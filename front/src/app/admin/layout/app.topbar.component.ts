@@ -9,18 +9,31 @@ import { Router } from '@angular/router';
 })
 export class AppTopBarComponent {
 
-    items!: MenuItem[];
-
     @ViewChild('menubutton') menuButton!: ElementRef;
-
     @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
-
     @ViewChild('topbarmenu') menu!: ElementRef;
 
-    constructor(public layoutService: LayoutService,private router:Router) { }
+    perfilItems: MenuItem[] = [];
 
-    funSalir(){
-        localStorage.removeItem("access_token")//para borrar el token
-        this.router.navigate(["/auth/login"])
+    constructor(
+        public layoutService: LayoutService,
+        private router: Router
+    ) {
+        this.perfilItems = [
+            {
+                label: 'Calendario',
+                icon: 'pi pi-calendar'
+            },
+            {
+                label: 'Cerrar sesión',
+                icon: 'pi pi-sign-out',
+                command: () => this.cerrarSesion()
+            }
+        ];
+    }
+
+    cerrarSesion() {
+        localStorage.removeItem('access_token');
+        this.router.navigate(['/auth/login']);
     }
 }
