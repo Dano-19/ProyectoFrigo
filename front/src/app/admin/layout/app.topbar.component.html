@@ -1,29 +1,35 @@
-<div class="layout-topbar">
-    <a class="layout-topbar-logo" routerLink="">
-        <img src="assets/layout/images/{{layoutService.config().colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg" alt="logo">
-        <span>SHIKAYRI</span>
-    </a>
+<div class="layout-topbar" style="background: white; border-bottom: 3px solid #007BFF; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);">
+  <!-- Logo con texto -->
+  <a class="layout-topbar-logo" routerLink="" style="display: flex; align-items: center;">
+      <div style="background: linear-gradient(135deg, #FF6B00, #007BFF); border-radius: 0.5rem; padding: 0.3rem 0.6rem; margin-right: 0.6rem;">
+          <img src="https://frigoserviciosecuador.com/wp-content/uploads/2025/01/LOGO-FRIGOSERVICIOS2we3-1024x309.png" alt="logo" style="height: 32px;" />
+      </div>
+      <span style="font-size: 1.5rem; font-weight: bold; color: #007BFF;">FRIGOSERVICIOS</span>
+  </a>
 
-    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
-        <i class="pi pi-bars"></i>
-    </button>
+  <!-- Botón de menú (hamburguesa) -->
+  <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()" style="color: #FF6B00;">
+      <i class="pi pi-bars text-xl"></i>
+  </button>
 
-    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
-        <i class="pi pi-ellipsis-v"></i>
-    </button>
+  <!-- Botón de menú superior derecho (puntos) -->
+  <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()" style="color: #FF6B00;">
+      <i class="pi pi-ellipsis-v text-xl"></i>
+  </button>
 
-    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-        <button class="p-link layout-topbar-button">
-            <i class="pi pi-calendar"></i>
-            <span>Calendar</span>
-        </button>
-        <button class="p-link layout-topbar-button">
-            <i class="pi pi-user"></i>
-            <span>Profile</span>
-        </button>
-        <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">
-            <i class="pi pi-power-off"></i>
-            <span>Salir</span>
-        </button>
-    </div>
+  <!-- Menú desplegable derecho -->
+  <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+      <button class="p-link layout-topbar-button hover:text-[#007BFF]">
+          <i class="pi pi-calendar"></i>
+          <span style="color: #333;">Calendario</span>
+      </button>
+      <button class="p-link layout-topbar-button hover:text-[#007BFF]">
+          <i class="pi pi-user"></i>
+          <span style="color: #333;">Perfil</span>
+      </button>
+      <button class="p-link layout-topbar-button" [routerLink]="'/documentation'" style="color: #FF6B00;">
+          <i class="pi pi-power-off"></i>
+          <span>Salir</span>
+      </button>
+  </div>
 </div>
