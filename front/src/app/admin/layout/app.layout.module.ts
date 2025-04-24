@@ -9,7 +9,10 @@ import { BadgeModule } from 'primeng/badge';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { RippleModule } from 'primeng/ripple';
-import { MenuModule } from 'primeng/menu'; // ✅ Importación necesaria para <p-menu>
+import { MenuModule } from 'primeng/menu';
+import { DialogModule } from 'primeng/dialog';      // ✅ Necesario para el p-dialog
+import { CalendarModule } from 'primeng/calendar';  // ✅ Necesario para el p-calendar
+
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -22,28 +25,31 @@ import { AppLayoutComponent } from './app.layout.component';
 import { AppConfigModule } from './config/config.module';
 
 @NgModule({
-    declarations: [
-        AppMenuitemComponent,
-        AppTopBarComponent,
-        AppFooterComponent,
-        AppMenuComponent,
-        AppSidebarComponent,
-        AppLayoutComponent,
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        HttpClientModule,
-        InputTextModule,
-        SidebarModule,
-        BadgeModule,
-        RadioButtonModule,
-        InputSwitchModule,
-        RippleModule,
-        MenuModule, // ✅ Aquí está
-        RouterModule,
-        AppConfigModule
-    ],
-    exports: [AppLayoutComponent]
+  declarations: [
+    AppMenuitemComponent,
+    AppTopBarComponent,
+    AppFooterComponent,
+    AppMenuComponent,
+    AppSidebarComponent,
+    AppLayoutComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
+    InputTextModule,
+    SidebarModule,
+    BadgeModule,
+    RadioButtonModule,
+    InputSwitchModule,
+    RippleModule,
+    MenuModule,
+    DialogModule,         // ✅ aquí importamos el dialog
+    CalendarModule,       // ✅ aquí importamos el calendar
+    RouterModule,
+    AppConfigModule
+  ],
+  exports: [AppLayoutComponent]
 })
 export class AppLayoutModule { }
+

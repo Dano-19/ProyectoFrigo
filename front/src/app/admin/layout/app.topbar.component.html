@@ -20,28 +20,34 @@
     </a>
   </div>
 
-<!-- Contenedor derecho: ícono de perfil y botón de menú -->
-<div class="flex items-center space-x-4 ml-auto pr-4">
-  <!-- Botón de perfil (redirige al perfil) -->
-  <button
-    class="p-link flex items-center justify-center layout-topbar-button"
-    routerLink="/admin/perfil"
-    pTooltip="Ver perfil"
-    style="color: #333;">
-    <i class="pi pi-user text-2xl"></i>
-  </button>
+  <!-- Lado derecho: ícono de perfil y botón de menú emergente -->
+  <div class="flex items-center space-x-4 ml-auto pr-4">
+    <!-- Botón de perfil -->
+    <button
+      class="p-link flex items-center justify-center layout-topbar-button"
+      routerLink="/admin/perfil"
+      pTooltip="Ver perfil"
+      style="color: #333;">
+      <i class="pi pi-user text-2xl"></i>
+    </button>
 
-  <!-- Botón menú hamburguesa para menú emergente -->
-  <button
-    class="p-link layout-menu-button layout-topbar-button"
-    (click)="perfilMenu.toggle($event)"
-    style="color: #FF6B00;"
-    pTooltip="Opciones">
-    <i class="pi pi-bars text-xl"></i>
-  </button>
+    <!-- Botón menú emergente -->
+    <button
+      class="p-link layout-menu-button layout-topbar-button"
+      (click)="perfilMenu.toggle($event)"
+      style="color: #FF6B00;"
+      pTooltip="Opciones">
+      <i class="pi pi-bars text-xl"></i>
+    </button>
 
-  <!-- Menú emergente -->
-  <p-menu #perfilMenu [popup]="true" [model]="perfilItems"></p-menu>
+    <!-- Menú emergente -->
+    <p-menu #perfilMenu [popup]="true" [model]="perfilItems"></p-menu>
+  </div>
 </div>
+
+<!-- Pop-up de calendario -->
+<p-dialog header="Calendario" [(visible)]="calendarVisible" [modal]="true" [style]="{width: '250px'}" [closable]="true">
+  <p-calendar [(ngModel)]="selectedDate" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+</p-dialog>
 
 
