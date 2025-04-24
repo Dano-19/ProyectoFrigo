@@ -13,6 +13,10 @@
     <button (click)="funIngresar()" [disabled]="!loginForm.valid">Ingresar</button>
 </form>
 -->
+<!-- ✅ Toast para mensajes flotantes -->
+<!-- ✅ Toast centrado -->
+<p-toast position="center"></p-toast>
+
 <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
   <div class="flex flex-column align-items-center justify-content-center">
 
@@ -36,7 +40,7 @@
           <label for="password1" class="block text-900 font-medium text-xl mb-2 mt-4">Contraseña:</label>
           <p-password id="password1" placeholder="Password" formControlName="password" styleClass="mb-2" inputStyleClass="w-full p-3 md:w-30rem"></p-password>
           <small
-          *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.value && !validPassword(loginForm.get('password')?.value || '')"
+            *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.value && !validPassword(loginForm.get('password')?.value || '')"
             class="p-error">
             La contraseña debe tener al menos 6 caracteres y un carácter especial.
           </small>
@@ -53,7 +57,12 @@
           <div *ngIf="notRegistered" class="p-error text-center mb-3">
             Debes registrarte para poder ingresar.
             <br>
-            <a routerLink="/register" class="text-primary font-medium cursor-pointer underline">Ir a registro</a>
+            <button
+              pButton
+              label="Ir a registro"
+              class="p-button-sm p-button-outlined p-button-secondary mt-2"
+              routerLink="/register">
+            </button>
             <br>
             <span class="text-600 text-sm">Redirigiendo automáticamente al registro en 4 segundos...</span>
           </div>

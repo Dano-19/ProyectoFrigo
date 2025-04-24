@@ -1,18 +1,23 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss'],
+  providers: [MessageService]
 })
 export class LoginComponent {
 
-  private authService = inject(AuthService);
-  private router = inject(Router);
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
 
   // Variables para mostrar mensajes de error
   errorLogin = false;
@@ -48,7 +53,18 @@ export class LoginComponent {
     this.authService.loginConNest(this.loginForm.value).subscribe(
       (res) => {
         localStorage.setItem("access_token", res.token);
-        this.router.navigate(["/admin"]);
+
+        this.messageService.add({
+          severity: 'success',
+          summary: `¡Bienvenido, ${res.user?.username || 'usuario'}!`,
+          detail: 'Redirigiendo a tu panel...',
+          icon: 'pi pi-user',
+          life: 2500
+        });
+
+        setTimeout(() => {
+          this.router.navigate(["/admin"]);
+        }, 2500);
       },
       (error) => {
         console.log(error);
@@ -59,7 +75,6 @@ export class LoginComponent {
           setTimeout(() => {
             this.router.navigate(['/register']);
           }, 4000);
-
         } else {
           this.errorLogin = true;
         }
