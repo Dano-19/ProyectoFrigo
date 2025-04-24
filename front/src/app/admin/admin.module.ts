@@ -11,6 +11,9 @@ import { InventarioModule } from './inventario/inventario.module';
 import { ProductoService } from './inventario/services/producto.service';
 import { PedidoModule } from './pedido/pedido.module';
 
+// ✅ Importaciones necesarias para <p-menu>
+import { MenuModule } from 'primeng/menu';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -24,10 +27,11 @@ import { PedidoModule } from './pedido/pedido.module';
     AppLayoutModule,
     TableModule,
     InventarioModule,
-    PedidoModule
+    PedidoModule,
+    MenuModule,       // ✅ Importado aquí
+    ButtonModule      // ✅ Botón con ícono para mostrar el menú
   ],
-
-  providers:[
+  providers: [
     CategoriaService,
     ProductoService
   ]

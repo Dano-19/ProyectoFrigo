@@ -1,35 +1,38 @@
-<div class="layout-topbar" style="background: white; border-bottom: 3px solid #007BFF; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);">
-  <!-- Logo con texto -->
-  <a class="layout-topbar-logo" routerLink="" style="display: flex; align-items: center;">
-      <div style="background: linear-gradient(135deg, #FF6B00, #007BFF); border-radius: 0.5rem; padding: 0.3rem 0.6rem; margin-right: 0.6rem;">
-          <img src="https://frigoserviciosecuador.com/wp-content/uploads/2025/01/LOGO-FRIGOSERVICIOS2we3-1024x309.png" alt="logo" style="height: 32px;" />
-      </div>
-      <span style="font-size: 1.5rem; font-weight: bold; color: #007BFF;">FRIGOSERVICIOS</span>
-  </a>
+<!-- Barra superior -->
+<div class="layout-topbar flex items-center px-6 py-4 shadow-md"
+     style="background-color: white; border-bottom: 3px solid #007BFF; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);">
 
-  <!-- Botón de menú (hamburguesa) -->
-  <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()" style="color: #FF6B00;">
+  <!-- Lado izquierdo: menú + logo -->
+  <div class="flex items-center space-x-4">
+    <!-- Botón menú hamburguesa -->
+    <button #menubutton class="p-link layout-menu-button layout-topbar-button"
+            (click)="layoutService.onMenuToggle()" style="color: #FF6B00;">
       <i class="pi pi-bars text-xl"></i>
-  </button>
+    </button>
 
-  <!-- Botón de menú superior derecho (puntos) -->
-  <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()" style="color: #FF6B00;">
-      <i class="pi pi-ellipsis-v text-xl"></i>
-  </button>
+    <!-- Logo -->
+    <a class="layout-topbar-logo" routerLink="" style="display: flex; align-items: center;">
+      <div style="background: linear-gradient(135deg, #FF6B00, #007BFF); border-radius: 0.5rem; padding: 0.3rem 0.6rem;">
+        <img src="https://frigoserviciosecuador.com/wp-content/uploads/2025/01/LOGO-FRIGOSERVICIOS2we3-1024x309.png"
+             alt="logo" style="height: 32px;" />
+      </div>
+      <span style="font-size: 1.5rem; font-weight: bold; color: #007BFF; margin-left: 0.6rem;">FRIGOSERVICIOS</span>
+    </a>
+  </div>
 
-  <!-- Menú desplegable derecho -->
-  <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-      <button class="p-link layout-topbar-button hover:text-[#007BFF]">
-          <i class="pi pi-calendar"></i>
-          <span style="color: #333;">Calendario</span>
-      </button>
-      <button class="p-link layout-topbar-button hover:text-[#007BFF]">
-          <i class="pi pi-user"></i>
-          <span style="color: #333;">Perfil</span>
-      </button>
-      <button class="p-link layout-topbar-button" [routerLink]="'/documentation'" style="color: #FF6B00;">
-          <i class="pi pi-power-off"></i>
-          <span>Salir</span>
-      </button>
+  <!-- Lado derecho: botón tres puntos totalmente alineado -->
+  <div class="ml-auto flex items-center space-x-4">
+    <!-- Menú popup -->
+    <p-menu #perfilMenu [popup]="true" [model]="perfilItems"></p-menu>
+
+    <!-- Botón tres puntos -->
+    <button
+      pButton
+      icon="pi pi-ellipsis-v"
+      class="p-button-rounded p-button-outlined"
+      style="border-color: #FF6B00; color: #FF6B00;"
+      (click)="perfilMenu.toggle($event)"
+      pTooltip="Opciones"
+    ></button>
   </div>
 </div>
