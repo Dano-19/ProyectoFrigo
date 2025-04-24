@@ -36,6 +36,7 @@ export class AppTopBarComponent {
         command: () => this.cerrarSesion()
       }
     ];
+
   }
 
   cerrarSesion() {

@@ -10,8 +10,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { RippleModule } from 'primeng/ripple';
 import { MenuModule } from 'primeng/menu';
-import { DialogModule } from 'primeng/dialog';      // ✅ Necesario para el p-dialog
-import { CalendarModule } from 'primeng/calendar';  // ✅ Necesario para el p-calendar
+import { DialogModule } from 'primeng/dialog';      
+import { CalendarModule } from 'primeng/calendar';
 
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
