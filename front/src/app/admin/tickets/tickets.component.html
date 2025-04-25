@@ -1,0 +1,28 @@
+<div style="max-width: 600px; margin: auto; padding: 2rem; background: #fff; border-radius: 10px; box-shadow: 0 0 10px #ddd;">
+    <h2 style="color: #3b82f6;">Enviar Ticket de Reclamo</h2>
+  
+    <form (ngSubmit)="enviarTicket()" #formTicket="ngForm">
+  
+      <label>Nombre:</label>
+      <input type="text" name="nombre" [(ngModel)]="ticket.nombre" required 
+             style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;" />
+  
+      <label>Correo:</label>
+      <input type="email" name="correo" [(ngModel)]="ticket.correo" required 
+             style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;" />
+  
+      <label>Asunto:</label>
+      <input type="text" name="asunto" [(ngModel)]="ticket.asunto" required 
+             style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;" />
+  
+      <label>Mensaje:</label>
+      <textarea name="mensaje" [(ngModel)]="ticket.mensaje" required rows="5" 
+                style="width: 100%; padding: 0.5rem; margin-bottom: 1rem;"></textarea>
+  
+      <button type="submit" [disabled]="!formTicket.valid"
+              style="background-color: #f97316; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px;">
+        Enviar Ticket
+      </button>
+    </form>
+  </div>
+  
