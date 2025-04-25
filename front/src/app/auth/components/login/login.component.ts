@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -36,6 +35,15 @@ export class LoginComponent {
     // Validación de formato de correo
     if (!email || !email.includes('@')) {
       alert('El correo debe contener un @ válido');
+      return;
+    }
+
+    // Validación de dominio permitido
+    const allowedDomains = ['@tecnico.com', '@admin.com', '@cliente.com'];
+    const isDomainValid = allowedDomains.some(domain => email.endsWith(domain));
+
+    if (!isDomainValid) {
+      alert('Solo se permite el acceso a correos con los dominios @tecnico.com, @admin.com o @cliente.com');
       return;
     }
 

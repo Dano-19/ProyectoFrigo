@@ -16,7 +16,8 @@ export class RegisterComponent {
     username: '',
     email: '',
     password: '',
-    telefono: ''
+    telefono: '',
+    rol: '' // Nuevo campo para el rol
   };
 
   constructor(
@@ -26,19 +27,25 @@ export class RegisterComponent {
   ) {}
 
   onSubmit() {
-    // Validación personalizada de email
-    if (!this.validEmail(this.formData.email)) {
+    const email = this.formData.email;
+    const password = this.formData.password;
+
+    // Validación de correo
+    if (!this.validEmail(email)) {
       this.messageService.add({
         severity: 'error',
         summary: 'Correo inválido',
-        detail: 'El correo debe contener "@" y terminar en ".com"',
+        detail: 'Solo se permiten correos con los dominios @tecnico.com, @admin.com o @cliente.com',
         life: 3000
       });
       return;
     }
 
-    // Validación personalizada de contraseña
-    if (!this.validPassword(this.formData.password)) {
+    // Asignar el rol según el dominio del correo
+    this.formData.rol = this.obtenerRolPorEmail(email);
+
+    // Validación de contraseña
+    if (!this.validPassword(password)) {
       this.messageService.add({
         severity: 'error',
         summary: 'Contraseña inválida',
@@ -48,7 +55,7 @@ export class RegisterComponent {
       return;
     }
 
-    // Llamada al backend
+    // Envío al backend
     this.http.post('http://localhost:3000/auth/register', this.formData).subscribe({
       next: () => {
         this.messageService.add({
@@ -76,10 +83,18 @@ export class RegisterComponent {
   }
 
   validEmail(email: string): boolean {
-    return email.includes('@') && email.endsWith('.com');
+    const allowedDomains = ['@tecnico.com', '@admin.com', '@cliente.com'];
+    return email.includes('@') && allowedDomains.some(domain => email.endsWith(domain));
   }
 
   validPassword(password: string): boolean {
-    return password.length >= 6 && /[^A-Za-z0-9]/.test(password); // al menos un carácter especial
+    return password.length >= 6 && /[^A-Za-z0-9]/.test(password);
+  }
+
+  obtenerRolPorEmail(email: string): string {
+    if (email.endsWith('@tecnico.com')) return 'tecnico';
+    if (email.endsWith('@admin.com')) return 'admin';
+    if (email.endsWith('@cliente.com')) return 'cliente';
+    return 'desconocido';
   }
 }
