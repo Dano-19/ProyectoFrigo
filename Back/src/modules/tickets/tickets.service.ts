@@ -1,26 +1,29 @@
-// src/modules/tickets/tickets.service.ts
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class TicketsService {
-  async enviarCorreo(ticket: any) {
+  async enviarCorreo(ticket: { nombre: string; correo: string; asunto: string; mensaje: string }) {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'tucorreo@gmail.com',
-        pass: 'tu_contraseña_o_app_password'
+        user: 'tucorreo@gmail.com',      // 🔒 Usa un correo real
+        pass: 'tu_contraseña_app'        // 🔒 Contraseña de aplicación, no la normal
       }
     });
 
     const mailOptions = {
       from: ticket.correo,
-      to: 'destinatario@correo.com',
-      subject: `📩 Reclamo: ${ticket.asunto}`,
-      text: `Nombre: ${ticket.nombre}\nCorreo: ${ticket.correo}\n\nMensaje:\n${ticket.mensaje}`
+      to: 'soporte@frigoservicios.com',
+      subject: `🧾 Reclamo: ${ticket.asunto}`,
+      text: `
+        Nombre: ${ticket.nombre}
+        Correo: ${ticket.correo}
+        Asunto: ${ticket.asunto}
+        Mensaje: ${ticket.mensaje}
+      `
     };
 
-    await transporter.sendMail(mailOptions);
-    return { message: 'Ticket enviado con éxito' };
+    return await transporter.sendMail(mailOptions);
   }
 }
