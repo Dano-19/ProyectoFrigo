@@ -20,15 +20,49 @@ export class RegisterComponent {
     rol: '' // Nuevo campo para el rol
   };
 
+  nameInvalid = false;
+
   constructor(
     private http: HttpClient,
     private router: Router,
     private messageService: MessageService
   ) {}
 
+  // 👇 Función para evitar números en nombre
+  soloLetras(event: KeyboardEvent): void {
+    const input = event.key;
+    const regex = /^[a-zA-ZÀ-ÿ\s]*$/;
+
+    if (!regex.test(input)) {
+      event.preventDefault();
+      this.nameInvalid = true;
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Solo letras',
+        detail: 'El nombre no puede contener números ni símbolos.',
+        life: 2500
+      });
+
+      setTimeout(() => {
+        this.nameInvalid = false;
+      }, 2000);
+    }
+  }
+
   onSubmit() {
     const email = this.formData.email;
     const password = this.formData.password;
+
+    // Validación de nombre (por si omite la tecla)
+    if (!/^[a-zA-ZÀ-ÿ\s]+$/.test(this.formData.name)) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Nombre inválido',
+        detail: 'El nombre solo puede contener letras',
+        life: 3000
+      });
+      return;
+    }
 
     // Validación de correo
     if (!this.validEmail(email)) {
