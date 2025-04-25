@@ -7,45 +7,49 @@ import { ProductoComponent } from './inventario/components/producto/producto.com
 import { NuevoPedidoComponent } from './pedido/components/nuevo-pedido/nuevo-pedido.component';
 import { ListaPedidoComponent } from './pedido/components/lista-pedido/lista-pedido.component';
 import { authGuard } from '../guards/auth.guard';
+import { TicketsComponent } from './tickets/tickets.component'; // 👈 Importación del componente
 
 const routes: Routes = [
   {
-    path:"",
-    component:AppLayoutComponent,
-    children:[
+    path: "",
+    component: AppLayoutComponent,
+    children: [
       {
-        path:"perfil",
-        component:PerfilComponent,
+        path: "perfil",
+        component: PerfilComponent,
         canActivate: [authGuard]
       },
       {
-        path:"categoria",
-        component:CategoriaComponent,
-        canActivate: [authGuard]
-      },
-
-      {
-        path:"producto",
-        component:ProductoComponent,
+        path: "categoria",
+        component: CategoriaComponent,
         canActivate: [authGuard]
       },
       {
-        path:"pedido/nuevo",
-        component:NuevoPedidoComponent,
+        path: "producto",
+        component: ProductoComponent,
         canActivate: [authGuard]
       },
       {
-        path:"pedido",
-        component:ListaPedidoComponent,
+        path: "pedido/nuevo",
+        component: NuevoPedidoComponent,
+        canActivate: [authGuard]
+      },
+      {
+        path: "pedido",
+        component: ListaPedidoComponent,
+        canActivate: [authGuard]
+      },
+      {
+        path: "tickets", // 👈 Ruta añadida
+        component: TicketsComponent,
         canActivate: [authGuard]
       }
     ]
   }
-  
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AdminRoutingModule { }
+export class AdminRoutingModule {}

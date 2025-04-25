@@ -1,32 +1,26 @@
+// src/modules/tickets/tickets.service.ts
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import { CreateTicketDto } from './dto/create-ticket.dto';
 
 @Injectable()
 export class TicketsService {
-  async enviarTicketPorCorreo(data: CreateTicketDto) {
+  async enviarCorreo(ticket: any) {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'TUCORREO@gmail.com',
-        pass: 'TU_APP_PASSWORD' // usa contraseña de aplicación, no tu clave normal
+        user: 'tucorreo@gmail.com',
+        pass: 'tu_contraseña_o_app_password'
       }
     });
 
-    await transporter.sendMail({
-      from: `"Ticket de Reclamo" <${data.correo}>`,
-      to: 'soporte@tusitio.com', // ✅ aquí llega el reclamo
-      subject: `Nuevo Reclamo: ${data.asunto}`,
-      text: `
-Nombre: ${data.nombre}
-Correo: ${data.correo}
-Asunto: ${data.asunto}
+    const mailOptions = {
+      from: ticket.correo,
+      to: 'destinatario@correo.com',
+      subject: `📩 Reclamo: ${ticket.asunto}`,
+      text: `Nombre: ${ticket.nombre}\nCorreo: ${ticket.correo}\n\nMensaje:\n${ticket.mensaje}`
+    };
 
-Mensaje:
-${data.mensaje}
-      `
-    });
-
-    return { mensaje: '✅ Ticket enviado correctamente por correo' };
+    await transporter.sendMail(mailOptions);
+    return { message: 'Ticket enviado con éxito' };
   }
 }

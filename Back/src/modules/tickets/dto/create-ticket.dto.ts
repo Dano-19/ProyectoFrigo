@@ -1,16 +1,12 @@
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+// src/modules/tickets/dto/create-ticket.dto.ts
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateTicketDto {
-  @IsNotEmpty({ message: 'El nombre es obligatorio' })
-  nombre: string;
-
-  @IsEmail({}, { message: 'El correo debe ser válido' })
-  correo: string;
-
-  @IsNotEmpty({ message: 'El asunto es obligatorio' })
+  @IsString()
+  @IsNotEmpty()
   asunto: string;
 
-  @IsNotEmpty({ message: 'El mensaje es obligatorio' })
-  @MinLength(10, { message: 'El mensaje debe tener al menos 10 caracteres' })
+  @IsString()
+  @IsNotEmpty()
   mensaje: string;
 }
