@@ -26,7 +26,7 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     { label: 'Categoría', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/categoria'] },
                     { label: 'Producto', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/producto'] },
-                    
+
                 ]
             },
             {
@@ -34,7 +34,7 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     { label: 'Lista Pedidos', icon: 'pi pi-fw pi-eye', routerLink: ['/admin/pedido'], badge: 'NEW' },
                     { label: 'Nuevo Pedido', icon: 'pi pi-fw pi-moon', routerLink: ['/admin/pedido/nuevo'], badge: 'NEW' },
-                    { label: 'Clientes', icon: 'pi pi-fw pi-user', routerLink: ['/admin/cliente'], target: '_blank' }
+                    { label: 'Tickets', icon: 'pi pi-fw pi-user', routerLink: ['/admin/tickets'], target: '_blank' }
                 ]
             },
             {
@@ -44,10 +44,10 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Roles', icon: 'pi pi-fw pi-desktop', url: ['https://www.primefaces.org/primeflex/'], target: '_blank' },
                 ]
             },
-            
-               
-            
-            
+
+
+
+
         ];
     }
 }
