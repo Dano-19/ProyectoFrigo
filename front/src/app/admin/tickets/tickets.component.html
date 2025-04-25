@@ -1,7 +1,6 @@
 <form (ngSubmit)="enviarTicket()" #ticketForm="ngForm" class="p-fluid"
   style="max-width: 42rem; margin: auto; margin-top: 3rem; padding: 3rem; border-radius: 2.5rem; background: linear-gradient(145deg, #ffffff, #e9f3ff); box-shadow: 0 15px 40px rgba(0, 94, 255, 0.15);">
 
-  <!-- ENCABEZADO -->
   <div style="text-align: center; margin-bottom: 2.5rem;">
     <div style="font-size: 2.5rem; font-weight: bold; color: #007BFF; text-shadow: 1px 1px 1px #ccc;">
       📬 Reclamos y Sugerencias
@@ -11,7 +10,6 @@
     </div>
   </div>
 
-  <!-- ASUNTO -->
   <div style="margin-bottom: 1.5rem;">
     <label for="asunto" style="font-weight: 600; color: #007BFF; display: block; margin-bottom: 0.6rem;">🎯 Asunto</label>
     <input
@@ -26,7 +24,6 @@
     />
   </div>
 
-  <!-- MENSAJE -->
   <div style="margin-bottom: 2rem;">
     <label for="mensaje" style="font-weight: 600; color: #007BFF; display: block; margin-bottom: 0.6rem;">✍️ Mensaje</label>
     <textarea
@@ -41,7 +38,6 @@
     ></textarea>
   </div>
 
-  <!-- BOTÓN -->
   <div style="text-align: center;">
     <button
       pButton
