@@ -1,92 +1,150 @@
-<div class="flex flex-column align-items-center justify-content-center min-h-screen bg-[#f8faff] p-4">
+<div class="flex flex-column align-items-center justify-content-center min-h-screen bg-[#eaf4ff] p-4">
 
-    <!-- Logo Frigoservicios -->
+    <!-- LOGO DE FRIGOSERVICIOS -->
     <div class="text-center mb-6">
       <div
         style="
-          background: linear-gradient(135deg, #FF6B00 20%, #007BFF 80%);
-          padding: 1rem 2rem;
+          background: radial-gradient(circle at top left, #FF6B00, #007BFF);
+          padding: 1.5rem 3rem;
           border-radius: 1.5rem;
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
           display: inline-block;
         "
       >
         <img
           src="https://frigoserviciosecuador.com/wp-content/uploads/2025/01/LOGO-FRIGOSERVICIOS2we3-1024x309.png"
           alt="Frigoservicios Logo"
-          style="max-height: 80px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));"
+          style="max-height: 85px; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.3));"
         />
       </div>
     </div>
   
-    <!-- Título -->
-    <h1 class="text-4xl font-bold mb-8 text-center" style="color: #007BFF; text-shadow: 1px 1px 0px #e3e3e3;">
+    <!-- TÍTULO CON SOMBRA -->
+    <h1
+      style="
+        font-size: 2.8rem;
+        font-weight: bold;
+        color: #007BFF;
+        text-shadow: 2px 2px 6px rgba(0, 94, 255, 0.2);
+        font-family: 'Segoe UI', sans-serif;
+        margin-bottom: 3rem;
+        text-align: center;
+      "
+    >
       ¿Cómo te quieres identificar?
     </h1>
   
-    <!-- Botones -->
+    <!-- BOTONES ESTILO BURBUJA INTERACTIVA -->
     <div class="flex gap-6 flex-wrap justify-center">
   
-      <!-- Botón Administrador -->
+      <!-- ADMINISTRADOR -->
       <button
-        pButton
-        class="p-button-lg p-button-text p-button-rounded"
         (click)="redirigirRol('admin')"
         style="
-          background-color: white;
-          border: 3px solid #007BFF;
-          color: #007BFF;
-          padding: 1.5rem 3rem;
-          font-size: 1.5rem;
-          font-weight: bold;
-          min-width: 250px;
-          transition: all 0.3s ease;
-          box-shadow: 0 6px 20px rgba(0, 123, 255, 0.1);
+          background: linear-gradient(135deg, #0099ff, #66ccff);
+          border: none;
+          color: white;
+          font-size: 1.3rem;
+          font-weight: 600;
+          border-radius: 100px;
+          padding: 1.8rem 3.2rem;
+          min-width: 260px;
+          box-shadow: inset 0 0 15px rgba(255,255,255,0.3), 0 10px 30px rgba(0,123,255,0.4);
+          transition: transform 0.3s ease, background 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
         "
+        onmouseover="this.style.background='linear-gradient(135deg, #007BFF, #3dbbff)'; this.style.transform='scale(1.07)'"
+        onmouseout="this.style.background='linear-gradient(135deg, #0099ff, #66ccff)'; this.style.transform='scale(1)'"
       >
-        <i class="pi pi-user-shield mr-3" style="font-size: 1.8rem;"></i>
+        <span
+          style="
+            background-color: white;
+            border-radius: 50%;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <i class="pi pi-user-shield" style="font-size: 1.8rem; color: #007BFF;"></i>
+        </span>
         Administrador
       </button>
   
-      <!-- Botón Cliente -->
+      <!-- CLIENTE -->
       <button
-        pButton
-        class="p-button-lg p-button-text p-button-rounded"
         (click)="redirigirRol('cliente')"
         style="
-          background-color: white;
-          border: 3px solid #FF6B00;
-          color: #FF6B00;
-          padding: 1.5rem 3rem;
-          font-size: 1.5rem;
-          font-weight: bold;
-          min-width: 250px;
-          transition: all 0.3s ease;
-          box-shadow: 0 6px 20px rgba(255, 107, 0, 0.1);
+          background: linear-gradient(135deg, #ff7f00, #ffbb66);
+          border: none;
+          color: white;
+          font-size: 1.3rem;
+          font-weight: 600;
+          border-radius: 100px;
+          padding: 1.8rem 3.2rem;
+          min-width: 260px;
+          box-shadow: inset 0 0 15px rgba(255,255,255,0.3), 0 10px 30px rgba(255, 140, 0, 0.4);
+          transition: transform 0.3s ease, background 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
         "
+        onmouseover="this.style.background='linear-gradient(135deg, #ff6b00, #ff9966)'; this.style.transform='scale(1.07)'"
+        onmouseout="this.style.background='linear-gradient(135deg, #ff7f00, #ffbb66)'; this.style.transform='scale(1)'"
       >
-        <i class="pi pi-users mr-3" style="font-size: 1.8rem;"></i>
+        <span
+          style="
+            background-color: white;
+            border-radius: 50%;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <i class="pi pi-users" style="font-size: 1.8rem; color: #ff6b00;"></i>
+        </span>
         Cliente
       </button>
   
-      <!-- Botón Técnico -->
+      <!-- TÉCNICO -->
       <button
-        pButton
-        class="p-button-lg p-button-text p-button-rounded"
         (click)="redirigirRol('tecnico')"
         style="
-          background-color: white;
-          border: 3px solid #4B5563;
-          color: #4B5563;
-          padding: 1.5rem 3rem;
-          font-size: 1.5rem;
-          font-weight: bold;
-          min-width: 250px;
-          transition: all 0.3s ease;
-          box-shadow: 0 6px 20px rgba(75, 85, 99, 0.1);
+          background: linear-gradient(135deg, #4B5563, #9fa6b2);
+          border: none;
+          color: white;
+          font-size: 1.3rem;
+          font-weight: 600;
+          border-radius: 100px;
+          padding: 1.8rem 3.2rem;
+          min-width: 260px;
+          box-shadow: inset 0 0 15px rgba(255,255,255,0.3), 0 10px 30px rgba(75,85,99,0.4);
+          transition: transform 0.3s ease, background 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
         "
+        onmouseover="this.style.background='linear-gradient(135deg, #374151, #6b7280)'; this.style.transform='scale(1.07)'"
+        onmouseout="this.style.background='linear-gradient(135deg, #4B5563, #9fa6b2)'; this.style.transform='scale(1)'"
       >
-        <i class="pi pi-cog mr-3" style="font-size: 1.8rem;"></i>
+        <span
+          style="
+            background-color: white;
+            border-radius: 50%;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <i class="pi pi-cog" style="font-size: 1.8rem; color: #4B5563;"></i>
+        </span>
         Técnico
       </button>
   
