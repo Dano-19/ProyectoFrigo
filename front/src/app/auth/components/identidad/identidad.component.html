@@ -1,0 +1,95 @@
+<div class="flex flex-column align-items-center justify-content-center min-h-screen bg-[#f8faff] p-4">
+
+    <!-- Logo Frigoservicios -->
+    <div class="text-center mb-6">
+      <div
+        style="
+          background: linear-gradient(135deg, #FF6B00 20%, #007BFF 80%);
+          padding: 1rem 2rem;
+          border-radius: 1.5rem;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+          display: inline-block;
+        "
+      >
+        <img
+          src="https://frigoserviciosecuador.com/wp-content/uploads/2025/01/LOGO-FRIGOSERVICIOS2we3-1024x309.png"
+          alt="Frigoservicios Logo"
+          style="max-height: 80px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));"
+        />
+      </div>
+    </div>
+  
+    <!-- Título -->
+    <h1 class="text-4xl font-bold mb-8 text-center" style="color: #007BFF; text-shadow: 1px 1px 0px #e3e3e3;">
+      ¿Cómo te quieres identificar?
+    </h1>
+  
+    <!-- Botones -->
+    <div class="flex gap-6 flex-wrap justify-center">
+  
+      <!-- Botón Administrador -->
+      <button
+        pButton
+        class="p-button-lg p-button-text p-button-rounded"
+        (click)="redirigirRol('admin')"
+        style="
+          background-color: white;
+          border: 3px solid #007BFF;
+          color: #007BFF;
+          padding: 1.5rem 3rem;
+          font-size: 1.5rem;
+          font-weight: bold;
+          min-width: 250px;
+          transition: all 0.3s ease;
+          box-shadow: 0 6px 20px rgba(0, 123, 255, 0.1);
+        "
+      >
+        <i class="pi pi-user-shield mr-3" style="font-size: 1.8rem;"></i>
+        Administrador
+      </button>
+  
+      <!-- Botón Cliente -->
+      <button
+        pButton
+        class="p-button-lg p-button-text p-button-rounded"
+        (click)="redirigirRol('cliente')"
+        style="
+          background-color: white;
+          border: 3px solid #FF6B00;
+          color: #FF6B00;
+          padding: 1.5rem 3rem;
+          font-size: 1.5rem;
+          font-weight: bold;
+          min-width: 250px;
+          transition: all 0.3s ease;
+          box-shadow: 0 6px 20px rgba(255, 107, 0, 0.1);
+        "
+      >
+        <i class="pi pi-users mr-3" style="font-size: 1.8rem;"></i>
+        Cliente
+      </button>
+  
+      <!-- Botón Técnico -->
+      <button
+        pButton
+        class="p-button-lg p-button-text p-button-rounded"
+        (click)="redirigirRol('tecnico')"
+        style="
+          background-color: white;
+          border: 3px solid #4B5563;
+          color: #4B5563;
+          padding: 1.5rem 3rem;
+          font-size: 1.5rem;
+          font-weight: bold;
+          min-width: 250px;
+          transition: all 0.3s ease;
+          box-shadow: 0 6px 20px rgba(75, 85, 99, 0.1);
+        "
+      >
+        <i class="pi pi-cog mr-3" style="font-size: 1.8rem;"></i>
+        Técnico
+      </button>
+  
+    </div>
+  </div>
+  
