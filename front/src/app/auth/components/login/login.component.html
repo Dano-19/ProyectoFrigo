@@ -1,24 +1,7 @@
-<!--
-<h1>Ingresar</h1>
-{{loginForm.value | json}}
-{{loginForm.valid}}
-
-<form [formGroup]="loginForm">
-    <label>Ingrese Correo: </label>
-    <input type="email" formControlName="email">
-    <br>
-    <label>Ingrese Contraseña: </label>
-    <input type="password" formControlName="password">
-    <br>
-    <button (click)="funIngresar()" [disabled]="!loginForm.valid">Ingresar</button>
-</form>
--->
 <p-toast position="center"></p-toast>
 
 <div class="flex justify-content-center align-items-center min-h-screen min-w-screen bg-[#f8faff] overflow-hidden">
   <div class="flex flex-column align-items-center justify-content-center">
-
-    <!-- Tarjeta redondeada con sombra difusa -->
     <div
       style="
         border-radius: 2.5rem;
@@ -28,8 +11,7 @@
       "
     >
       <div class="w-full py-10 px-6 sm:px-10" style="border-radius: 2rem; background-color: white;">
-
-        <!-- LOGO con fondo decorativo -->
+        <!-- LOGO -->
         <div class="text-center mb-6">
           <div
             style="
@@ -48,17 +30,9 @@
           </div>
         </div>
 
-        <!-- Encabezado visual -->
+        <!-- ENCABEZADO -->
         <div class="text-center mb-6">
-          <div
-            style="
-              font-size: 2.5rem;
-              font-weight: bold;
-              color: #007BFF;
-              text-shadow: 1px 1px 0px #e3e3e3;
-              font-family: 'Segoe UI', sans-serif;
-            "
-          >
+          <div style="font-size: 2.5rem; font-weight: bold; color: #007BFF; text-shadow: 1px 1px 0px #e3e3e3; font-family: 'Segoe UI', sans-serif;">
             🔐 Bienvenido
           </div>
           <div style="color: #FF6B00; font-weight: 500; font-size: 1.2rem;">
@@ -66,9 +40,9 @@
           </div>
         </div>
 
-        <!-- Formulario -->
+        <!-- FORMULARIO -->
         <div [formGroup]="loginForm">
-          <!-- Email -->
+          <!-- Correo -->
           <label for="email1" class="block text-xl font-semibold mb-2 mt-2" style="color: #007BFF;">Correo electrónico</label>
           <input
             id="email1"
@@ -100,13 +74,13 @@
             La contraseña debe tener mínimo 6 caracteres y al menos un carácter especial.
           </small>
 
-          <!-- Recordarme y olvido -->
+          <!-- Opciones -->
           <div class="flex align-items-center justify-content-between mb-5 mt-4 gap-3">
             <label style="color: #444;">🔁 Recordarme</label>
             <a class="font-medium no-underline text-right cursor-pointer" style="color: #007BFF;">¿Olvidaste tu contraseña?</a>
           </div>
 
-          <!-- No registrado -->
+          <!-- Errores -->
           <div *ngIf="notRegistered" class="p-error text-center mb-3">
             Debes registrarte para continuar.
             <br />
@@ -114,18 +88,17 @@
               pButton
               label="Ir al registro"
               class="p-button-sm p-button-outlined p-button-info mt-2"
-              routerLink="/register"
+              (click)="redirigirAlRegistro()"
             ></button>
             <br />
             <span class="text-600 text-sm" style="color: #007BFF;">Redirigiendo automáticamente en 4 segundos...</span>
           </div>
 
-          <!-- Error de credenciales -->
           <div *ngIf="errorLogin && !notRegistered" class="p-error text-center mb-3">
             Las credenciales no son válidas. Intenta de nuevo.
           </div>
 
-          <!-- Botón ingresar -->
+          <!-- Botón Ingresar -->
           <button
             pButton
             pRipple
@@ -134,14 +107,23 @@
             (click)="funIngresar()"
             style="background-color: #FF6B00; border: none; color: white; border-radius: 0.8rem; font-weight: bold;"
             [disabled]="!loginForm.valid || !validPassword(loginForm.get('password')?.value || '')"
-          >
-          </button>
+          ></button>
+
+          <!-- Botón Regístrate -->
+          <div class="text-center mt-4">
+            <span style="color: #333; font-size: 1rem;">¿No tienes cuenta?</span>
+            <br />
+            <button
+              pButton
+              pRipple
+              label="Regístrate"
+              class="p-button-outlined p-button-primary mt-2"
+              (click)="redirigirAlRegistro()"
+              style="padding: 0.6rem 1.5rem; border-radius: 0.8rem; font-weight: bold; color: #007BFF; border-color: #007BFF;"
+            ></button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
-

@@ -73,7 +73,7 @@ export class LoginComponent {
 
           // Redirección automática al registro después de 4 segundos
           setTimeout(() => {
-            this.router.navigate(['/register']);
+            this.router.navigate(['auth/register']);
           }, 4000);
         } else {
           this.errorLogin = true;
@@ -84,5 +84,10 @@ export class LoginComponent {
 
   validPassword(password: string): boolean {
     return password.length >= 6 && /[^A-Za-z0-9]/.test(password);
+  }
+
+  // ✅ Redirección directa al registro desde botón
+  redirigirAlRegistro(): void {
+    this.router.navigate(['auth/register']);
   }
 }
