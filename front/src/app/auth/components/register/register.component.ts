@@ -16,11 +16,8 @@ export class RegisterComponent {
     username: '',
     email: '',
     password: '',
-    telefono: '',
-    rol: '' // Nuevo campo para el rol
+    rol: ''
   };
-
-  nameInvalid = false;
 
   constructor(
     private http: HttpClient,
@@ -28,41 +25,9 @@ export class RegisterComponent {
     private messageService: MessageService
   ) {}
 
-  // 👇 Función para evitar números en nombre
-  soloLetras(event: KeyboardEvent): void {
-    const input = event.key;
-    const regex = /^[a-zA-ZÀ-ÿ\s]*$/;
-
-    if (!regex.test(input)) {
-      event.preventDefault();
-      this.nameInvalid = true;
-      this.messageService.add({
-        severity: 'warn',
-        summary: 'Solo letras',
-        detail: 'El nombre no puede contener números ni símbolos.',
-        life: 2500
-      });
-
-      setTimeout(() => {
-        this.nameInvalid = false;
-      }, 2000);
-    }
-  }
-
   onSubmit() {
     const email = this.formData.email;
     const password = this.formData.password;
-
-    // Validación de nombre (por si omite la tecla)
-    if (!/^[a-zA-ZÀ-ÿ\s]+$/.test(this.formData.name)) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Nombre inválido',
-        detail: 'El nombre solo puede contener letras',
-        life: 3000
-      });
-      return;
-    }
 
     // Validación de correo
     if (!this.validEmail(email)) {
@@ -75,7 +40,7 @@ export class RegisterComponent {
       return;
     }
 
-    // Asignar el rol según el dominio del correo
+    // Asignar rol por dominio
     this.formData.rol = this.obtenerRolPorEmail(email);
 
     // Validación de contraseña
@@ -83,7 +48,7 @@ export class RegisterComponent {
       this.messageService.add({
         severity: 'error',
         summary: 'Contraseña inválida',
-        detail: 'Debe tener mínimo 6 caracteres y al menos un carácter especial',
+        detail: 'Debe tener mínimo 6 caracteres y al menos un carácter especial.',
         life: 3000
       });
       return;
@@ -97,7 +62,7 @@ export class RegisterComponent {
           summary: '¡Registro exitoso!',
           detail: 'Serás redirigido al login...',
           icon: 'pi pi-check-circle',
-          life: 3000
+          life: 3500
         });
 
         setTimeout(() => {
@@ -109,7 +74,7 @@ export class RegisterComponent {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Ocurrió un error al registrar usuario',
+          detail: 'Ocurrió un error al registrar el usuario.',
           life: 3000
         });
       }
