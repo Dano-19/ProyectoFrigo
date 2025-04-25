@@ -10,14 +10,49 @@
       <i class="pi pi-bars text-xl"></i>
     </button>
 
-    <!-- Logo -->
-    <a class="layout-topbar-logo" routerLink="" style="display: flex; align-items: center;">
-      <div style="background: linear-gradient(135deg, #FF6B00, #007BFF); border-radius: 0.5rem; padding: 0.3rem 0.6rem;">
-        <img src="https://frigoserviciosecuador.com/wp-content/uploads/2025/01/LOGO-FRIGOSERVICIOS2we3-1024x309.png"
-             alt="logo" style="height: 32px;" />
-      </div>
-      <span style="font-size: 1.5rem; font-weight: bold; color: #007BFF; margin-left: 0.6rem;">FRIGOSERVICIOS</span>
-    </a>
+    <!-- Logo + texto con fondo blanco y bordes redondeados -->
+    <a routerLink="/admin"
+    style="
+      display: inline-flex;
+      align-items: center;
+      padding: 0.4rem 1rem;
+      background-color: white;
+      border-radius: 999px;
+      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      box-sizing: border-box;
+      outline: none;
+      margin-left: 1rem; /* 👈 Esto lo separa del botón */
+    "
+    onfocus="this.style.outline='none';"
+    onmousedown="this.style.outline='none';"
+    onmouseup="this.style.outline='none';"
+    onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 6px 12px rgba(0, 123, 255, 0.2)';"
+    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 10px rgba(0, 123, 255, 0.1)';">
+
+   <img src="https://frigoserviciosecuador.com/wp-content/uploads/2025/01/LOGO-FRIGOSERVICIOS2we3-1024x309.png"
+        alt="logo"
+        style="
+          height: 32px;
+          border-radius: 0.5rem;
+          margin-right: 0.8rem;
+          background: linear-gradient(135deg, #FF6B00, #007BFF);
+          padding: 0.2rem 0.5rem;
+          display: block;
+        " />
+
+   <span style="
+     font-size: 1.5rem;
+     font-weight: bold;
+     color: #007BFF;
+     white-space: nowrap;
+   ">
+     FRIGOSERVICIOS
+   </span>
+ </a>
+
+
   </div>
 
   <!-- Lado derecho: ícono de perfil y botón de menú emergente -->
@@ -40,8 +75,12 @@
       <i class="pi pi-bars text-xl"></i>
     </button>
 
-<!-- Menú emergente -->
-<p-menu #perfilMenu [popup]="true" [model]="perfilItems"></p-menu>
+    <!-- Menú emergente -->
+    <p-menu #perfilMenu [popup]="true" [model]="perfilItems"></p-menu>
+  </div>
+</div>
+
+
 
 <!-- Calendario visible -->
 <p-sidebar
@@ -57,15 +96,10 @@
 
 </p-sidebar>
 
-
-
-
-
 <!-- Calendario fijo personalizado -->
 <div
   *ngIf="calendarVisible"
-  class="fixed top-20 right-6 z-50 bg-white border border-gray-300 rounded-lg shadow-lg p-4 w-72"
->
+  class="fixed top-20 right-6 z-50 bg-white border border-gray-300 rounded-lg shadow-lg p-4 w-72">
   <p-calendar [(ngModel)]="selectedDate" [inline]="true" [showIcon]="true" [showButtonBar]="true"></p-calendar>
 
   <!-- Botón para cerrar -->
@@ -79,6 +113,7 @@
     </button>
   </div>
 </div>
+
 
 
 
