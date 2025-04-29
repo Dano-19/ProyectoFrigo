@@ -28,17 +28,21 @@ export class LoginComponent {
     password: new FormControl("", [Validators.required, Validators.minLength(6)])
   });
 
+  // ✅ Validación personalizada de contraseña
+  validPassword(password: string): boolean {
+    return password.length >= 6 && /[^A-Za-z0-9]/.test(password);
+  }
+
+  // ✅ Ingreso al sistema
   funIngresar() {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value || '';
 
-    // Validación de formato de correo
     if (!email || !email.includes('@')) {
       alert('El correo debe contener un @ válido');
       return;
     }
 
-    // Validación de dominio permitido
     const allowedDomains = ['@tecnico.com', '@admin.com', '@cliente.com'];
     const isDomainValid = allowedDomains.some(domain => email.endsWith(domain));
 
@@ -47,24 +51,21 @@ export class LoginComponent {
       return;
     }
 
-    // Validación de contraseña con carácter especial
     if (!this.validPassword(password)) {
       alert('La contraseña debe tener al menos 6 caracteres y un carácter especial.');
       return;
     }
 
-    // Reinicia los estados de error
     this.errorLogin = false;
     this.notRegistered = false;
 
-    // Lógica de login
     this.authService.loginConNest(this.loginForm.value).subscribe(
       (res) => {
         localStorage.setItem("access_token", res.token);
 
         this.messageService.add({
           severity: 'success',
-          summary: `¡Bienvenido, ${res.user?.username || 'usuario'}!`,
+          summary: `¡Bienvenido!`,
           detail: 'Redirigiendo a tu panel...',
           icon: 'pi pi-user',
           life: 2500
@@ -79,7 +80,6 @@ export class LoginComponent {
         if (error?.error?.message === 'Debes registrarte para poder ingresar') {
           this.notRegistered = true;
 
-          // Redirección automática al registro después de 4 segundos
           setTimeout(() => {
             this.router.navigate(['auth/register']);
           }, 4000);
@@ -90,12 +90,42 @@ export class LoginComponent {
     );
   }
 
-  validPassword(password: string): boolean {
-    return password.length >= 6 && /[^A-Za-z0-9]/.test(password);
-  }
-
-  // ✅ Redirección directa al registro desde botón
+  // ✅ Redirección al registro desde botón
   redirigirAlRegistro(): void {
     this.router.navigate(['auth/register']);
+  }
+
+  // ✅ Enviar contraseña por correo desde el botón "¿Olvidaste tu contraseña?"
+  onForgotPassword(): void {
+    const email = this.loginForm.get('email')?.value;
+
+    if (!email || !this.loginForm.get('email')?.valid) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Correo inválido',
+        detail: 'Por favor ingresa un correo válido para recuperar la contraseña.',
+        life: 3000
+      });
+      return;
+    }
+
+    this.authService.enviarPasswordPorCorreo(email).subscribe({
+      next: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Correo enviado',
+          detail: `Tu contraseña fue enviada a ${email}`,
+          life: 4000
+        });
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'No se pudo enviar la contraseña. Inténtalo más tarde.',
+          life: 4000
+        });
+      }
+    });
   }
 }

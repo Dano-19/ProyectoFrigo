@@ -7,16 +7,21 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-    constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-    @Post('register')
-    async registerUser(@Body() userObj: RegisterAuthDto) {
-        console.log(userObj);
-        return await this.authService.funRegister(userObj);
-    }
+  @Post('register')
+  async registerUser(@Body() userObj: RegisterAuthDto) {
+    return await this.authService.funRegister(userObj);
+  }
 
-    @Post('login')
-    async login(@Body() credenciales: LoginAuthDto) {
-        return await this.authService.login(credenciales);
-    }
+  @Post('login')
+  async login(@Body() credenciales: LoginAuthDto) {
+    return await this.authService.login(credenciales);
+  }
+
+  @Post('recuperar')
+  async recuperar(@Body('email') email: string) {
+    await this.authService.recuperarContraseña(email);
+    return { message: 'Correo de recuperación enviado correctamente' };
+  }
 }

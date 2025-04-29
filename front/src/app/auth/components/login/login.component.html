@@ -103,10 +103,16 @@
           <!-- Recordarme y olvido -->
           <div class="flex align-items-center justify-content-between mb-5 mt-4 gap-3">
             <label style="color: #444;">🔁 Recordarme</label>
-            <a class="font-medium no-underline text-right cursor-pointer" style="color: #007BFF;">¿Olvidaste tu contraseña?</a>
+            <a
+              class="font-medium no-underline text-right cursor-pointer"
+              style="color: #007BFF;"
+              (click)="onForgotPassword()"
+            >
+              ¿Olvidaste tu contraseña?
+            </a>
           </div>
 
-          <!-- No registrado -->
+          <!-- No registrado por error -->
           <div *ngIf="notRegistered" class="p-error text-center mb-3">
             Debes registrarte para continuar.
             <br />
@@ -114,7 +120,7 @@
               pButton
               label="Ir al registro"
               class="p-button-sm p-button-outlined p-button-info mt-2"
-              routerLink="/register"
+              (click)="redirigirAlRegistro()"
             ></button>
             <br />
             <span class="text-600 text-sm" style="color: #007BFF;">Redirigiendo automáticamente en 4 segundos...</span>
@@ -136,12 +142,21 @@
             [disabled]="!loginForm.valid || !validPassword(loginForm.get('password')?.value || '')"
           >
           </button>
+
+          <!-- ✅ Botón visible siempre para Registrarse -->
+          <div class="text-center mt-5">
+            <button
+              pButton
+              label="¿No tienes cuenta? Regístrate"
+              class="p-button-text p-button-primary"
+              (click)="redirigirAlRegistro()"
+              style="font-weight: bold; color: #007BFF; font-size: 1rem;"
+            >
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
-

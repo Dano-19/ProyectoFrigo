@@ -1,25 +1,24 @@
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private baseUrl=environment.urlServidor
-  private http=inject(HttpClient)
-  constructor() { }
+  private apiUrl = 'http://localhost:3000/auth'; // ✅ Cambia si tu backend está en otro host
 
-  loginConNest(credenciales:any)
-  {
-    return this.http.post<any>(`${this.baseUrl}/auth/login`,credenciales)
+  constructor(private http: HttpClient) {}
+
+  // ✅ Método para login
+  loginConNest(credentials: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, credentials);
   }
 
-  registroConNest(datos:any)
-  {
-    return this.http.post<any>(`${this.baseUrl}/register`, datos)
+  // ✅ Método para enviar contraseña por correo
+  enviarPasswordPorCorreo(email: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/recuperar`, { email });
   }
 }
-
 

@@ -24,6 +24,7 @@
     "migration:revert": "npm run typeorm migration:revert -- -d typeorm.config.ts"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.3.0",
     "@nestjs/core": "^10.0.0",
