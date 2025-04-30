@@ -3,9 +3,11 @@ import { ClienteService } from './cliente.service';
 import { ClienteController } from './cliente.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Cliente } from './entities/cliente.entity';
+import { AuthModule } from '../auth/auth.module';
+
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Cliente])],
+  imports:[AuthModule,TypeOrmModule.forFeature([Cliente])],
   controllers: [ClienteController],
   providers: [ClienteService],
 })

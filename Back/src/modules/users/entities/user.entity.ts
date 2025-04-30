@@ -1,4 +1,4 @@
-import { Persona } from "../../persona/entities/persona.entity";
+import { Role } from "../../common/enums/rol.enum";
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -15,6 +15,6 @@ export class User {
     @Column({type:'varchar', length:200})
     password:string;
 
-    @OneToOne(()=>Persona, persona=>persona.user,{cascade:true})
-    persona:Persona
+    @Column({type: 'enum', enum: Role, default: Role.CLIENT,})
+    role: Role
 }

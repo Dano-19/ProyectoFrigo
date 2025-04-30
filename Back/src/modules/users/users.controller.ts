@@ -7,8 +7,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 
 
-@UseGuards(JwtAuthGuard)
-@ApiBearerAuth()
+
 @ApiTags('usuario')
 @Controller('users')
 export class UsersController {
@@ -37,5 +36,11 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
+  }
+
+    
+  @Patch('mail/:email')
+  password(@Param('email') email: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.password(email, updateUserDto);
   }
 }

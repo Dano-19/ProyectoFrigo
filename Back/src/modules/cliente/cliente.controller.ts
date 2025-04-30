@@ -3,6 +3,9 @@ import { ClienteService } from './cliente.service';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Auth } from '../auth/decorators/auth.decorator';
+import { Role } from '../common/enums/rol.enum';
+import { JwtService } from '@nestjs/jwt';
 
 @ApiTags('cliente')
 
@@ -20,7 +23,7 @@ export class ClienteController {
     return this.clienteService.buscar(params.buscar)
   }
 
-
+  @Auth(Role.ADMIN)
   @Get()
   findAll() {
     return this.clienteService.findAll();
