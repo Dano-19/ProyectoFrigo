@@ -22,10 +22,17 @@ export class LoginComponent {
   errorLogin = false;
   notRegistered = false;
 
+  // Lista de roles disponibles
+  roles = [
+    { label: 'Tecnico', value: 'tecnico' },
+    { label: 'Cliente', value: 'cliente' }
+  ];
+
   // Formulario con validación
   loginForm = new FormGroup({
     email: new FormControl("", [Validators.email, Validators.required]),
-    password: new FormControl("", [Validators.required, Validators.minLength(6)])
+    password: new FormControl("", [Validators.required, Validators.minLength(6)]),
+    rol: new FormControl(null, Validators.required)
   });
 
   // ✅ Validación personalizada de contraseña
@@ -37,6 +44,7 @@ export class LoginComponent {
   funIngresar() {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value || '';
+    const rol = this.loginForm.get('rol')?.value;
 
     if (!email || !email.includes('@')) {
       alert('El correo debe contener un @ válido');
@@ -46,6 +54,11 @@ export class LoginComponent {
 
     if (!this.validPassword(password)) {
       alert('La contraseña debe tener al menos 6 caracteres y un carácter especial.');
+      return;
+    }
+
+    if (!rol) {
+      alert('Debes seleccionar un rol.');
       return;
     }
 
@@ -65,7 +78,7 @@ export class LoginComponent {
         });
 
         setTimeout(() => {
-          this.router.navigate(["/admin"]);
+          this.router.navigate(["/admin"]); // aquí podrías condicionar según el rol
         }, 2500);
       },
       (error) => {
