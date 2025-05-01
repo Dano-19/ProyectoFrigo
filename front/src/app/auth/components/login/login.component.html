@@ -21,16 +21,17 @@
     <!-- Tarjeta redondeada con sombra difusa -->
     <div
       style="
+        margin-top: 5rem;
         border-radius: 2.5rem;
-        padding: 0.5rem;
+        padding:  0.5rem;
         background: linear-gradient(180deg, #FF6B00 10%, rgba(0, 94, 255, 0.05) 40%);
         box-shadow: 0 15px 45px rgba(0, 94, 255, 0.15);
       "
     >
       <div class="w-full py-10 px-6 sm:px-10" style="border-radius: 2rem; background-color: white;">
 
-        <!-- LOGO con fondo decorativo (más abajo) -->
-        <div class="text-center mt-12 mb-6">
+        <!-- LOGO -->
+        <div class="text-center mb-6" style="margin-top: 1.rem; border-radius: 2.5rem; padding: 1.5rem;">
           <div
             style="
               background: linear-gradient(135deg, #FF6B00 20%, #007BFF 80%);
@@ -43,13 +44,13 @@
             <img
               src="https://frigoserviciosecuador.com/wp-content/uploads/2025/01/LOGO-FRIGOSERVICIOS2we3-1024x309.png"
               alt="Frigoservicios Logo"
-              style="max-height: 70px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));"
+              style="max-height: 70px;  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));"
             />
           </div>
         </div>
 
         <!-- Encabezado visual -->
-        <div class="text-center mb-6">
+        <div class="text-center mb-5">
           <div
             style="
               font-size: 2.5rem;
@@ -69,7 +70,7 @@
         <!-- Formulario -->
         <div [formGroup]="loginForm">
           <!-- Email -->
-          <label for="email1" class="block text-xl font-semibold mb-2 mt-2" style="color: #007BFF;">Correo electrónico</label>
+          <label for="email1" class="block text-xl font-semibold mb-5 mt-2" style="color: #007BFF;">Correo electrónico</label>
           <input
             id="email1"
             type="text"
@@ -87,7 +88,7 @@
           <label for="password1" class="block font-semibold text-xl mb-2 mt-4" style="color: #007BFF;">Contraseña</label>
           <p-password
             id="password1"
-            placeholder="Contraseña segura"
+            placeholder="Contraseña"
             formControlName="password"
             styleClass="mb-2"
             inputStyleClass="w-full p-3 md:w-30rem"
@@ -102,9 +103,9 @@
 
           <!-- Selección de rol -->
           <label for="rol" class="block text-xl font-semibold mb-2 mt-4" style="color: #007BFF;">Seleccionar rol</label>
-          <p-dropdown 
+          <p-dropdown
             inputId="rol"
-            [options]="roles" 
+            [options]="roles"
             formControlName="rol"
             placeholder="Selecciona un rol"
             optionLabel="label"
@@ -172,3 +173,5 @@
     </div>
   </div>
 </div>
+
+
