@@ -29,11 +29,11 @@
     >
       <div class="w-full py-10 px-6 sm:px-10" style="border-radius: 2rem; background-color: white;">
 
-        <!-- LOGO con fondo decorativo -->
-        <div class="text-center mb-6">
+        <!-- LOGO con fondo decorativo (más abajo) -->
+        <div class="text-center mt-12 mb-6">
           <div
             style="
-              background: linear-gradient(135deg, #00ff51 20%, #007BFF 80%);
+              background: linear-gradient(135deg, #FF6B00 20%, #007BFF 80%);
               padding: 1rem 2rem;
               display: inline-block;
               border-radius: 1.5rem;
@@ -99,6 +99,18 @@
           >
             La contraseña debe tener mínimo 6 caracteres y al menos un carácter especial.
           </small>
+
+          <!-- Selección de rol -->
+          <label for="rol" class="block text-xl font-semibold mb-2 mt-4" style="color: #007BFF;">Seleccionar rol</label>
+          <p-dropdown 
+            inputId="rol"
+            [options]="roles" 
+            formControlName="rol"
+            placeholder="Selecciona un rol"
+            optionLabel="label"
+            class="w-full md:w-30rem mb-2"
+            [style]="{ 'border-radius': '1rem', 'background-color': '#f9f9f9' }"
+          ></p-dropdown>
 
           <!-- Recordarme y olvido -->
           <div class="flex align-items-center justify-content-between mb-5 mt-4 gap-3">
