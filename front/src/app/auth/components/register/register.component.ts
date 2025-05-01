@@ -12,11 +12,9 @@ import { MessageService } from 'primeng/api';
 export class RegisterComponent {
   formData = {
     name: '',
-    apellido: '',
     username: '',
     email: '',
-    password: '',
-    rol: ''
+    password: ''
   };
 
   constructor(
@@ -29,19 +27,7 @@ export class RegisterComponent {
     const email = this.formData.email;
     const password = this.formData.password;
 
-    // Validación de correo
-    if (!this.validEmail(email)) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Correo inválido',
-        detail: 'Solo se permiten correos con los dominios @tecnico.com, @admin.com o @cliente.com',
-        life: 3000
-      });
-      return;
-    }
-
-    // Asignar rol por dominio
-    this.formData.rol = this.obtenerRolPorEmail(email);
+   
 
     // Validación de contraseña
     if (!this.validPassword(password)) {
@@ -54,6 +40,7 @@ export class RegisterComponent {
       return;
     }
 
+    console.log(this.formData)
     // Envío al backend
     this.http.post('http://localhost:3000/auth/register', this.formData).subscribe({
       next: () => {
@@ -81,19 +68,11 @@ export class RegisterComponent {
     });
   }
 
-  validEmail(email: string): boolean {
-    const allowedDomains = ['@tecnico.com', '@admin.com', '@cliente.com'];
-    return email.includes('@') && allowedDomains.some(domain => email.endsWith(domain));
-  }
+  
 
   validPassword(password: string): boolean {
     return password.length >= 6 && /[^A-Za-z0-9]/.test(password);
   }
 
-  obtenerRolPorEmail(email: string): string {
-    if (email.endsWith('@tecnico.com')) return 'tecnico';
-    if (email.endsWith('@admin.com')) return 'admin';
-    if (email.endsWith('@cliente.com')) return 'cliente';
-    return 'desconocido';
-  }
+ 
 }

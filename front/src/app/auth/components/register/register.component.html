@@ -139,10 +139,6 @@
             "
             onmouseover="this.style.background='linear-gradient(90deg,#ff9100,#ff6b00)'"
             onmouseout="this.style.background='linear-gradient(90deg,#ff6b00,#ff9100)'"
-            [disabled]="
-              !registerForm.form.valid ||
-              !validEmail(formData.email) ||
-              !validPassword(formData.password)"
           ></button>
         </form>
       </div>

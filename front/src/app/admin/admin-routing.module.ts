@@ -17,32 +17,32 @@ const routes: Routes = [
       {
         path: "perfil",
         component: PerfilComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard("admin")]
       },
       {
         path: "categoria",
         component: CategoriaComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard("technical")]
       },
       {
         path: "producto",
         component: ProductoComponent,
-        canActivate: [authGuard]
+        canActivate:[authGuard("technical")]
       },
       {
         path: "pedido/nuevo",
         component: NuevoPedidoComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard("admin")]
       },
       {
         path: "pedido",
         component: ListaPedidoComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard("admin")]
       },
       {
         path: "tickets", // 👈 Ruta añadida
         component: TicketsComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard("admin")]
       }
     ]
   }
