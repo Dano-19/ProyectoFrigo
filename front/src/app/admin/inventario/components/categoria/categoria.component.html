@@ -17,12 +17,12 @@
         border-bottom: 3px solid #ffa366;
         padding-bottom: 0.5rem;
         text-transform: uppercase;
-    ">Categoria</h1>
+    ">Formulario</h1>
 
-    <p-button (onClick)="mostrarDialog()" label="Nueva Categoria"></p-button>
+    <p-button (onClick)="mostrarDialog()" label="Nuevo Formulario"></p-button>
 
     <p-dialog
-        header="Categoria"
+        header="Formulario"
         [(visible)]="dialog_visible"
         [modal]="true"
         [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
@@ -33,18 +33,55 @@
         style="border-radius: 1rem;">
 
         <form [formGroup]="categoriaForm">
+            <!-- Fecha -->
             <div class="field" style="margin-bottom: 1rem;">
-                <label for="name" style="font-weight: 600; color: #007acc;">Nombre</label>
-                <input type="text" pInputText id="name" required autofocus formControlName="nombre"
-                       style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
-                <small class="ng-dirty ng-invalid" style="color: #cc3300;">El campo nombre es obligatorio.</small>
+                <label for="fecha" style="font-weight: 600; color: #007acc;">Fecha</label>
+                <input type="date" pInputText id="fecha" formControlName="fecha" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
             </div>
-
+        
+            <!-- Area -->
             <div class="field" style="margin-bottom: 1rem;">
-                <label for="det" style="font-weight: 600; color: #007acc;">Detalle</label>
-                <input type="text" pInputText id="det" required formControlName="detalle"
-                       style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+                <label for="area" style="font-weight: 600; color: #007acc;">Área</label>
+                <input type="text" pInputText id="area" formControlName="area" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
             </div>
+        
+            <!-- Marca -->
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="marca" style="font-weight: 600; color: #007acc;">Marca</label>
+                <input type="text" pInputText id="marca" formControlName="marca" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+            </div>
+        
+            <!-- Modelo -->
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="modelo" style="font-weight: 600; color: #007acc;">Modelo</label>
+                <input type="text" pInputText id="modelo" formControlName="modelo" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+            </div>
+        
+            <!-- Tipo -->
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="tipo" style="font-weight: 600; color: #007acc;">Tipo</label>
+                <input type="text" pInputText id="tipo" formControlName="tipo" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+            </div>
+        
+            <!-- Descripción de Trabajo -->
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="descripcionTrabajo" style="font-weight: 600; color: #007acc;">Descripción de Trabajo</label>
+                <textarea type="descripcionTrabajo" pInputTextarea formControlName="descripcionTrabajo" style="border: 1px solid #ffa366; border-radius: 0.5rem;" rows="3"></textarea>
+            </div>
+        
+            <!-- Cantidad y Materiales -->
+            <div class="field" style="margin-bottom: 1rem; display: flex;">
+                <div style="width: 50%; padding-right: 10px;">
+                    <label for="cantidad" style="font-weight: 600; color: #007acc;">Cantidad</label>
+                    <input type="number" pInputText id="cantidad" formControlName="cantidad" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+                </div>
+                <div style="width: 50%; padding-left: 10px;">
+                    <label for="materiales" style="font-weight: 600; color: #007acc;">Materiales</label>
+                    <input type="text" pInputText id="materiales" formControlName="materiales" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+                </div>
+            </div>
+        
+            <!-- Submit Button -->
         </form>
 
         <ng-template pTemplate="footer">
@@ -59,9 +96,15 @@
         <ng-template pTemplate="header">
             <tr style="background-color: #007acc; color: white;">
                 <th style="padding: 0.75rem;">ID</th>
-                <th style="padding: 0.75rem;">NOMBRE</th>
-                <th style="padding: 0.75rem;">DETALLE</th>
-                <th style="padding: 0.75rem;">ACCIONES</th>
+                <th style="padding: 0.75rem;">Fecha</th>
+                <th style="padding: 0.75rem;">Área</th>
+                <th style="padding: 0.75rem;">Marca</th>
+                <th style="padding: 0.75rem;">Modelo</th>
+                <th style="padding: 0.75rem;">Tipo</th>
+                <th style="padding: 0.75rem;">Descripción Trabajo</th>
+                <th style="padding: 0.75rem;">Cantidad</th>
+                <th style="padding: 0.75rem;">Materiales</th>
+                <th style="padding: 0.75rem;">Acciones</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-categoria>
@@ -69,8 +112,14 @@
                 onmouseover="this.style.backgroundColor='#ffe5cc'"
                 onmouseout="this.style.backgroundColor='#ffffff'">
                 <td style="padding: 0.75rem;">{{ categoria.id }}</td>
-                <td style="padding: 0.75rem;">{{ categoria.nombre }}</td>
-                <td style="padding: 0.75rem;">{{ categoria.detalle }}</td>
+                <td style="padding: 0.75rem;">{{ categoria.fecha }}</td>
+                <td style="padding: 0.75rem;">{{ categoria.area }}</td>
+                <td style="padding: 0.75rem;">{{ categoria.marca }}</td>
+                <td style="padding: 0.75rem;">{{ categoria.modelo }}</td>
+                <td style="padding: 0.75rem;">{{ categoria.tipo }}</td>
+                <td style="padding: 0.75rem;">{{ categoria.descripcionTrabajo }}</td>
+                <td style="padding: 0.75rem;">{{ categoria.cantidad }}</td>
+                <td style="padding: 0.75rem;">{{ categoria.materiales }}</td>
                 <td style="padding: 0.75rem;">
                     <div class="flex" style="gap: 0.5rem;">
                         <button pButton pRipple icon="pi pi-pencil"
@@ -88,31 +137,4 @@
             </tr>
         </ng-template>
     </p-table>
-
-    <ul style="margin-top: 2rem; color: #003366;">
-        @for (cat of categorias; track $index) {
-            <li style="margin-bottom: 0.5rem;">🟠 <strong>{{cat.nombre}}</strong> - {{cat.detalle}}</li>
-        }
-    </ul>
-
-    <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 2rem; font-size: 0.95rem;">
-        <thead style="background-color: #ffa366; color: white;">
-            <tr>
-                <th style="padding: 0.5rem;">ID</th>
-                <th style="padding: 0.5rem;">NOMBRE</th>
-                <th style="padding: 0.5rem;">DETALLE</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (cat of categorias; track $index) {
-                <tr style="background-color: #ffffff;"
-                    onmouseover="this.style.backgroundColor='#e6f0ff'"
-                    onmouseout="this.style.backgroundColor='#ffffff'">
-                    <td style="padding: 0.5rem;">{{cat.id}}</td>
-                    <td style="padding: 0.5rem;">{{cat.nombre}}</td>
-                    <td style="padding: 0.5rem;">{{cat.detalle}}</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+    

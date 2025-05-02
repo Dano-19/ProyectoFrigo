@@ -17,15 +17,15 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Administración',
                 items: [
-                    { label: 'Admin', icon: 'pi pi-fw pi-home', routerLink: ['/admin'] },
+                    { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['/admin'] },
                     { label: 'Perfil', icon: 'pi pi-fw pi-user', routerLink: ['/admin/perfil'] }
                 ]
             },
             {
                 label: 'Inventario',
                 items: [
-                    { label: 'Categoría', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/categoria'] },
-                    { label: 'Producto', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/producto'] },
+                    { label: 'Formulario', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/categoria'] },
+                    { label: 'Materiales', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/producto'] },
 
                 ]
             },
