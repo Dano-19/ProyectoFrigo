@@ -1,31 +1,32 @@
+// src/app/producto/dto/create-producto.dto.ts
 import { IsBoolean, IsDecimal, IsInt, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateProductoDto {
-    @IsString()
-    @IsNotEmpty()
-    nombre:string;
+  @IsString()
+  @IsNotEmpty()
+  nombre: string;
 
-    @IsDecimal({decimal_digits:'2'})
-    @IsNotEmpty()
-    precio:number;
+  @IsOptional()
+  @IsDecimal({ decimal_digits: '2' })
+  precio?: number;
 
-    @IsInt()
-    @IsNotEmpty()
-    stock:number;
+  @IsOptional()
+  @IsInt()
+  stock?: number;
 
-    @IsOptional()
-    @IsString()
-    imagen?:string;
+  @IsOptional()
+  @IsString()
+  imagen?: string;
 
-    @IsOptional()
-    @IsString()
-    descripcion:string;
+  @IsOptional()
+  @IsString()
+  descripcion?: string;
 
-    @IsOptional()
-    @IsBoolean()
-    estado?: boolean;
+  @IsOptional()
+  @IsBoolean()
+  estado?: boolean;
 
-    @IsInt()
-    @IsNotEmpty()
-    categoriaId:number;
+  @IsOptional()
+  @IsInt()
+  categoriaId?: number;
 }

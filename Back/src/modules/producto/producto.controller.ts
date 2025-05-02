@@ -85,16 +85,7 @@ export class ProductoController {
     })
   }))
 
-  uploadFile(@UploadedFile(new ParseFilePipe({
-    validators:[
-      new FileTypeValidator({fileType: '.(png|jpeg|jpg)'}),
-      new MaxFileSizeValidator({maxSize: 1024*1024*4})
-    ]
-  })) file: Express.Multer.File, @Param() paramas) {
-    console.log(file);
-
-    return this.productoService.uploadImagen(file,paramas.id)
-  }
+ 
 
   @Get('file/:img')
   getArchivosFile(@Param('img') imagen, @Res() res){

@@ -38,11 +38,5 @@ export class ProductoService {
     return this.productoRepository.delete(id);
   }
 
-  uploadImagen(file: Express.Multer.File, id:any){
-    const prod=this.productoRepository.findOne({
-      where:{id:id}
-    })
-
-    return this.productoRepository.update({id:id},{image: file.filename})
-  }
+  
 }

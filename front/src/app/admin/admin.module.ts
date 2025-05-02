@@ -27,7 +27,7 @@ import { TecnicoComponent } from './tecnico/tecnico.component';
     AdminRoutingModule,
     AppLayoutModule,
     TableModule,
-    InventarioModule,
+    //InventarioModule,
     PedidoModule,
     MenuModule,
     ButtonModule,

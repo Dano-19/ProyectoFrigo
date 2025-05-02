@@ -1,17 +1,26 @@
-import { Producto } from "../../producto/entities/producto.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+// src/modules/categoria/entities/categoria.entity.ts
+
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany
+} from 'typeorm';
+import { Producto } from '../../producto/entities/producto.entity';
+
+@Entity('categoria')  // Ajuste: usar el nombre real de tu tabla en singular
 export class Categoria {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({type: 'varchar', length:50})
-    nombre:string;
+  @Column()
+  nombre: string;
 
-    @Column({type: 'text', nullable:true})
-    detalle:string;
+  @Column({ type: 'text', nullable: true })
+  detalle: string | null;
 
-    @OneToMany(()=>Producto,(prod)=>prod.categoria)
-    producto:Producto[]
+  @OneToMany(() => Producto, producto => producto.categoria)
+  productos: Producto[];
 }
+

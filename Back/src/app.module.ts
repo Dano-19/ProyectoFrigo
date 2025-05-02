@@ -28,7 +28,9 @@ import { TecnicoModule } from './modules/tecnico/tecnico.module';
 
     // ✅ MailerModule usando variables de entorno
     MailerModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [ConfigModule,
+        
+      ],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         transport: {
