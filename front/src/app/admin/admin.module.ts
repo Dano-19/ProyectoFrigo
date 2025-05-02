@@ -10,16 +10,17 @@ import { TableModule } from 'primeng/table';
 import { InventarioModule } from './inventario/inventario.module';
 import { ProductoService } from './inventario/services/producto.service';
 import { PedidoModule } from './pedido/pedido.module';
-
-// ✅ Importaciones necesarias para <p-menu>
 import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TecnicoComponent } from './tecnico/tecnico.component';
 
 @NgModule({
   declarations: [
     ClienteComponent,
     PerfilComponent,
-    LayoutComponent
+    LayoutComponent,
+    TecnicoComponent
   ],
   imports: [
     CommonModule,
@@ -28,8 +29,9 @@ import { ButtonModule } from 'primeng/button';
     TableModule,
     InventarioModule,
     PedidoModule,
-    MenuModule,       // ✅ Importado aquí
-    ButtonModule      // ✅ Botón con ícono para mostrar el menú
+    MenuModule,
+    ButtonModule,
+    ReactiveFormsModule
   ],
   providers: [
     CategoriaService,

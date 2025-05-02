@@ -8,6 +8,7 @@ import { NuevoPedidoComponent } from './pedido/components/nuevo-pedido/nuevo-ped
 import { ListaPedidoComponent } from './pedido/components/lista-pedido/lista-pedido.component';
 import { authGuard } from '../guards/auth.guard';
 import { TicketsComponent } from './tickets/tickets.component'; // 👈 Importación del componente
+import { TecnicoComponent } from './tecnico/tecnico.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,10 @@ const routes: Routes = [
         path: "tickets", // 👈 Ruta añadida
         component: TicketsComponent,
         canActivate: [authGuard("admin")]
+      },
+      {
+        path: "tecnicos",
+        component: TecnicoComponent
       }
     ]
   }

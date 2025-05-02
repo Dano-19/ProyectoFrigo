@@ -17,6 +17,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'; // ✅ Config
 import { MailerModule } from '@nestjs-modules/mailer';        // ✅ Mailer
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
+import { TecnicoModule } from './modules/tecnico/tecnico.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { join } from 'path';
     ClienteModule,
     PedidoModule,
     TicketsModule,
+    TecnicoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
