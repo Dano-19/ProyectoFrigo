@@ -15,11 +15,11 @@ export class Categoria {
     area: string;
 
     // Marca: Se usa 'varchar' con longitud definida (50 caracteres)
-    @Column({ type: 'varchar', length: 50 })
+    @Column({ type: 'text', nullable: false })
     Marca: string;
 
     // Modelo: Se usa 'varchar' con longitud definida (50 caracteres)
-    @Column({ type: 'varchar', length: 50 })
+    @Column({ type: 'varchar', nullable: true })
     Modelo: string;
 
     // Tipo: Se usa 'varchar' con longitud definida (50 caracteres)
