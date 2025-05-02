@@ -15,9 +15,9 @@ export class CategoriaService {
   async create(createCategoriaDto: CreateCategoriaDto) {
     const categoria = new Categoria();
 
-    // Validación y asignación de 'Fecha'
+    // Asignación de 'Fecha' con formato ISO
     const fecha = new Date(createCategoriaDto.Fecha);
-    categoria.fecha = isNaN(fecha.getTime()) ? new Date() : fecha; // Asignar la fecha actual si la fecha no es válida
+    categoria.fecha = !isNaN(fecha.getTime()) ? fecha : new Date(); // Asignar la fecha actual si no es válida
 
     // Asignación directa de los demás campos
     categoria.area = createCategoriaDto.area;
@@ -43,32 +43,36 @@ export class CategoriaService {
 
   // Método para obtener una categoría por su ID
   async findOne(id: number) {
-    return await this.categoriaRepository.findOne({
-      where: {
-        id: id,
-      },
+    const categoria = await this.categoriaRepository.findOne({
+      where: { id: id },
     });
+    if (!categoria) {
+      throw new Error('Categoría no encontrada');
+    }
+    return categoria;
   }
 
   // Método para actualizar una categoría
   async update(id: number, updateCategoriaDto: UpdateCategoriaDto) {
+    const categoria = await this.findOne(id);  // Verificar que la categoría exista
+
+    // Actualización de campos
     const updateData: Partial<Categoria> = {
       ...updateCategoriaDto,
+      // Se puede agregar lógica extra de actualización si es necesario
+      Cantidad: isNaN(Number(updateCategoriaDto.Cantidad)) 
+        ? 0 
+        : Number(updateCategoriaDto.Cantidad),  // Convertir a número si es necesario
     };
 
-    // Validación y conversión de 'Cantidad' a número, si está presente en los datos de actualización
-    if (updateCategoriaDto.Cantidad !== undefined) {
-      updateData.Cantidad = isNaN(Number(updateCategoriaDto.Cantidad)) 
-        ? 0 
-        : Number(updateCategoriaDto.Cantidad);  // Convertir a número
-    }
-
     // Actualizar la categoría en la base de datos
-    return await this.categoriaRepository.update(id, updateData);
+    await this.categoriaRepository.update(id, updateData);
+    return this.findOne(id);  // Retornar la categoría actualizada
   }
 
   // Método para eliminar una categoría
   async remove(id: number) {
+    const categoria = await this.findOne(id);  // Verificar que la categoría exista
     return await this.categoriaRepository.delete(id);
   }
 }

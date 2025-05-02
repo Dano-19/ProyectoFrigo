@@ -1,36 +1,44 @@
-import { PedidoProducto } from "../../pedido/entities/pedidoproducto.entity";
-import { Categoria } from "../../categoria/entities/categoria.entity";
-import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+// src/modules/producto/entities/producto.entity.ts
 
-@Entity('productos')
-export class Producto {
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    OneToMany,
+    JoinColumn
+  } from 'typeorm';
+  import { Categoria } from '../../categoria/entities/categoria.entity';
+  import { PedidoProducto } from '../../pedido/entities/pedidoproducto.entity';
+  
+  @Entity('productos')
+  export class Producto {
     @PrimaryGeneratedColumn()
-    id:number;
-
-    @Column({type: 'varchar', length:250})
-    nombre:string;
-
-    @Column({type: 'decimal', precision:10, scale:2})
-    precio:number;
-
-    @Column({type: 'int'})
-    stock:number;
-
-    @Column({type: 'varchar', length:250, nullable:true})
-    image:string;
-
-    @Column({type: 'text', nullable:true})
-    descripcion:string;
-
-    @Column({type: 'boolean', default:true})
-    estado:boolean;
-
+    id: number;
+  
     @Column()
-    categoriaId: Number;
-
-    @ManyToOne(()=>Categoria, (cat)=>cat.producto)
-    categoria: Categoria;
-
-    @ManyToMany(()=>PedidoProducto, predprod => predprod.producto)
-    pedidoProducto: PedidoProducto[];
-}
+    nombre: string;
+  
+    @Column('decimal', { precision: 10, scale: 2, default: 0 })
+    precio: number;
+  
+    @Column('int', { default: 0 })
+    stock: number;
+  
+    @Column({ type: 'text', nullable: true })
+    descripcion: string | null;
+  
+    @ManyToOne(() => Categoria, c => c.productos, {
+      nullable: true,
+      onDelete: 'SET NULL'
+    })
+    @JoinColumn({ name: 'categoriaId' })
+    categoria: Categoria | null;
+  
+    @Column({ type: 'int', nullable: true })
+    categoriaId: number | null;
+  
+    @OneToMany(() => PedidoProducto, pp => pp.producto)
+    pedidoProductos: PedidoProducto[];
+  }
+  

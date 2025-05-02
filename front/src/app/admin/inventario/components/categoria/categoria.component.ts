@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CategoriaService } from '../../services/categoria.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 interface Categoria {
@@ -29,20 +29,30 @@ export class CategoriaComponent implements OnInit {
   categorias: Categoria[] = [];
   dialog_visible: boolean = false;
   categoria_id: number = -1;
+  isSaving: boolean = false;  // Variable para controlar el estado de los botones
 
   categoriaForm = new FormGroup({
-    fecha: new FormControl(''),
-    area: new FormControl(''),
-    marca: new FormControl(''),
-    modelo: new FormControl(''),
-    tipo: new FormControl(''),
-    descripcionTrabajo: new FormControl(''),
-    cantidad: new FormControl(''),
-    materiales: new FormControl('')
+    fecha: new FormControl('', [Validators.required, this.dateValidator]),
+    area: new FormControl('', Validators.required),
+    marca: new FormControl('', Validators.required),
+    modelo: new FormControl('', Validators.required),
+    tipo: new FormControl('', Validators.required),
+    descripcionTrabajo: new FormControl('', Validators.required),
+    cantidad: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
+    materiales: new FormControl('', Validators.required)
   });
 
   ngOnInit(): void {
     this.getCategorias();
+  }
+
+  // Validador personalizado para la fecha
+  dateValidator(control: AbstractControl): ValidationErrors | null {
+    const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/; // Formato dd/mm/yyyy
+    if (control.value && !dateRegex.test(control.value)) {
+      return { invalidDate: true };
+    }
+    return null;
   }
 
   getCategorias() {
@@ -61,40 +71,61 @@ export class CategoriaComponent implements OnInit {
   }
 
   guardarCategoria() {
+    // Verifica si el formulario es inválido
     if (this.categoriaForm.invalid) {
       this.alerta("ERROR AL REGISTRAR", "Por favor complete todos los campos", "error");
       return;
     }
-
+  
+    const categoriaData = this.categoriaForm.value;
+    console.log("Datos a enviar al backend:", categoriaData);  // Verifica los valores antes de enviarlos
+  
+    // Si la fecha es válida, la convertimos a formato ISO para el backend
+    if (categoriaData['fecha']) {
+      categoriaData['fecha'] = new Date(categoriaData['fecha']).toISOString();
+    }
+  
+    // Iniciar el proceso de guardado
+    this.isSaving = true;
+  
+    // Si la categoría tiene un ID mayor a 0, significa que estamos modificando una categoría existente
     if (this.categoria_id > 0) {
-      this.categoriaService.funModificar(this.categoria_id, this.categoriaForm.value).subscribe(
+      this.categoriaService.funModificar(this.categoria_id, categoriaData).subscribe(
         (res: any) => {
+          console.log("Respuesta de modificación:", res);
+          this.isSaving = false;
           this.dialog_visible = false;
-          this.getCategorias(); // Refresh categories list after modification
-          this.categoria_id = -1;
+          this.getCategorias();  // Refrescar la lista de categorías después de modificar
+          this.categoria_id = -1;  // Restablecer el ID
           this.alerta("ACTUALIZADO", "La categoría se modificó con éxito!", "success");
         },
         (error: any) => {
+          console.error("Error al modificar:", error);
+          this.isSaving = false;
           this.alerta("ERROR AL ACTUALIZAR", "Verifica los datos!", "error");
         }
       );
     } else {
-      this.categoriaService.funGuardar(this.categoriaForm.value).subscribe(
+      // Si no hay ID, significa que estamos creando una nueva categoría
+      this.categoriaService.funGuardar(categoriaData).subscribe(
         (res: any) => {
+          console.log("Respuesta de guardado:", res);
+          this.isSaving = false;
           this.dialog_visible = false;
-          this.getCategorias(); // Fetch updated list after saving new category
+          this.getCategorias();  // Obtener lista actualizada después de guardar la nueva categoría
           this.alerta("REGISTRADO", "La categoría se creó con éxito!", "success");
         },
         (error: any) => {
+          console.error("Error al guardar:", error);
+          this.isSaving = false;
           this.alerta("ERROR AL REGISTRAR", "Verifica los datos!", "error");
         }
       );
     }
-
-    // Reset form after submission
+  
+    // Resetear el formulario después de la operación
     this.categoriaForm.reset();
-}
-
+  }
 
   editarCategoria(cat: Categoria) {
     this.dialog_visible = true;
@@ -129,7 +160,7 @@ export class CategoriaComponent implements OnInit {
             this.categoria_id = -1;
           },
           (error: any) => {
-            this.alerta("ERROR!", "Error al intentar eliminar. ", "error");
+            this.alerta("ERROR!", "Error al intentar eliminar.", "error");
           }
         );
       }

@@ -1,99 +1,93 @@
-import { Component, inject } from '@angular/core';
-import { ProductoService } from '../../services/producto.service';
-import { UploadEvent } from 'primeng/fileupload';
-import { FileUploadHandlerEvent } from 'primeng/fileupload';
+// src/app/admin/inventario/components/producto/producto.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { TableLazyLoadEvent } from 'primeng/table';
+import { ProductoService, Producto } from '../../services/producto.service';
 
 @Component({
   selector: 'app-producto',
   templateUrl: './producto.component.html',
-  styleUrl: './producto.component.scss'
+  styleUrls: ['./producto.component.scss']
 })
-export class ProductoComponent {
+export class ProductoComponent implements OnInit {
+  products: Producto[] = [];
+  loading = false;
+  totalRecords = 0;
+  buscador = '';
 
-  private productoService = inject(ProductoService)
+  visible = false;
+  isEdit = false;
+  editId: number | null = null;
+  nuevoMaterial: Partial<Producto> = {};
 
-  loading:boolean=false;
-  totalRecords!:number;
-  buscador:string='';
-  visible:boolean=false;
-  producto_id:number=-1;
-  products: any[] = [];
-  cols: any[] = [];
-  uploadedFiles:any[]=[];
+  // ← Agregado: lista de formularios para el p-dropdown
+  formularios = [
+    { name: 'Formulario A', code: 'FA' },
+    { name: 'Formulario B', code: 'FB' },
+    { name: 'Formulario C', code: 'FC' }
+  ];
 
+  selectedProduct: Producto | null = null;
 
-  categorias: any = [
-    { name: 'Ropa Dama', code: 'RD' },
-    { name: 'Ropa Caballero', code: 'RC' },
-    { name: 'Herramientas', code: 'He' },
-    { name: 'Tecnologia', code: 'Tec' },
-    { name: 'Hogar', code: 'Hgr' }
-  ]
+  constructor(private productoService: ProductoService) {}
 
-  constructor() {
-    this.productoService.funListar().subscribe(
-      (res: any) => {
-        this.products = res.data
-      }
-    )
+  ngOnInit(): void {
+    this.loadProductos({ first: 0, rows: 10 } as TableLazyLoadEvent);
   }
 
-  loadProductos(event:any){
-    let page=(event.first/event.rows)+1
-    this.listar(page,event.rows)
-    console.log(event)
+  loadProductos(event: TableLazyLoadEvent) {
+    this.loading = true;
+    const first = event.first ?? 0;
+    const rows  = event.rows  ?? 10;
+    const page  = first / rows + 1;
+
+    this.productoService
+      .funListar(page, rows, this.buscador)
+      .subscribe((res: any) => {
+        this.products     = res.data;
+        this.totalRecords = res.total;
+        this.loading      = false;
+      });
   }
 
-  listar(page=1, limit=10){
-    this.productoService.funListar(page,limit, this.buscador).subscribe(
-      (res:any)=>{
-        this.products=res.data;
-        this.totalRecords=res.total;
-        this.loading=false;
-      }
-    )
-  }
   buscar(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      this.listar();
-    } else if (this.buscador === '') {
-      this.listar(); 
+    if (event.key === 'Enter' || !this.buscador) {
+      this.loadProductos({ first: 0, rows: 10 } as TableLazyLoadEvent);
     }
   }
 
-  
-
   openNew() {
-
+    this.isEdit        = false;
+    this.editId        = null;
+    this.nuevoMaterial = {};
+    this.visible       = true;
   }
 
-  editProduct(prod: any) {
-
+  onEditButton() {
+    if (!this.selectedProduct) return;
+    this.isEdit        = true;
+    this.editId        = this.selectedProduct.id!;
+    this.nuevoMaterial = { ...this.selectedProduct };
+    this.visible       = true;
   }
 
-  deleteProduct(prod: any) {
-
+  onDeleteButton() {
+    if (!this.selectedProduct) return;
+    this.productoService.eliminar(this.selectedProduct.id!).subscribe(() => {
+      this.selectedProduct = null;
+      this.loadProductos({ first: 0, rows: 10 } as TableLazyLoadEvent);
+    });
   }
 
-  subirImagen(event:any){
-    console.log(event.files[0])
-    let formData=new FormData();
-    formData.append("imagen", event.files[0])
+  guardarMaterial() {
+    const action$ = (this.isEdit && this.editId != null)
+      ? this.productoService.actualizar(this.editId, this.nuevoMaterial)
+      : this.productoService.crear(this.nuevoMaterial as Producto);
 
-    this.productoService.actualizarImagen(formData, this.producto_id).subscribe(
-      (res:any)=>{
-        console.log(res);
-        this.visible=false;
-        this.producto_id=-1;
-        this.listar();
-      }
-    )
+    action$.subscribe(() => {
+      this.visible         = false;
+      this.selectedProduct = null;
+      this.loadProductos({ first: 0, rows: 10 } as TableLazyLoadEvent);
+    });
   }
-
-  openDialogImagen(id:number){
-    this.visible=true
-    this.producto_id=id
-  }
-
-
 }

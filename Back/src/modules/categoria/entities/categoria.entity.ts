@@ -1,25 +1,32 @@
-import { Producto } from "../../producto/entities/producto.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+// src/modules/categoria/entities/categoria.entity.ts
+
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany
+} from 'typeorm';
+import { Producto } from '../../producto/entities/producto.entity';
+
+@Entity('categoria')  // Ajuste: usar el nombre real de tu tabla en singular
 export class Categoria {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    // Fecha: No necesita 'length' con tipo 'date'
-    @Column({ type: 'date' })
-    fecha: Date;
+  @Column()
+  nombre: string;
 
     // Área: Usando tipo 'text' está bien si es un campo largo opcional
     @Column({ type: 'text', nullable: true })
     area: string;
 
     // Marca: Se usa 'varchar' con longitud definida (50 caracteres)
-    @Column({ type: 'text', nullable: false })
+    @Column({ type: 'varchar', length: 50 })
     Marca: string;
 
     // Modelo: Se usa 'varchar' con longitud definida (50 caracteres)
-    @Column({ type: 'varchar', nullable: true })
+    @Column({ type: 'varchar', length: 50 })
     Modelo: string;
 
     // Tipo: Se usa 'varchar' con longitud definida (50 caracteres)
@@ -45,4 +52,6 @@ export class Categoria {
     // Relación uno a muchos con Producto
     @OneToMany(() => Producto, (prod) => prod.categoria)
     producto: Producto[];
+  fecha: Date;
 }
+

@@ -19,7 +19,7 @@
         text-transform: uppercase;
     ">Formulario</h1>
 
-    <p-button (onClick)="mostrarDialog()" label="Nuevo Formulario"></p-button>
+    <p-button (onClick)="mostrarDialog()" label="Nuevo Formulario" class="p-button-success"></p-button>
 
     <p-dialog
         header="Formulario"
@@ -36,62 +36,87 @@
             <!-- Fecha -->
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="fecha" style="font-weight: 600; color: #007acc;">Fecha</label>
-                <input type="date" pInputText id="fecha" formControlName="fecha" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+                <input type="date" pInputText id="fecha" formControlName="fecha" class="input-field" />
+                <div *ngIf="categoriaForm.get('fecha')?.invalid && categoriaForm.get('fecha')?.touched" class="error-message">
+                    Fecha es obligatoria y debe tener el formato correcto.
+                </div>
             </div>
-        
+
             <!-- Area -->
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="area" style="font-weight: 600; color: #007acc;">Área</label>
-                <input type="text" pInputText id="area" formControlName="area" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+                <input type="text" pInputText id="area" formControlName="area" class="input-field" />
+                <div *ngIf="categoriaForm.get('area')?.invalid && categoriaForm.get('area')?.touched" class="error-message">
+                    El área es obligatoria.
+                </div>
             </div>
-        
+
             <!-- Marca -->
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="marca" style="font-weight: 600; color: #007acc;">Marca</label>
-                <input type="text" pInputText id="marca" formControlName="marca" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+                <input type="text" pInputText id="marca" formControlName="marca" class="input-field" />
+                <div *ngIf="categoriaForm.get('marca')?.invalid && categoriaForm.get('marca')?.touched" class="error-message">
+                    La marca es obligatoria.
+                </div>
             </div>
-        
+
             <!-- Modelo -->
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="modelo" style="font-weight: 600; color: #007acc;">Modelo</label>
-                <input type="text" pInputText id="modelo" formControlName="modelo" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+                <input type="text" pInputText id="modelo" formControlName="modelo" class="input-field" />
+                <div *ngIf="categoriaForm.get('modelo')?.invalid && categoriaForm.get('modelo')?.touched" class="error-message">
+                    El modelo es obligatorio.
+                </div>
             </div>
-        
+
             <!-- Tipo -->
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="tipo" style="font-weight: 600; color: #007acc;">Tipo</label>
-                <input type="text" pInputText id="tipo" formControlName="tipo" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+                <input type="text" pInputText id="tipo" formControlName="tipo" class="input-field" />
+                <div *ngIf="categoriaForm.get('tipo')?.invalid && categoriaForm.get('tipo')?.touched" class="error-message">
+                    El tipo es obligatorio.
+                </div>
             </div>
-        
+
             <!-- Descripción de Trabajo -->
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="descripcionTrabajo" style="font-weight: 600; color: #007acc;">Descripción de Trabajo</label>
-                <textarea type="descripcionTrabajo" pInputTextarea formControlName="descripcionTrabajo" style="border: 1px solid #ffa366; border-radius: 0.5rem;" rows="3"></textarea>
+                <textarea pInputTextarea formControlName="descripcionTrabajo" class="input-field" rows="3"></textarea>
+                <div *ngIf="categoriaForm.get('descripcionTrabajo')?.invalid && categoriaForm.get('descripcionTrabajo')?.touched" class="error-message">
+                    La descripción de trabajo es obligatoria.
+                </div>
             </div>
-        
+
             <!-- Cantidad y Materiales -->
             <div class="field" style="margin-bottom: 1rem; display: flex;">
                 <div style="width: 50%; padding-right: 10px;">
                     <label for="cantidad" style="font-weight: 600; color: #007acc;">Cantidad</label>
-                    <input type="number" pInputText id="cantidad" formControlName="cantidad" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+                    <input type="number" pInputText id="cantidad" formControlName="cantidad" class="input-field" />
+                    <div *ngIf="categoriaForm.get('cantidad')?.invalid && categoriaForm.get('cantidad')?.touched" class="error-message">
+                        La cantidad es obligatoria y debe ser un número.
+                    </div>
                 </div>
                 <div style="width: 50%; padding-left: 10px;">
                     <label for="materiales" style="font-weight: 600; color: #007acc;">Materiales</label>
-                    <input type="text" pInputText id="materiales" formControlName="materiales" style="border: 1px solid #ffa366; border-radius: 0.5rem;" />
+                    <input type="text" pInputText id="materiales" formControlName="materiales" class="input-field" />
+                    <div *ngIf="categoriaForm.get('materiales')?.invalid && categoriaForm.get('materiales')?.touched" class="error-message">
+                        El campo materiales es obligatorio.
+                    </div>
                 </div>
             </div>
-        
+
             <!-- Submit Button -->
         </form>
 
         <ng-template pTemplate="footer">
             <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
                     style="color: #007acc;" (click)="dialog_visible=false"></button>
-            <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
-                    style="color: #ff6b00;" (click)="guardarCategoria()"></button>
+            <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text p-button-success"
+                    [disabled]="isSaving" (click)="guardarCategoria()"></button>
         </ng-template>
     </p-dialog>
 
+    <!-- Tabla de Categorías -->
     <p-table [value]="categorias" [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
             <tr style="background-color: #007acc; color: white;">
@@ -137,4 +162,5 @@
             </tr>
         </ng-template>
     </p-table>
-    
+
+</div>
