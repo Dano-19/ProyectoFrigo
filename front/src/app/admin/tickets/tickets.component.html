@@ -1,52 +1,88 @@
-<form (ngSubmit)="enviarTicket()" #ticketForm="ngForm" class="p-fluid"
-  style="max-width: 42rem; margin: auto; margin-top: 3rem; padding: 3rem; border-radius: 2.5rem; background: linear-gradient(145deg, #ffffff, #e9f3ff); box-shadow: 0 15px 40px rgba(0, 94, 255, 0.15);">
+<div class="flex justify-content-center mt-5">
+  <div class="surface-card p-5 shadow-3 border-round-xl w-full md:w-10 lg:w-7 xl:w-6">
 
-  <div style="text-align: center; margin-bottom: 2.5rem;">
-    <div style="font-size: 2.5rem; font-weight: bold; color: #007BFF; text-shadow: 1px 1px 1px #ccc;">
-      📬 Reclamos y Sugerencias
+    <!-- Encabezado -->
+    <div class="text-center mb-4">
+      <h2 class="text-3xl font-bold text-primary">Gestión de Tickets</h2>
+      <img src="assets/images/logo.jpg" alt="Logo" style="max-height: 60px; margin-top: 1rem;" />
     </div>
-    <div style="font-size: 1.2rem; color: #FF6B00; margin-top: 0.5rem;">
-      Tu opinión nos ayuda a mejorar 🚀
-    </div>
-  </div>
 
-  <div style="margin-bottom: 1.5rem;">
-    <label for="asunto" style="font-weight: 600; color: #007BFF; display: block; margin-bottom: 0.6rem;">🎯 Asunto</label>
-    <input
-      id="asunto"
-      name="asunto"
-      type="text"
-      pInputText
-      [(ngModel)]="ticket.asunto"
-      required
-      placeholder="Ingresa el asunto de tu reclamo"
-      style="width: 100%; border-radius: 1rem; padding: 1rem; border: 1px solid #ccc; background-color: #f9fbff;"
-    />
-  </div>
+    <!-- Formulario con ngModel -->
+    <form (ngSubmit)="enviarTicket()" #ticketForm="ngForm" class="grid formgrid">
 
-  <div style="margin-bottom: 2rem;">
-    <label for="mensaje" style="font-weight: 600; color: #007BFF; display: block; margin-bottom: 0.6rem;">✍️ Mensaje</label>
-    <textarea
-      id="mensaje"
-      name="mensaje"
-      [(ngModel)]="ticket.mensaje"
-      required
-      rows="6"
-      placeholder="Escribe aquí los detalles de tu reclamo..."
-      pInputTextarea
-      style="width: 100%; border-radius: 1rem; padding: 1rem; border: 1px solid #ccc; background-color: #f9fbff;"
-    ></textarea>
-  </div>
+      <!-- Nombre -->
+      <div class="field col-12">
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" name="nombre" type="text" pInputText class="w-full" [(ngModel)]="ticket.nombre"
+          placeholder="Tu nombre completo" required />
+      </div>
 
-  <div style="text-align: center;">
-    <button
-      pButton
-      type="submit"
-      label="Enviar Ticket 🚀"
-      class="text-lg"
-      style="background: linear-gradient(to right, #FF6B00, #FF9800); border: none; color: white; font-size: 1.2rem; font-weight: bold; padding: 1rem 2.5rem; border-radius: 2rem; box-shadow: 0 6px 16px rgba(255, 107, 0, 0.3); transition: transform 0.2s;"
-      onmouseover="this.style.transform='scale(1.05)'"
-      onmouseleave="this.style.transform='scale(1)'"
-    ></button>
+      <!-- Correo -->
+      <div class="field col-12">
+        <label for="correo">Correo:</label>
+        <input id="correo" name="correo" type="email" pInputText class="w-full" [(ngModel)]="ticket.correo"
+          placeholder="Correo electrónico" required />
+      </div>
+
+      <!-- Asunto -->
+      <div class="field col-12">
+        <label for="asunto">Asunto:</label>
+        <input id="asunto" name="asunto" type="text" pInputText class="w-full" [(ngModel)]="ticket.asunto"
+          placeholder="Asunto del ticket" required />
+      </div>
+
+      <!-- Estado -->
+      <div class="field col-12">
+        <label for="estado" class="font-semibold text-primary">Estado:</label>
+        <select id="estado" name="estado" [(ngModel)]="ticket.estado" required class="p-inputtext p-component w-full"
+          style="border-radius: 1rem; padding: 0.75rem; border: 1px solid #ccc;">
+          <option value="" disabled selected>Seleccione un estado</option>
+          <option value="Abierto">Abierto</option>
+          <option value="En Progreso">En Progreso</option>
+          <option value="Cerrado">Cerrado</option>
+        </select>
+      </div>
+
+      <!-- Prioridad -->
+      <div class="field col-12">
+        <label for="prioridad" class="font-semibold text-primary">Prioridad:</label>
+        <select id="prioridad" name="prioridad" [(ngModel)]="ticket.prioridad" required
+          class="p-inputtext p-component w-full" style="border-radius: 1rem; padding: 0.75rem; border: 1px solid #ccc;">
+          <option value="" disabled selected>Seleccione una prioridad</option>
+          <option value="Alta">Alta</option>
+          <option value="Media">Media</option>
+          <option value="Baja">Baja</option>
+        </select>
+      </div>
+
+      <!-- Fecha de Creación -->
+      <div class="field col-12">
+        <label for="fecha" class="font-semibold text-primary">Fecha de Creación:</label>
+        <p-calendar id="fecha" name="fecha" [(ngModel)]="ticket.fechaCreacion" dateFormat="dd/mm/yy" showIcon="true"
+          showButtonBar="true" class="w-full" [inputStyle]="{
+      padding: '0.75rem',
+      borderRadius: '0rem',
+      backgroundColor: '#f9fbff',
+      border: '1px solid #ccc'
+    }">
+        </p-calendar>
+      </div>
+
+      <!-- Mensaje -->
+      <div class="field col-12">
+        <label for="mensaje">Mensaje:</label>
+        <textarea [(ngModel)]="ticket.mensaje" name="mensaje" id="mensaje" rows="5"
+          placeholder="Escribe tu mensaje aquí" class="p-inputtext p-component w-full"
+          style="border-radius: 1rem; padding: 1rem; border: 1px solid #ccc; background-color: #f9fbff;">
+        </textarea>
+      </div>
+
+
+      <!-- Botón -->
+      <div class="col-12 text-center mt-3">
+        <button pButton type="submit" label="Agregar Ticket"
+          class="p-button-primary p-button-rounded p-button-lg"></button>
+      </div>
+    </form>
   </div>
-</form>
+</div>

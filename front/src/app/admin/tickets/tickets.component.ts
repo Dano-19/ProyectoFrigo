@@ -3,10 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+
+
 @Component({
   selector: 'app-tickets',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule,
+             CommonModule,
+              InputTextModule,  
+              InputTextareaModule,
+              ButtonModule,
+              CalendarModule
+            ],
   templateUrl: './tickets.component.html'
 })
 export class TicketsComponent {
@@ -14,8 +26,12 @@ export class TicketsComponent {
     nombre: '',
     correo: '',
     asunto: '',
-    mensaje: ''
+    mensaje: '',
+    estado: '',
+    prioridad: '',
+    fechaCreacion: '',
   };
+  
 
   // Define el correo al que se enviará
   correoDestino = 'soporte@frigoservicios.com';
