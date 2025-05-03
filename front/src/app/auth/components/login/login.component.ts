@@ -26,7 +26,6 @@ export class LoginComponent {
     { label: 'Administrador', value: 'admin' },
   ];
  
-
   // Formulario con validación
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
@@ -101,11 +100,6 @@ export class LoginComponent {
     );
   }
 
-  // ✅ Redirección al registro desde botón
-  redirigirAlRegistro(): void {
-    this.router.navigate(['auth/register']);
-  }
-
   // ✅ Mostrar formulario de "Olvidaste tu contraseña"
   onForgotPassword(): void {
     this.isForgotPasswordVisible = true; // Esto activa la visibilidad del formulario de recuperación
@@ -149,11 +143,6 @@ export class LoginComponent {
   }
 
   validEmail(email: string): boolean {
-    // Nueva expresión regular mejorada para aceptar más formatos de correos válidos
-    //const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    //return emailPattern.test(email);//  // Devuelve true si el correo es válido//
     return true;
   }
-  
-  
 }

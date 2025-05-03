@@ -15,14 +15,11 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
         this.model = [
             {
-                label: 'Administración',
                 items: [
                     { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['/admin'] },
-                    { label: 'Perfil', icon: 'pi pi-fw pi-user', routerLink: ['/admin/perfil'] }
                 ]
             },
             {
-                label: 'Inventario',
                 items: [
                     { label: 'Formulario', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/categoria'] },
                     { label: 'Materiales', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/producto'] },
@@ -30,7 +27,6 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
-                label: 'Pedidos',
                 items: [
                     { label: 'Lista Pedidos', icon: 'pi pi-fw pi-eye', routerLink: ['/admin/pedido'], badge: 'NEW' },
                     { label: 'Nuevo Pedido', icon: 'pi pi-fw pi-moon', routerLink: ['/admin/pedido/nuevo'], badge: 'NEW' },
@@ -38,7 +34,6 @@ export class AppMenuComponent implements OnInit {
                 ]
             },
             {
-                label: 'Roles y usuarios',
                 items: [
                     { label: 'Técnicos', icon: 'pi pi-fw pi-user', routerLink: ['admin/tecnico'] },
                     { label: 'Roles', icon: 'pi pi-fw pi-desktop', url: ['https://www.primefaces.org/primeflex/'], target: '_blank' },
