@@ -60,10 +60,10 @@ export class LoginComponent {
       return;
     }
 
-    if (!rol) {
-      alert('Debes seleccionar un rol.');
-      return;
-    }
+    // if (!rol) {
+    //   alert('Debes seleccionar un rol.');
+    //   return;
+    // }
 
     this.errorLogin = false;
     this.notRegistered = false;

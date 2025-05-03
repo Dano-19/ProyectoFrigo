@@ -28,7 +28,7 @@ import {
     @Column({ type: 'text', nullable: true })
     descripcion: string | null;
   
-    @ManyToOne(() => Categoria, c => c.productos, {
+    @ManyToOne(() => Categoria, c => c.producto, {
       nullable: true,
       onDelete: 'SET NULL'
     })
