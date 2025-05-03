@@ -10,6 +10,7 @@ export class AuthService {
   private apiUrl = 'http://localhost:3000/auth'; // ✅ Cambia si tu backend está en otro host
 
   constructor(private http: HttpClient) {}
+  
   usersData: any;
 
   // ✅ Método para login
@@ -21,13 +22,19 @@ export class AuthService {
       })
     );
   }
-  getuserData(){
-    return this.usersData
+
+  // ✅ Obtener datos del usuario (opcional, si se necesita)
+  getuserData() {
+    return this.usersData;
   }
 
-  // ✅ Método para enviar contraseña por correo
+  // ✅ Método para enviar el código de recuperación al correo del usuario
   enviarPasswordPorCorreo(email: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/recuperar`, { email });
+    return this.http.post(`${this.apiUrl}/send-email`, { email });
+  }
+
+  // ✅ Método para restablecer la contraseña con el código de recuperación
+  restablecerPassword(email: string, code: string, newPassword: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/reset-password`, { email, code, newPassword });
   }
 }
-

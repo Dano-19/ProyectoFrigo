@@ -11,16 +11,13 @@ import { MessageService } from 'primeng/api';
   providers: [MessageService]
 })
 export class LoginComponent {
-
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private messageService: MessageService
-  ) {}
-
   // Variables para mostrar mensajes de error
   errorLogin = false;
   notRegistered = false;
+
+  // Variables para el formulario de recuperación de contraseña
+  forgotPasswordEmail: string = '';
+  isForgotPasswordVisible: boolean = false;
 
   // Lista de roles disponibles
   roles = [
@@ -30,10 +27,17 @@ export class LoginComponent {
 
   // Formulario con validación
   loginForm = new FormGroup({
-    email: new FormControl("", [Validators.email, Validators.required]),
-    password: new FormControl("", [Validators.required, Validators.minLength(6)]),
+    email: new FormControl('', [Validators.email, Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     rol: new FormControl(null, Validators.required)
   });
+
+  // Constructor con inyección de dependencias
+  constructor(
+    private authService: AuthService,           // Inyectar AuthService
+    private router: Router,                     // Inyectar Router
+    private messageService: MessageService      // Inyectar MessageService
+  ) {}
 
   // ✅ Validación personalizada de contraseña
   validPassword(password: string): boolean {
@@ -51,7 +55,6 @@ export class LoginComponent {
       return;
     }
 
-
     if (!this.validPassword(password)) {
       alert('La contraseña debe tener al menos 6 caracteres y un carácter especial.');
       return;
@@ -66,8 +69,8 @@ export class LoginComponent {
     this.notRegistered = false;
 
     this.authService.loginConNest(this.loginForm.value).subscribe(
-      (res) => {
-        localStorage.setItem("access_token", res.token);
+      (res: any) => {
+        localStorage.setItem('access_token', res.token);
 
         this.messageService.add({
           severity: 'success',
@@ -78,10 +81,10 @@ export class LoginComponent {
         });
 
         setTimeout(() => {
-          this.router.navigate(["/admin"]); // aquí podrías condicionar según el rol
+          this.router.navigate(['/admin']); // Redirección
         }, 2500);
       },
-      (error) => {
+      (error: any) => {
         console.log(error);
         if (error?.error?.message === 'Debes registrarte para poder ingresar') {
           this.notRegistered = true;
@@ -101,37 +104,54 @@ export class LoginComponent {
     this.router.navigate(['auth/register']);
   }
 
-  // ✅ Enviar contraseña por correo desde el botón "¿Olvidaste tu contraseña?"
+  // ✅ Mostrar formulario de "Olvidaste tu contraseña"
   onForgotPassword(): void {
-    const email = this.loginForm.get('email')?.value;
+    this.isForgotPasswordVisible = true; // Esto activa la visibilidad del formulario de recuperación
+  }
 
-    if (!email || !this.loginForm.get('email')?.valid) {
+  // ✅ Enviar código de recuperación
+  onSendRecoveryCode() {
+    const email = this.forgotPasswordEmail;
+
+    // Verifica si el correo es válido
+    if (!this.validEmail(email)) {
       this.messageService.add({
         severity: 'warn',
         summary: 'Correo inválido',
         detail: 'Por favor ingresa un correo válido para recuperar la contraseña.',
         life: 3000
       });
-      return;
+      return;  // Detener la ejecución si el correo no es válido
     }
 
+    // Si el correo es válido, llama al servicio para enviar el código
     this.authService.enviarPasswordPorCorreo(email).subscribe({
       next: () => {
         this.messageService.add({
           severity: 'info',
           summary: 'Correo enviado',
-          detail: `Tu contraseña fue enviada a ${email}`,
+          detail: `Te hemos enviado un código de recuperación a ${email}`,
           life: 4000
         });
+        this.isForgotPasswordVisible = false; // Ocultar formulario de recuperación
       },
       error: () => {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'No se pudo enviar la contraseña. Inténtalo más tarde.',
+          detail: 'No se pudo enviar el código. Intenta más tarde.',
           life: 4000
         });
       }
     });
   }
+
+  validEmail(email: string): boolean {
+    // Nueva expresión regular mejorada para aceptar más formatos de correos válidos
+    //const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    //return emailPattern.test(email);//  // Devuelve true si el correo es válido//
+    return true;
+  }
+  
+  
 }

@@ -28,13 +28,13 @@ import { PrimengModule } from '../primeng/primeng.module';
     HttpClientModule,
     ButtonModule,
     PasswordModule,
-    ToastModule,                // ✅ NUEVO
+    ToastModule,                // ✅ NUEVO: Toast para mensajes emergentes
     PrimengModule,
     FormsModule
   ],
   providers: [
     AuthService,
-    MessageService             // ✅ NUEVO
+    MessageService             // ✅ NUEVO: MessageService para mostrar los mensajes de éxito/error
   ]
 })
 export class AuthModule { }

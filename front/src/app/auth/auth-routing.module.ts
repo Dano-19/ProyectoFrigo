@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: '**',
     redirectTo: 'login'
+  },
+  {
+    path:'send-email',
+    redirectTo: ''
   }
 ];
 

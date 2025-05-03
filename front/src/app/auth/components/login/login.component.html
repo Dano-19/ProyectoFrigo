@@ -13,6 +13,8 @@
     <button (click)="funIngresar()" [disabled]="!loginForm.valid">Ingresar</button>
 </form>
 -->
+<!-- Formulario para ingresar correo y recibir código -->
+<!-- Formulario de Recuperación de Contraseña -->
 <p-toast position="center"></p-toast>
 
 <div class="flex justify-content-center align-items-center min-h-screen min-w-screen bg-[#f8faff] overflow-hidden">
@@ -31,7 +33,7 @@
       <div class="w-full py-10 px-6 sm:px-10" style="border-radius: 2rem; background-color: white;">
 
         <!-- LOGO -->
-        <div class="text-center mb-6" style="margin-top: 1.rem; border-radius: 2.5rem; padding: 1.5rem;">
+        <div class="text-center mb-6" style="margin-top: 1rem; border-radius: 2.5rem; padding: 1.5rem;">
           <div
             style="
               background: linear-gradient(135deg, #FF6B00 20%, #007BFF 80%);
@@ -44,7 +46,7 @@
             <img
               src="https://frigoserviciosecuador.com/wp-content/uploads/2025/01/LOGO-FRIGOSERVICIOS2we3-1024x309.png"
               alt="Frigoservicios Logo"
-              style="max-height: 70px;  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));"
+              style="max-height: 70px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));"
             />
           </div>
         </div>
@@ -78,8 +80,7 @@
             formControlName="email"
             pInputText
             class="w-full md:w-30rem mb-2"
-            style="padding: 1rem; border-radius: 1rem; border: 1px solid #ccc; background-color: #f9f9f9;"
-          />
+            style="padding: 1rem; border-radius: 1rem; border: 1px solid #ccc; background-color: #f9f9f9;" />
           <small *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)" class="p-error">
             El correo debe contener un &#64;
           </small>
@@ -92,8 +93,8 @@
             formControlName="password"
             styleClass="mb-2"
             inputStyleClass="w-full p-3 md:w-30rem"
-            [feedback]="false"
-          ></p-password>
+            [feedback]="false">
+          </p-password>
           <small
             *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.value && !validPassword(loginForm.get('password')?.value || '')"
             class="p-error"
@@ -101,47 +102,15 @@
             La contraseña debe tener mínimo 6 caracteres y al menos un carácter especial.
           </small>
 
-          <!-- Selección de rol -->
-          <label for="rol" class="block text-xl font-semibold mb-2 mt-4" style="color: #007BFF;">Seleccionar rol</label>
-          <p-dropdown
-            inputId="rol"
-            [options]="roles"
-            formControlName="rol"
-            placeholder="Selecciona un rol"
-            optionLabel="label"
-            class="w-full md:w-30rem mb-2"
-            [style]="{ 'border-radius': '1rem', 'background-color': '#f9f9f9' }"
-          ></p-dropdown>
-
           <!-- Recordarme y olvido -->
           <div class="flex align-items-center justify-content-between mb-5 mt-4 gap-3">
             <label style="color: #444;">🔁 Recordarme</label>
             <a
               class="font-medium no-underline text-right cursor-pointer"
               style="color: #007BFF;"
-              (click)="onForgotPassword()"
-            >
+              (click)="onForgotPassword()">
               ¿Olvidaste tu contraseña?
             </a>
-          </div>
-
-          <!-- No registrado por error -->
-          <div *ngIf="notRegistered" class="p-error text-center mb-3">
-            Debes registrarte para continuar.
-            <br />
-            <button
-              pButton
-              label="Ir al registro"
-              class="p-button-sm p-button-outlined p-button-info mt-2"
-              (click)="redirigirAlRegistro()"
-            ></button>
-            <br />
-            <span class="text-600 text-sm" style="color: #007BFF;">Redirigiendo automáticamente en 4 segundos...</span>
-          </div>
-
-          <!-- Error de credenciales -->
-          <div *ngIf="errorLogin && !notRegistered" class="p-error text-center mb-3">
-            Las credenciales no son válidas. Intenta de nuevo.
           </div>
 
           <!-- Botón ingresar -->
@@ -152,26 +121,48 @@
             class="w-full p-3 text-xl mt-2"
             (click)="funIngresar()"
             style="background-color: #FF6B00; border: none; color: white; border-radius: 0.8rem; font-weight: bold;"
-            [disabled]="!loginForm.valid || !validPassword(loginForm.get('password')?.value || '')"
-          >
+            [disabled]="!loginForm.valid || !validPassword(loginForm.get('password')?.value || '')">
           </button>
-
-          <!-- ✅ Botón visible siempre para Registrarse -->
-          <div class="text-center mt-5">
-            <button
-              pButton
-              label="¿No tienes cuenta? Regístrate"
-              class="p-button-text p-button-primary"
-              (click)="redirigirAlRegistro()"
-              style="font-weight: bold; color: #007BFF; font-size: 1rem;"
-            >
-            </button>
-          </div>
-
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Formulario de Recuperación de Contraseña -->
+<div *ngIf="isForgotPasswordVisible" class="flex justify-content-center align-items-center min-h-screen min-w-screen bg-[#f8faff] overflow-hidden">
+  <div class="flex flex-column align-items-center justify-content-center">
 
+    <div
+      style="
+        margin-top: 5rem;
+        border-radius: 2.5rem;
+        padding: 0.5rem;
+        background: linear-gradient(180deg, #FF6B00 10%, rgba(0, 94, 255, 0.05) 40%);
+        box-shadow: 0 15px 45px rgba(0, 94, 255, 0.15);
+      "
+    >
+      <div class="w-full py-10 px-6 sm:px-10" style="border-radius: 2rem; background-color: white;">
+        
+        <div [formGroup]="loginForm">
+          <!-- Email para recuperación -->
+          <label for="emailForgot" class="block text-xl font-semibold mb-5 mt-2" style="color: #007BFF;">Correo electrónico</label>
+          <input
+            id="emailForgot"
+            type="email"
+            [(ngModel)]="forgotPasswordEmail"
+            placeholder="ejemplo&#64;email.com"
+            class="w-full md:w-30rem mb-2"
+            style="padding: 1rem; border-radius: 1rem; border: 1px solid #ccc; background-color: #f9f9f9;" />
+          <button
+            pButton
+            label="Enviar código"
+            class="w-full p-3 text-xl mt-2"
+            (click)="onSendRecoveryCode()"
+            style="background-color: #FF6B00; border: none; color: white; border-radius: 0.8rem; font-weight: bold;">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
