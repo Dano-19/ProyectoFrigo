@@ -22,8 +22,10 @@ export class LoginComponent {
   // Lista de roles disponibles
   roles = [
     { label: 'Tecnico', value: 'tecnico' },
-    { label: 'Cliente', value: 'cliente' }
+    { label: 'Cliente', value: 'cliente' },
+    { label: 'Administrador', value: 'admin' },
   ];
+ 
 
   // Formulario con validación
   loginForm = new FormGroup({
@@ -60,10 +62,10 @@ export class LoginComponent {
       return;
     }
 
-    // if (!rol) {
-    //   alert('Debes seleccionar un rol.');
-    //   return;
-    // }
+    if (!rol) {
+      alert('Debes seleccionar un rol.');
+      return;
+    }
 
     this.errorLogin = false;
     this.notRegistered = false;
