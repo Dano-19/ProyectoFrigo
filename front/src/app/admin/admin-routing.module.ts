@@ -8,6 +8,7 @@ import { ListaPedidoComponent } from './pedido/components/lista-pedido/lista-ped
 import { authGuard } from '../guards/auth.guard';
 import { TicketsComponent } from './tickets/tickets.component'; // 👈 Importación del componente
 import { TecnicoComponent } from './tecnico/tecnico.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const routes: Routes = [
   {
@@ -40,8 +41,14 @@ const routes: Routes = [
         canActivate: [authGuard("admin")]
       },
       {
-        path: "tecnicos",
-        component: TecnicoComponent
+        path: "tecnico",
+        component: TecnicoComponent,
+        canActivate: [authGuard("admin")]
+      },
+      {
+        path: "usuarios",
+        component: UsuariosComponent,
+        canActivate: [authGuard("admin")]
       }
     ]
   }

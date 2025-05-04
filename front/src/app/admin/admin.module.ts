@@ -12,11 +12,21 @@ import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TecnicoComponent } from './tecnico/tecnico.component';
+import { HttpClientModule }    from '@angular/common/http';
+import { DialogModule }        from 'primeng/dialog';
+import { InputTextModule }     from 'primeng/inputtext';
+import { DropdownModule }      from 'primeng/dropdown';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     LayoutComponent,
-    TecnicoComponent
+    TecnicoComponent,
+    UsuariosComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +37,16 @@ import { TecnicoComponent } from './tecnico/tecnico.component';
     PedidoModule,
     MenuModule,
     ButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    DialogModule,
+    InputTextModule,
+    DropdownModule,
+    ProgressSpinnerModule,
+    //BrowserModule,
+    //RouterModule,
+    FormsModule,
+    InventarioModule,
   ],
   providers: [
     CategoriaService,
