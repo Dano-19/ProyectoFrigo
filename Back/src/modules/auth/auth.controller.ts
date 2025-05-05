@@ -7,28 +7,26 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  async registerUser(@Body() userObj: RegisterAuthDto) {
-    return await this.authService.funRegister(userObj);
+  async register(@Body() dto: RegisterAuthDto) {
+    return this.authService.funRegister(dto);
   }
 
   @Post('login')
-  async login(@Body() credenciales: LoginAuthDto) {
-    return await this.authService.login(credenciales);
+  async login(@Body() dto: LoginAuthDto) {
+    return this.authService.login(dto);
   }
 
-  @Post('recuperar')
-  async recuperar(@Body('email') email: string) {
-    await this.authService.recuperarContraseña(email);
-    return { message: 'Correo de recuperación enviado correctamente' };
+  @Post('forgot-password')
+  async forgotPassword(@Body('email') email: string) {
+    return this.authService.recuperarContraseña(email);
   }
-  
+
   @Post('change-password')
-  async changePassword(@Body() body: { token: string; newPassword: string }) {
-    return this.authService.changePasswordWithToken(body.token, body.newPassword);
+  async changePassword(@Body() body: { token: string; password: string }) {
+    const { token, password } = body;
+    return this.authService.changePasswordWithToken(token, password);
   }
-  
-
 }
