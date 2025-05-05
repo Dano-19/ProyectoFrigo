@@ -181,18 +181,38 @@ export class CategoriaComponent implements OnInit {
     Swal.fire({ title, text, icon });
   }
 
-  generarPDFCategoria(cat: Categoria): void {
+  private loadImageAsDataUrl(url: string): Promise<string> {
+    return fetch(url)
+      .then(res => res.blob())
+      .then(blob => new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      }));
+  }
+
+  async generarPDFCategoria(cat: Categoria): Promise<void> {
     const doc = new jsPDF();
+    
+    try {
+      const dataUrl = await this.loadImageAsDataUrl('assets/layout/images/Logo-FRIGO.jpg');
+      doc.addImage(dataUrl, 'JPG', 127, 10, 70, 25);
+    } catch (err) {
+      console.warn('No se pudo cargar el logo desde assets:', err);
+    }
+
+
     doc.setFontSize(18);
-    doc.text("Detalle de Formulario", 10, 10);
+    doc.text("Formulario", 60, 10);
 
     doc.setFontSize(12);
     if (cat.fecha) {
-      doc.text('Fecha: ' + cat.fecha, 10, 40);
+      doc.text('Fecha: ' + cat.fecha, 10, 20);
     }
 
     doc.setFontSize(13);
-    doc.text('Información:', 10, 55);
+    doc.text('Información:', 10, 40);
 
     const datos = [
       ['Área', cat.area || ''],
@@ -206,11 +226,27 @@ export class CategoriaComponent implements OnInit {
     ];
 
     autotable(doc, {
+      startY: 45,
       head: [['Campo', 'Valor']],
       body: datos,
-      startY: 60
+      styles: {
+        fontSize: 11,
+        cellPadding: 4,
+        fillColor: [255, 255, 255]
+      },
+      headStyles: {
+        fillColor: [243, 146,   0], // naranja corporativo
+        textColor: 255,
+        fontStyle: 'bold'
+      },
+      alternateRowStyles: {
+        fillColor: [240, 245, 255]  // azul claro corporativo
+      },
+      tableLineWidth: 0.1,
+      tableLineColor: [200, 200, 200]
     });
 
     doc.save(`categoria_${cat.id}.pdf`);
   }
 }
+
