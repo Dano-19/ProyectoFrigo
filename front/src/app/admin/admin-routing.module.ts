@@ -7,13 +7,9 @@ import { NuevoPedidoComponent } from './pedido/components/nuevo-pedido/nuevo-ped
 import { ListaPedidoComponent } from './pedido/components/lista-pedido/lista-pedido.component';
 import { authGuard } from '../guards/auth.guard';
 import { TicketsComponent } from './tickets/tickets.component'; // 👈 Importación del componente
-<<<<<<< HEAD
 import { ClienteComponent } from './cliente/cliente.component';
 import { ReporteComponent } from './reporte/reporte.component';
-=======
-import { TecnicoComponent } from './tecnico/tecnico.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
->>>>>>> 16fd965c5c3b137dfc546bc5c0f9b2ac046f5011
 
 const routes: Routes = [
   {
@@ -46,7 +42,6 @@ const routes: Routes = [
         canActivate: [authGuard("admin")]
       },
       {
-<<<<<<< HEAD
         path: "cliente",
         component: ClienteComponent,
         canActivate: [authGuard("admin")]
@@ -54,17 +49,13 @@ const routes: Routes = [
       {
         path: "reporte",
         component: ReporteComponent,
-=======
-        path: "tecnico",
-        component: TecnicoComponent,
         canActivate: [authGuard("admin")]
       },
       {
         path: "usuarios",
         component: UsuariosComponent,
->>>>>>> 16fd965c5c3b137dfc546bc5c0f9b2ac046f5011
         canActivate: [authGuard("admin")]
-      }
+      },
     ]
   }
 ];
