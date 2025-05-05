@@ -8,6 +8,8 @@ import autotable from 'jspdf-autotable';
 interface Categoria {
   id: number;
   fecha?: string;
+  horaIngreso?: string;
+  horaSalida?: string;
   area?: string;
   marca?: string;
   modelo?: string;
@@ -24,27 +26,26 @@ interface Categoria {
   styleUrls: ['./categoria.component.scss']
 })
 export class CategoriaComponent implements OnInit {
-
   private categoriaService = inject(CategoriaService);
-
   categorias: Categoria[] = [];
-  dialog_visible: boolean = false;
-  categoria_id: number = -1;
-  isSaving: boolean = false;
+  dialog_visible = false;
+  categoria_id = -1;
+  isSaving = false;
 
+  // 1) Incluimos los controles para horaIngreso y horaSalida
   categoriaForm = new FormGroup({
-    fecha: new FormControl('', Validators.required),
-    area: new FormControl('', Validators.required),
-    marca: new FormControl('', Validators.required),
-    modelo: new FormControl('', Validators.required),
-    tipo: new FormControl('', Validators.required),
-    descripcion: new FormControl('', Validators.required),
-    cantidad: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
-    materiales: new FormControl('', Validators.required),
-    acciones: new FormControl('', Validators.required)
+    fecha:        new FormControl('', Validators.required),
+    horaIngreso:  new FormControl('', Validators.required),
+    horaSalida:   new FormControl('', Validators.required),
+    area:         new FormControl('', Validators.required),
+    marca:        new FormControl('', Validators.required),
+    modelo:       new FormControl('', Validators.required),
+    tipo:         new FormControl('', Validators.required),
+    descripcion:  new FormControl('', Validators.required),
+    cantidad:     new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
+    materiales:   new FormControl('', Validators.required),
+    acciones:     new FormControl('', Validators.required)
   });
-
-  cat: Categoria | undefined;
 
   ngOnInit(): void {
     this.getCategorias();
@@ -52,132 +53,97 @@ export class CategoriaComponent implements OnInit {
 
   getCategorias() {
     this.categoriaService.funListar().subscribe(
-      (res: any) => {
-        this.categorias = res;
-      },
-      (error: any) => {
-        console.log(error);
-      }
+      (res: any) => this.categorias = res,
+      (err: any) => console.error(err)
     );
   }
 
-  mostrarDialog() {
-    this.dialog_visible = true;
-  }
+  mostrarDialog() { this.categoria_id = -1;
+    this.categoriaForm.reset();
+    this.dialog_visible = true; }
 
   cerrarDialog(): void {
     this.dialog_visible = false;
-
-    // Para evitar errores de foco oculto (aria-hidden)
     setTimeout(() => {
-      if (document.activeElement instanceof HTMLElement) {
-        document.activeElement.blur();
-      }
+      if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
     }, 0);
   }
 
   guardarCategoria() {
     if (this.categoriaForm.invalid) {
-      this.alerta("ERROR AL REGISTRAR", "Por favor complete todos los campos", "error");
+      this.alerta('ERROR AL REGISTRAR', 'Complete todos los campos', 'error');
       return;
     }
 
-    const categoriaData = this.categoriaForm.value;
+    const data = { ...this.categoriaForm.value };
 
-    if (categoriaData['fecha']) {
-      const fecha = new Date(categoriaData['fecha']);
-      const yyyy = fecha.getFullYear();
-      const mm = String(fecha.getMonth() + 1).padStart(2, '0');
-      const dd = String(fecha.getDate()).padStart(2, '0');
-      categoriaData['fecha'] = `${yyyy}-${mm}-${dd}`;
+    // Validar y formatear fecha
+    if (data.fecha) {
+      const f = new Date(data.fecha);
+      data.fecha = `${f.getFullYear()}-${String(f.getMonth()+1).padStart(2,'0')}-${String(f.getDate()).padStart(2,'0')}`;
     }
 
     this.isSaving = true;
+    const request$ = this.categoria_id > 0
+      ? this.categoriaService.funModificar(this.categoria_id, data)
+      : this.categoriaService.funGuardar(data);
 
-    if (this.categoria_id > 0) {
-      this.categoriaService.funModificar(this.categoria_id, categoriaData).subscribe(
-        (res: any) => {
-          this.isSaving = false;
-          this.cerrarDialog();
-          this.getCategorias();
-          this.categoria_id = -1;
-          this.alerta("ACTUALIZADO", "El formulario se modificó con éxito!", "success");
-        },
-        (error: any) => {
-          this.isSaving = false;
-          this.alerta("ERROR AL ACTUALIZAR", "Verifica los datos!", "error");
-        }
-      );
-    } else {
-      this.categoriaService.funGuardar(categoriaData).subscribe(
-        (res: any) => {
-          this.isSaving = false;
-          this.cerrarDialog();
-          this.getCategorias();
-          this.alerta("REGISTRADO", "El formulario se creó con éxito!", "success");
-        },
-        (error: any) => {
-          this.isSaving = false;
-          this.alerta("ERROR AL REGISTRAR", "Verifica los datos!", "error");
-        }
-      );
-    }
-
-    this.categoriaForm.reset();
+    request$.subscribe(
+      () => {
+        this.isSaving = false;
+        this.cerrarDialog();
+        this.getCategorias();
+        this.alerta(this.categoria_id > 0 ? 'ACTUALIZADO' : 'REGISTRADO', '¡Operación exitosa!', 'success');
+        this.categoria_id = -1;
+        this.categoriaForm.reset();
+      },
+      () => {
+        this.isSaving = false;
+        this.alerta(this.categoria_id > 0 ? 'ERROR AL ACTUALIZAR' : 'ERROR AL REGISTRAR', 'Verifica los datos!', 'error');
+      }
+    );
   }
 
   editarCategoria(cat: Categoria) {
     this.dialog_visible = true;
     this.categoria_id = cat.id;
 
-    let fechaFormateada = '';
-    if (cat.fecha) {
-      const fecha = new Date(cat.fecha);
-      const yyyy = fecha.getFullYear();
-      const mm = String(fecha.getMonth() + 1).padStart(2, '0');
-      const dd = String(fecha.getDate()).padStart(2, '0');
-      fechaFormateada = `${yyyy}-${mm}-${dd}`;
-    }
-
+    // 2) Incluir horaIngreso y horaSalida en el setValue
     this.categoriaForm.setValue({
-      fecha: fechaFormateada,
-      area: cat.area || '',
-      marca: cat.marca || '',
-      modelo: cat.modelo || '',
-      tipo: cat.tipo || '',
-      descripcion: cat.descripcion || '',
-      cantidad: cat.cantidad || '',
-      materiales: cat.materiales || '',
-      acciones: cat.acciones || ''
+      fecha:        cat.fecha ? cat.fecha.split('T')[0] : '',
+      horaIngreso:  cat.horaIngreso  || '',
+      horaSalida:   cat.horaSalida   || '',
+      area:         cat.area         || '',
+      marca:        cat.marca        || '',
+      modelo:       cat.modelo       || '',
+      tipo:         cat.tipo         || '',
+      descripcion:  cat.descripcion  || '',
+      cantidad:     cat.cantidad     || '',
+      materiales:   cat.materiales   || '',
+      acciones:     cat.acciones     || ''
     });
   }
 
   eliminarCategoria(cat: Categoria) {
     Swal.fire({
-      title: "¿Está seguro de eliminar El formulario?",
-      text: "Una vez eliminada no se podrá recuperar!",
-      icon: "warning",
+      title: '¿Eliminar formulario?',
+      text: '¡No podrás revertirlo!',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar!"
-    }).then((result) => {
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar'
+    }).then(result => {
       if (result.isConfirmed) {
         this.categoriaService.funEliminar(cat.id).subscribe(
-          (res: any) => {
-            this.alerta("ELIMINANDO!", "formulario eliminado", "success");
-            this.getCategorias();
-            this.categoria_id = -1;
-          },
-          (error: any) => {
-            this.alerta("ERROR!", "Error al intentar eliminar.", "error");
-          }
+          () => { this.alerta('ELIMINADO', 'Formulario eliminado', 'success'); this.getCategorias(); this.categoria_id = -1; },
+          () => this.alerta('ERROR', 'Error al eliminar', 'error')
         );
       }
     });
   }
 
-  alerta(title: string, text: string, icon: 'success' | 'error' | 'info' | 'question') {
+  alerta(title: string, text: string, icon: 'success'|'error'|'info'|'question') {
     Swal.fire({ title, text, icon });
   }
 
@@ -204,7 +170,7 @@ export class CategoriaComponent implements OnInit {
 
 
     doc.setFontSize(18);
-    doc.text("Formulario", 60, 10);
+    doc.text("Formulario", 90, 10);
 
     doc.setFontSize(12);
     if (cat.fecha) {
@@ -215,6 +181,8 @@ export class CategoriaComponent implements OnInit {
     doc.text('Información:', 10, 40);
 
     const datos = [
+      ['Hora Ingreso', cat.horaIngreso  || ''],
+      ['Hora Salida',  cat.horaSalida   || ''],
       ['Área', cat.area || ''],
       ['Marca', cat.marca || ''],
       ['Modelo', cat.modelo || ''],
