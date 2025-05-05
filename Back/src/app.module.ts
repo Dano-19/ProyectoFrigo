@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { DatabaseModule } from './database/database.module';
@@ -9,28 +8,22 @@ import { CategoriaModule } from './modules/categoria/categoria.module';
 import { PersonaModule } from './modules/persona/persona.module';
 import { ProductoModule } from './modules/producto/producto.module';
 import { RoleModule } from './modules/role/role.module';
-import { ClienteModule } from './modules/cliente/cliente.module';
 import { PedidoModule } from './modules/pedido/pedido.module';
 import { TicketsModule } from './modules/tickets/tickets.module';
-
-import { ConfigModule, ConfigService } from '@nestjs/config'; // ✅ Config
-import { MailerModule } from '@nestjs-modules/mailer';        // ✅ Mailer
+import { ClienteModule } from './modules/cliente/cliente.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
-import { TecnicoModule } from './modules/tecnico/tecnico.module';
 
 @Module({
   imports: [
-    // ✅ ConfigModule global
     ConfigModule.forRoot({
       isGlobal: true,
     }),
 
-    // ✅ MailerModule usando variables de entorno
     MailerModule.forRootAsync({
-      imports: [ConfigModule,
-        
-      ],
+      imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         transport: {
@@ -46,7 +39,7 @@ import { TecnicoModule } from './modules/tecnico/tecnico.module';
           from: `"Frigoservicios" <${configService.get<string>('MAIL_USER')}>`,
         },
         template: {
-          dir: join(__dirname, 'templates'), // puedes quitar si no usas plantillas
+          dir: join(__dirname, 'templates'),
           adapter: new HandlebarsAdapter(),
           options: {
             strict: true,
@@ -55,7 +48,6 @@ import { TecnicoModule } from './modules/tecnico/tecnico.module';
       }),
     }),
 
-    // ✅ Tus demás módulos
     AuthModule,
     UsersModule,
     DatabaseModule,
@@ -66,7 +58,6 @@ import { TecnicoModule } from './modules/tecnico/tecnico.module';
     ClienteModule,
     PedidoModule,
     TicketsModule,
-    TecnicoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

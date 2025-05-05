@@ -32,7 +32,7 @@ export class ForgotPasswordComponent {
     });
 
     setTimeout(() => {
-      this.router.navigate(['/auth/login']); // Redirección
+      this.router.navigate(['/auth/change-password']); // Redirección
     }, 2500);
 
     // TODO: Integrate with your backend email service

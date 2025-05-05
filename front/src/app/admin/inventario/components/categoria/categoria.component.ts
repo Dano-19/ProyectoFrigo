@@ -35,7 +35,7 @@ export class CategoriaComponent implements OnInit {
   categorias: Categoria[] = [];
   dialog_visible: boolean = false;
   categoria_id: number = -1;
-  isSaving: boolean = false;
+  isSaving: boolean = false;  // Variable para controlar el estado de los botones
 
   categoriaForm = new FormGroup({
     fecha: new FormControl('', Validators.required),
@@ -62,12 +62,8 @@ export class CategoriaComponent implements OnInit {
 
   getCategorias() {
     this.categoriaService.funListar().subscribe(
-      (res: any) => {
-        this.categorias = res;
-      },
-      (error: any) => {
-        console.log(error);
-      }
+      res => { this.categorias = res as Categoria[]; },
+      err => console.error(err)
     );
   }
 
@@ -76,52 +72,59 @@ export class CategoriaComponent implements OnInit {
   }
 
   guardarCategoria() {
+    // Verifica si el formulario es inválido
     if (this.categoriaForm.invalid) {
-      this.alerta("ERROR AL REGISTRAR", "Por favor complete todos los campos", "error");
+      this.alerta('ERROR AL REGISTRAR', 'Por favor complete todos los campos', 'error');
       return;
     }
-
+  
     const categoriaData = this.categoriaForm.value;
-
+    console.log("Datos a enviar al backend:", categoriaData);  // Verifica los valores antes de enviarlos
+  
+    // Si la fecha es válida, la convertimos a formato ISO para el backend
     if (categoriaData['fecha']) {
-      const fecha = new Date(categoriaData['fecha']);
-      const yyyy = fecha.getFullYear();
-      const mm = String(fecha.getMonth() + 1).padStart(2, '0');
-      const dd = String(fecha.getDate()).padStart(2, '0');
-      categoriaData['fecha'] = `${yyyy}-${mm}-${dd}`;
+      categoriaData['fecha'] = new Date(categoriaData['fecha']).toISOString();
     }
-
+  
+    // Iniciar el proceso de guardado
     this.isSaving = true;
-
+  
+    // Si la categoría tiene un ID mayor a 0, significa que estamos modificando una categoría existente
     if (this.categoria_id > 0) {
       this.categoriaService.funModificar(this.categoria_id, categoriaData).subscribe(
         (res: any) => {
+          console.log("Respuesta de modificación:", res);
           this.isSaving = false;
           this.dialog_visible = false;
-          this.getCategorias();
-          this.categoria_id = -1;
-          this.alerta("ACTUALIZADO", "El formulario se modificó con éxito!", "success");
+          this.getCategorias();  // Refrescar la lista de categorías después de modificar
+          this.categoria_id = -1;  // Restablecer el ID
+          this.alerta("ACTUALIZADO", "La categoría se modificó con éxito!", "success");
         },
         (error: any) => {
+          console.error("Error al modificar:", error);
           this.isSaving = false;
           this.alerta("ERROR AL ACTUALIZAR", "Verifica los datos!", "error");
         }
       );
     } else {
+      // Si no hay ID, significa que estamos creando una nueva categoría
       this.categoriaService.funGuardar(categoriaData).subscribe(
         (res: any) => {
+          console.log("Respuesta de guardado:", res);
           this.isSaving = false;
           this.dialog_visible = false;
-          this.getCategorias();
-          this.alerta("REGISTRADO", "El formulario se creó con éxito!", "success");
+          this.getCategorias();  // Obtener lista actualizada después de guardar la nueva categoría
+          this.alerta("REGISTRADO", "La categoría se creó con éxito!", "success");
         },
         (error: any) => {
+          console.error("Error al guardar:", error);
           this.isSaving = false;
           this.alerta("ERROR AL REGISTRAR", "Verifica los datos!", "error");
         }
       );
     }
-
+  
+    // Resetear el formulario después de la operación
     this.categoriaForm.reset();
   }
 
@@ -158,24 +161,21 @@ export class CategoriaComponent implements OnInit {
 
   eliminarCategoria(cat: Categoria) {
     Swal.fire({
-      title: "¿Está seguro de eliminar el formulario?",
-      text: "Una vez eliminado, no se podrá recuperar!",
+      title: "¿Está seguro de eliminar la categoría?",
+      text: "Una vez eliminada no se podrá recuperar!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar!"
-    }).then((result) => {
+      confirmButtonText: 'Sí, eliminar!',
+      cancelButtonText: 'Cancelar'
+    }).then(result => {
       if (result.isConfirmed) {
         this.categoriaService.funEliminar(cat.id).subscribe(
           (res: any) => {
-            this.alerta("ELIMINADO", "Formulario eliminado correctamente", "success");
+            this.alerta("ELIMINANDO!", "Categoría eliminada", "success");
             this.getCategorias();
             this.categoria_id = -1;
           },
-          (error: any) => {
-            this.alerta("ERROR!", "Error al intentar eliminar.", "error");
-          }
+          () => this.alerta('ERROR!', 'Error al intentar eliminar.', 'error')
         );
       }
     });
@@ -183,43 +183,5 @@ export class CategoriaComponent implements OnInit {
 
   alerta(title: string, text: string, icon: 'success' | 'error' | 'info' | 'question') {
     Swal.fire({ title, text, icon });
-  }
-
-  generarPDFCategoria(cat: Categoria): void {
-    const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text("Detalle de Formulario", 10, 10);
-
-    doc.setFontSize(12);
-    if (cat.fecha) {
-      doc.text('Fecha: ' + cat.fecha, 10, 40);
-    }
-
-    doc.setFontSize(13);
-    doc.text('Información:', 10, 55);
-
-    const datos = [
-      ['Área', cat.area || ''],
-      ['Marca', cat.marca || ''],
-      ['Modelo', cat.modelo || ''],
-      ['Tipo', cat.tipo || ''],
-      ['Capacidad', cat.capacidad || ''],
-      ['Refrigerante', cat.refrig || ''],
-      ['PSI', cat.psi || ''],
-      ['Volts', cat.volts || ''],
-      ['AMP', cat.amp || ''],
-      ['Descripción', cat.descripcion || ''],
-      ['Cantidad', cat.cantidad || ''],
-      ['Materiales', cat.materiales || ''],
-      ['Recomendación', cat.recomendacion || '']
-    ];
-
-    autotable(doc, {
-      head: [['Campo', 'Valor']],
-      body: datos,
-      startY: 60
-    });
-
-    doc.save(`categoria_${cat.id}.pdf`);
   }
 }

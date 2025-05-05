@@ -7,7 +7,9 @@ import { NuevoPedidoComponent } from './pedido/components/nuevo-pedido/nuevo-ped
 import { ListaPedidoComponent } from './pedido/components/lista-pedido/lista-pedido.component';
 import { authGuard } from '../guards/auth.guard';
 import { TicketsComponent } from './tickets/tickets.component'; // 👈 Importación del componente
-import { TecnicoComponent } from './tecnico/tecnico.component';
+import { ClienteComponent } from './cliente/cliente.component';
+import { ReporteComponent } from './reporte/reporte.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const routes: Routes = [
   {
@@ -22,7 +24,7 @@ const routes: Routes = [
       {
         path: "producto",
         component: ProductoComponent,
-        canActivate:[authGuard("technical")]
+        canActivate: [authGuard("technical")]
       },
       {
         path: "pedido/nuevo",
@@ -35,14 +37,25 @@ const routes: Routes = [
         canActivate: [authGuard("admin")]
       },
       {
-        path: "tickets", // 👈 Ruta añadida
+        path: "tickets",
         component: TicketsComponent,
         canActivate: [authGuard("admin")]
       },
       {
-        path: "tecnicos",
-        component: TecnicoComponent
-      }
+        path: "cliente",
+        component: ClienteComponent,
+        canActivate: [authGuard("admin")]
+      },
+      {
+        path: "reporte",
+        component: ReporteComponent,
+        canActivate: [authGuard("admin")]
+      },
+      {
+        path: "usuarios",
+        component: UsuariosComponent,
+        canActivate: [authGuard("admin")]
+      },
     ]
   }
 ];

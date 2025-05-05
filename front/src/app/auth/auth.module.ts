@@ -8,6 +8,11 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+
+
 
 // PrimeNG Modules
 import { ButtonModule } from 'primeng/button';
@@ -16,12 +21,15 @@ import { ToastModule } from 'primeng/toast';         // ✅ NUEVO
 import { MessageService } from 'primeng/api';        // ✅ NUEVO
 
 import { PrimengModule } from '../primeng/primeng.module';
+import { AccordionModule } from 'primeng/accordion';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
     RegisterComponent,
     LoginComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +40,12 @@ import { PrimengModule } from '../primeng/primeng.module';
     PasswordModule,
     ToastModule,                // ✅ NUEVO: Toast para mensajes emergentes
     PrimengModule,
-    FormsModule
+    FormsModule,
+    CardModule,
+    InputTextModule,
+    DropdownModule,
+    AccordionModule,
+
   ],
   providers: [
     AuthService,

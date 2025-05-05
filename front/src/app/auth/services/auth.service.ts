@@ -7,34 +7,41 @@ import { Observable, tap } from 'rxjs';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:3000/auth'; // ✅ Cambia si tu backend está en otro host
+  private apiUrl = 'http://localhost:3000/auth'; // Asegúrate de que este sea el puerto correcto
 
   constructor(private http: HttpClient) {}
-  
-  usersData: any;
 
-  // ✅ Método para login
+  private usersData: any;
+
+  // ✅ Login
   loginConNest(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap((res) => {
-        console.log(res);
         this.usersData = res.data;
       })
     );
   }
 
-  // ✅ Obtener datos del usuario (opcional, si se necesita)
+  // ✅ Obtener datos del usuario guardado (opcional)
   getuserData() {
     return this.usersData;
   }
 
-  // ✅ Método para enviar el código de recuperación al correo del usuario
+  // ✅ Enviar enlace de recuperación al correo
   enviarPasswordPorCorreo(email: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/send-email`, { email });
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email });
   }
 
-  // ✅ Método para restablecer la contraseña con el código de recuperación
-  restablecerPassword(email: string, code: string, newPassword: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/reset-password`, { email, code, newPassword });
+  // ✅ Alias más legible
+  forgotPassword(email: string): Observable<any> {
+    return this.enviarPasswordPorCorreo(email);
+  }
+
+  // ✅ Cambiar la contraseña usando el token del link
+  changePassword(token: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/change-password`, {
+      token,
+      password
+    });
   }
 }
