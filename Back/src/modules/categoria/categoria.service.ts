@@ -24,11 +24,6 @@ export class CategoriaService {
     categoria.marca = createCategoriaDto.marca;
     categoria.modelo = createCategoriaDto.modelo;
     categoria.tipo = createCategoriaDto.tipo;
-    categoria.capacidad = createCategoriaDto.capacidad;
-    categoria.refrig = createCategoriaDto.refrig;
-    categoria.psi = createCategoriaDto.psi;
-    categoria.volts = createCategoriaDto.volts;
-    categoria.amp = createCategoriaDto.amp;
     categoria.descripcion = createCategoriaDto.descripcion;
 
     // Asegurarse que la cantidad sea un número positivo
@@ -36,7 +31,7 @@ export class CategoriaService {
     categoria.cantidad = isNaN(cantidad) || cantidad < 1 ? 0 : cantidad;
 
     categoria.materiales = createCategoriaDto.materiales;
-    categoria.recomendacion = createCategoriaDto.recomendacion;
+    categoria.acciones = createCategoriaDto.acciones;
 
     return await this.categoriaRepository.save(categoria);
   }
@@ -69,7 +64,7 @@ export class CategoriaService {
   
   async update(id: number, UpdateCategoriaDto: UpdateCategoriaDto) {
     const categoria = this.categoriaRepository.findOneBy({ id });
-    if (!categoria) {
+    if (!Categoria) {
       throw new BadRequestException('categoria not found');
     }
 

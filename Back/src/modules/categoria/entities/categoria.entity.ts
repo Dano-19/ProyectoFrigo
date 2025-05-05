@@ -14,6 +14,7 @@ export class Categoria {
     @Column({ nullable: true})
     fecha:Date
 
+
     // Área: Usando tipo 'text' está bien si es un campo largo opcional
     @Column({ type: 'text', nullable: true })
     area: string;
@@ -30,21 +31,6 @@ export class Categoria {
     @Column({ type: 'varchar', length: 50 })
     tipo: string;
 
-    @Column({ type: 'varchar', length: 50 })
-    capacidad: string;
-
-    @Column({ type: 'varchar', length: 50 })
-    refrig: string;
-
-    @Column({ type: 'varchar', length: 50 })
-    psi: string;
-
-    @Column({ type: 'varchar', length: 50 })
-    volts: string;
-
-    @Column({ type: 'varchar', length: 50 })
-    amp: string;
-
     // Descripción de trabajo: Usamos 'text' para textos largos
     @Column({ type: 'text', nullable: true })
     descripcion: string;
@@ -59,7 +45,7 @@ export class Categoria {
 
     // Acciones: Se usa 'varchar' con longitud definida
     @Column({ type: 'varchar', length: 50, nullable: true })
-    recomendacion: string;
+    acciones: string;
 
     // Relación uno a muchos con Producto
     @OneToMany(() => Producto, (prod) => prod.categoria)

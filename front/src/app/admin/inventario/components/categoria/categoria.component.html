@@ -85,53 +85,6 @@
                 </div>
             </div>
 
-            <!-- capacidad -->
-            <div class="field" style="margin-bottom: 1rem;">
-                <label for="capacidad" style="font-weight: 600; color: #007acc;">capacidad</label>
-                <input type="text" pInputText id="capacidad" formControlName="capacidad" class="input-field" />
-                <div *ngIf="categoriaForm.get('capacidad')?.invalid && categoriaForm.get('capacidad')?.touched" class="error-message">
-                    El modelo es obligatorio.
-                </div>
-            </div>
-
-            <!-- refrigerante -->
-            <div class="field" style="margin-bottom: 1rem;">
-                <label for="refrigerante" style="font-weight: 600; color: #007acc;">refrigerante</label>
-                <input type="text" pInputText id="refrigerante" formControlName="refrigerante" class="input-field" />
-                <div *ngIf="categoriaForm.get('refrigerante')?.invalid && categoriaForm.get('refrigerante')?.touched" class="error-message">
-                    El modelo es obligatorio.
-                </div>
-            </div>
-
-            <!-- psi -->
-            <div class="field" style="margin-bottom: 1rem;">
-                <label for="psi" style="font-weight: 600; color: #007acc;">psi</label>
-                <input type="text" pInputText id="psi" formControlName="psi" class="input-field" />
-                <div *ngIf="categoriaForm.get('psi')?.invalid && categoriaForm.get('psi')?.touched" class="error-message">
-                    El modelo es obligatorio.
-                </div>
-            </div>
-
-            <!-- volts -->
-            <div class="field" style="margin-bottom: 1rem;">
-                <label for="volts" style="font-weight: 600; color: #007acc;">volts</label>
-                <input type="text" pInputText id="volts" formControlName="volts"class="input-field" />
-                <div *ngIf="categoriaForm.get('volts')?.invalid && categoriaForm.get('volts')?.touched" class="error-message">
-                    El modelo es obligatorio.
-                </div>
-            </div>
-
-            <!-- amp -->
-            <div class="field" style="margin-bottom: 1rem;">
-                <label for="amp" style="font-weight: 600; color: #007acc;">amp</label>
-                <input type="text" pInputText id="amp" formControlName="amp" class="input-field" />
-                <div *ngIf="categoriaForm.get('amp')?.invalid && categoriaForm.get('amp')?.touched" class="error-message">
-                    El modelo es obligatorio.
-                </div>
-            </div>
-
-            
-
             <!-- Descripción -->
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="descripcion" style="font-weight: 600; color: #007acc;">Descripción</label>
@@ -159,11 +112,11 @@
                 </div>
             </div>
 
-            <!-- recomendacion -->
+            <!-- Acciones -->
             <div class="field" style="margin-bottom: 1rem;">
-                <label for="recomendacion" style="font-weight: 600; color: #007acc;">recomendacion</label>
-                <input type="text" pInputText id="recomendacion" formControlName="acciones" class="input-field" />
-                <div *ngIf="categoriaForm.get('recomendacion')?.invalid && categoriaForm.get('recomendacion')?.touched" class="error-message">
+                <label for="acciones" style="font-weight: 600; color: #007acc;">Acciones</label>
+                <input type="text" pInputText id="acciones" formControlName="acciones" class="input-field" />
+                <div *ngIf="categoriaForm.get('acciones')?.invalid && categoriaForm.get('acciones')?.touched" class="error-message">
                     El campo es obligatorio.
                 </div>
             </div>
@@ -188,15 +141,11 @@
                 <th>Marca</th>
                 <th>Modelo</th>
                 <th>Tipo</th>
-                <th>capacidad/th>
-                <th>refrigeranteth>
-                <th>psi</th>
-                <th>volts</th>
-                <th>amp</th>
                 <th>Descripción</th>
                 <th>Cantidad</th>
                 <th>Materiales</th>
-                <th>recomendacion</th>
+                <th>Acciones</th>
+                <th>Opciones</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-categoria>
@@ -209,15 +158,10 @@
                 <td>{{ categoria.marca }}</td>
                 <td>{{ categoria.modelo }}</td>
                 <td>{{ categoria.tipo }}</td>
-                <td>{{ categoria.capacidad }}</td>
-                <td>{{ categoria.refrigerante }}</td>
-                <td>{{ categoria.psi }}</td>
-                <td>{{ categoria.volts }}</td>
-                <td>{{ categoria.amp }}</td>
                 <td>{{ categoria.descripcion }}</td>
                 <td>{{ categoria.cantidad }}</td>
                 <td>{{ categoria.materiales }}</td>
-                <td>{{ categoria.recomendacion }}</td>
+                <td>{{ categoria.acciones }}</td>
                 <td>
                     <div class="flex" style="gap: 0.5rem;">
                         <button pButton pRipple icon="pi pi-pencil"
