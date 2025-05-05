@@ -26,30 +26,6 @@ interface Categoria {
   styleUrls: ['./categoria.component.scss']
 })
 export class CategoriaComponent implements OnInit {
-<<<<<<< HEAD
-
-  private categoriaService = inject(CategoriaService);
-
-  categorias: Categoria[] = [];
-  dialog_visible: boolean = false;
-  categoria_id: number = -1;
-  isSaving: boolean = false;
-
-  categoriaForm = new FormGroup({
-    fecha: new FormControl('', Validators.required),
-    area: new FormControl('', Validators.required),
-    marca: new FormControl('', Validators.required),
-    modelo: new FormControl('', Validators.required),
-    tipo: new FormControl('', Validators.required),
-    descripcion: new FormControl('', Validators.required),
-    cantidad: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
-    materiales: new FormControl('', Validators.required),
-    acciones: new FormControl('', Validators.required)
-  });
-
-  cat: Categoria | undefined;
-
-=======
   private categoriaService = inject(CategoriaService);
   categorias: Categoria[] = [];
   dialog_visible = false;
@@ -71,36 +47,12 @@ export class CategoriaComponent implements OnInit {
     acciones:     new FormControl('', Validators.required)
   });
 
->>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
   ngOnInit(): void {
     this.getCategorias();
   }
 
   getCategorias() {
     this.categoriaService.funListar().subscribe(
-<<<<<<< HEAD
-      (res: any) => {
-        this.categorias = res;
-      },
-      (error: any) => {
-        console.log(error);
-      }
-    );
-  }
-
-  mostrarDialog() {
-    this.dialog_visible = true;
-  }
-
-  cerrarDialog(): void {
-    this.dialog_visible = false;
-
-    // Para evitar errores de foco oculto (aria-hidden)
-    setTimeout(() => {
-      if (document.activeElement instanceof HTMLElement) {
-        document.activeElement.blur();
-      }
-=======
       (res: any) => this.categorias = res,
       (err: any) => console.error(err)
     );
@@ -114,60 +66,11 @@ export class CategoriaComponent implements OnInit {
     this.dialog_visible = false;
     setTimeout(() => {
       if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
->>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
     }, 0);
   }
 
   guardarCategoria() {
     if (this.categoriaForm.invalid) {
-<<<<<<< HEAD
-      this.alerta("ERROR AL REGISTRAR", "Por favor complete todos los campos", "error");
-      return;
-    }
-
-    const categoriaData = this.categoriaForm.value;
-
-    if (categoriaData['fecha']) {
-      const fecha = new Date(categoriaData['fecha']);
-      const yyyy = fecha.getFullYear();
-      const mm = String(fecha.getMonth() + 1).padStart(2, '0');
-      const dd = String(fecha.getDate()).padStart(2, '0');
-      categoriaData['fecha'] = `${yyyy}-${mm}-${dd}`;
-    }
-
-    this.isSaving = true;
-
-    if (this.categoria_id > 0) {
-      this.categoriaService.funModificar(this.categoria_id, categoriaData).subscribe(
-        (res: any) => {
-          this.isSaving = false;
-          this.cerrarDialog();
-          this.getCategorias();
-          this.categoria_id = -1;
-          this.alerta("ACTUALIZADO", "El formulario se modificó con éxito!", "success");
-        },
-        (error: any) => {
-          this.isSaving = false;
-          this.alerta("ERROR AL ACTUALIZAR", "Verifica los datos!", "error");
-        }
-      );
-    } else {
-      this.categoriaService.funGuardar(categoriaData).subscribe(
-        (res: any) => {
-          this.isSaving = false;
-          this.cerrarDialog();
-          this.getCategorias();
-          this.alerta("REGISTRADO", "El formulario se creó con éxito!", "success");
-        },
-        (error: any) => {
-          this.isSaving = false;
-          this.alerta("ERROR AL REGISTRAR", "Verifica los datos!", "error");
-        }
-      );
-    }
-
-    this.categoriaForm.reset();
-=======
       this.alerta('ERROR AL REGISTRAR', 'Complete todos los campos', 'error');
       return;
     }
@@ -199,34 +102,12 @@ export class CategoriaComponent implements OnInit {
         this.alerta(this.categoria_id > 0 ? 'ERROR AL ACTUALIZAR' : 'ERROR AL REGISTRAR', 'Verifica los datos!', 'error');
       }
     );
->>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
   }
 
   editarCategoria(cat: Categoria) {
     this.dialog_visible = true;
     this.categoria_id = cat.id;
 
-<<<<<<< HEAD
-    let fechaFormateada = '';
-    if (cat.fecha) {
-      const fecha = new Date(cat.fecha);
-      const yyyy = fecha.getFullYear();
-      const mm = String(fecha.getMonth() + 1).padStart(2, '0');
-      const dd = String(fecha.getDate()).padStart(2, '0');
-      fechaFormateada = `${yyyy}-${mm}-${dd}`;
-    }
-
-    this.categoriaForm.setValue({
-      fecha: fechaFormateada,
-      area: cat.area || '',
-      marca: cat.marca || '',
-      modelo: cat.modelo || '',
-      tipo: cat.tipo || '',
-      descripcion: cat.descripcion || '',
-      cantidad: cat.cantidad || '',
-      materiales: cat.materiales || '',
-      acciones: cat.acciones || ''
-=======
     // 2) Incluir horaIngreso y horaSalida en el setValue
     this.categoriaForm.setValue({
       fecha:        cat.fecha ? cat.fecha.split('T')[0] : '',
@@ -240,32 +121,11 @@ export class CategoriaComponent implements OnInit {
       cantidad:     cat.cantidad     || '',
       materiales:   cat.materiales   || '',
       acciones:     cat.acciones     || ''
->>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
     });
   }
 
   eliminarCategoria(cat: Categoria) {
     Swal.fire({
-<<<<<<< HEAD
-      title: "¿Está seguro de eliminar El formulario?",
-      text: "Una vez eliminada no se podrá recuperar!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, eliminar!"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.categoriaService.funEliminar(cat.id).subscribe(
-          (res: any) => {
-            this.alerta("ELIMINANDO!", "formulario eliminado", "success");
-            this.getCategorias();
-            this.categoria_id = -1;
-          },
-          (error: any) => {
-            this.alerta("ERROR!", "Error al intentar eliminar.", "error");
-          }
-=======
       title: '¿Eliminar formulario?',
       text: '¡No podrás revertirlo!',
       icon: 'warning',
@@ -278,17 +138,12 @@ export class CategoriaComponent implements OnInit {
         this.categoriaService.funEliminar(cat.id).subscribe(
           () => { this.alerta('ELIMINADO', 'Formulario eliminado', 'success'); this.getCategorias(); this.categoria_id = -1; },
           () => this.alerta('ERROR', 'Error al eliminar', 'error')
->>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
         );
       }
     });
   }
 
-<<<<<<< HEAD
-  alerta(title: string, text: string, icon: 'success' | 'error' | 'info' | 'question') {
-=======
   alerta(title: string, text: string, icon: 'success'|'error'|'info'|'question') {
->>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
     Swal.fire({ title, text, icon });
   }
 
@@ -315,11 +170,7 @@ export class CategoriaComponent implements OnInit {
 
 
     doc.setFontSize(18);
-<<<<<<< HEAD
-    doc.text("Formulario", 60, 10);
-=======
     doc.text("Formulario", 90, 10);
->>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
 
     doc.setFontSize(12);
     if (cat.fecha) {
@@ -330,11 +181,8 @@ export class CategoriaComponent implements OnInit {
     doc.text('Información:', 10, 40);
 
     const datos = [
-<<<<<<< HEAD
-=======
       ['Hora Ingreso', cat.horaIngreso  || ''],
       ['Hora Salida',  cat.horaSalida   || ''],
->>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
       ['Área', cat.area || ''],
       ['Marca', cat.marca || ''],
       ['Modelo', cat.modelo || ''],

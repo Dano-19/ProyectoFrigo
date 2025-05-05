@@ -14,11 +14,7 @@ import { CalendarModule } from 'primeng/calendar';
   standalone: true,
   imports: [FormsModule,
              CommonModule,
-<<<<<<< HEAD
               InputTextModule,
-=======
-              InputTextModule,
->>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
               InputTextareaModule,
               ButtonModule,
               CalendarModule
