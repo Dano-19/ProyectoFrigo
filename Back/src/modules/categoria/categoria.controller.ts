@@ -4,6 +4,7 @@ import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import path from 'path';
 
 @UseGuards(JwtAuthGuard)
 @ApiTags('categoria')
@@ -27,12 +28,15 @@ export class CategoriaController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCategoriaDto: UpdateCategoriaDto) {
-    return this.categoriaService.update(+id, updateCategoriaDto);
+  update(@Param('id') id: number,@Body()UpdateCategoriaDto:UpdateCategoriaDto) {
+    return this.categoriaService.update(+id,UpdateCategoriaDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.categoriaService.remove(+id);
   }
+
+
+
 }

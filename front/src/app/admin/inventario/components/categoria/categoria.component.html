@@ -9,28 +9,35 @@
 ">
 
     <h1 style="
-        color: #007acc;
+        color: #070701;
         text-align: center;
         margin-bottom: 1.5rem;
         font-size: 2rem;
         font-weight: bold;
-        border-bottom: 3px solid #ffa366;
+        border-bottom: 3px solid #FF5733 ;
         padding-bottom: 0.5rem;
         text-transform: uppercase;
     ">Formulario</h1>
 
-    <p-button (onClick)="mostrarDialog()" label="Nuevo Formulario" class="p-button-success"></p-button>
+    <p-button 
+        (onClick)="mostrarDialog()" 
+        label="Nuevo Formulario" 
+        class="p-button-success p-button-rounded"
+        [style]="{ 'background-color': '#05b6f9', 'border': 'none' }">
+    </p-button>
 
     <p-dialog
         header="Formulario"
         [(visible)]="dialog_visible"
         [modal]="true"
         [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
-        [style]="{ width: '30vw' }"
+        [style]="{ width: '30vw', 'border-radius': '1rem' }"
         [draggable]="false"
         [resizable]="false"
         class="p-fluid"
-        style="border-radius: 1rem;">
+        [attr.aria-modal]="true"
+        [closeOnEscape]="true"
+    >
 
         <form [formGroup]="categoriaForm">
             <!-- Fecha -->
@@ -42,7 +49,7 @@
                 </div>
             </div>
 
-            <!-- Area -->
+            <!-- Área -->
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="area" style="font-weight: 600; color: #007acc;">Área</label>
                 <input type="text" pInputText id="area" formControlName="area" class="input-field" />
@@ -78,11 +85,58 @@
                 </div>
             </div>
 
-            <!-- Descripción de Trabajo -->
+            <!-- capacidad -->
             <div class="field" style="margin-bottom: 1rem;">
-                <label for="descripcionTrabajo" style="font-weight: 600; color: #007acc;">Descripción de Trabajo</label>
-                <textarea pInputTextarea formControlName="descripcionTrabajo" class="input-field" rows="3"></textarea>
-                <div *ngIf="categoriaForm.get('descripcionTrabajo')?.invalid && categoriaForm.get('descripcionTrabajo')?.touched" class="error-message">
+                <label for="capacidad" style="font-weight: 600; color: #007acc;">capacidad</label>
+                <input type="text" pInputText id="capacidad" formControlName="capacidad" class="input-field" />
+                <div *ngIf="categoriaForm.get('capacidad')?.invalid && categoriaForm.get('capacidad')?.touched" class="error-message">
+                    El modelo es obligatorio.
+                </div>
+            </div>
+
+            <!-- refrigerante -->
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="refrigerante" style="font-weight: 600; color: #007acc;">refrigerante</label>
+                <input type="text" pInputText id="refrigerante" formControlName="refrigerante" class="input-field" />
+                <div *ngIf="categoriaForm.get('refrigerante')?.invalid && categoriaForm.get('refrigerante')?.touched" class="error-message">
+                    El modelo es obligatorio.
+                </div>
+            </div>
+
+            <!-- psi -->
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="psi" style="font-weight: 600; color: #007acc;">psi</label>
+                <input type="text" pInputText id="psi" formControlName="psi" class="input-field" />
+                <div *ngIf="categoriaForm.get('psi')?.invalid && categoriaForm.get('psi')?.touched" class="error-message">
+                    El modelo es obligatorio.
+                </div>
+            </div>
+
+            <!-- volts -->
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="volts" style="font-weight: 600; color: #007acc;">volts</label>
+                <input type="text" pInputText id="volts" formControlName="volts"class="input-field" />
+                <div *ngIf="categoriaForm.get('volts')?.invalid && categoriaForm.get('volts')?.touched" class="error-message">
+                    El modelo es obligatorio.
+                </div>
+            </div>
+
+            <!-- amp -->
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="amp" style="font-weight: 600; color: #007acc;">amp</label>
+                <input type="text" pInputText id="amp" formControlName="amp" class="input-field" />
+                <div *ngIf="categoriaForm.get('amp')?.invalid && categoriaForm.get('amp')?.touched" class="error-message">
+                    El modelo es obligatorio.
+                </div>
+            </div>
+
+            
+
+            <!-- Descripción -->
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="descripcion" style="font-weight: 600; color: #007acc;">Descripción</label>
+                <textarea pInputTextarea id="descripcion" formControlName="descripcion" class="input-field" rows="3"></textarea>
+                <div *ngIf="categoriaForm.get('descripcion')?.invalid && categoriaForm.get('descripcion')?.touched" class="error-message">
                     La descripción de trabajo es obligatoria.
                 </div>
             </div>
@@ -100,12 +154,20 @@
                     <label for="materiales" style="font-weight: 600; color: #007acc;">Materiales</label>
                     <input type="text" pInputText id="materiales" formControlName="materiales" class="input-field" />
                     <div *ngIf="categoriaForm.get('materiales')?.invalid && categoriaForm.get('materiales')?.touched" class="error-message">
-                        El campo materiales es obligatorio.
+                        El campo es obligatorio.
                     </div>
                 </div>
             </div>
 
-            <!-- Submit Button -->
+            <!-- recomendacion -->
+            <div class="field" style="margin-bottom: 1rem;">
+                <label for="recomendacion" style="font-weight: 600; color: #007acc;">recomendacion</label>
+                <input type="text" pInputText id="recomendacion" formControlName="acciones" class="input-field" />
+                <div *ngIf="categoriaForm.get('recomendacion')?.invalid && categoriaForm.get('recomendacion')?.touched" class="error-message">
+                    El campo es obligatorio.
+                </div>
+            </div>
+
         </form>
 
         <ng-template pTemplate="footer">
@@ -119,43 +181,59 @@
     <!-- Tabla de Categorías -->
     <p-table [value]="categorias" [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
-            <tr style="background-color: #007acc; color: white;">
-                <th style="padding: 0.75rem;">ID</th>
-                <th style="padding: 0.75rem;">Fecha</th>
-                <th style="padding: 0.75rem;">Área</th>
-                <th style="padding: 0.75rem;">Marca</th>
-                <th style="padding: 0.75rem;">Modelo</th>
-                <th style="padding: 0.75rem;">Tipo</th>
-                <th style="padding: 0.75rem;">Descripción Trabajo</th>
-                <th style="padding: 0.75rem;">Cantidad</th>
-                <th style="padding: 0.75rem;">Materiales</th>
-                <th style="padding: 0.75rem;">Acciones</th>
+            <tr style="background-color: #007acc; color: rgba(18, 176, 182, 0.699);">
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Área</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Tipo</th>
+                <th>capacidad/th>
+                <th>refrigeranteth>
+                <th>psi</th>
+                <th>volts</th>
+                <th>amp</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Materiales</th>
+                <th>recomendacion</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-categoria>
             <tr style="background-color: #ffffff; transition: background 0.3s;"
                 onmouseover="this.style.backgroundColor='#ffe5cc'"
                 onmouseout="this.style.backgroundColor='#ffffff'">
-                <td style="padding: 0.75rem;">{{ categoria.id }}</td>
-                <td style="padding: 0.75rem;">{{ categoria.fecha }}</td>
-                <td style="padding: 0.75rem;">{{ categoria.area }}</td>
-                <td style="padding: 0.75rem;">{{ categoria.marca }}</td>
-                <td style="padding: 0.75rem;">{{ categoria.modelo }}</td>
-                <td style="padding: 0.75rem;">{{ categoria.tipo }}</td>
-                <td style="padding: 0.75rem;">{{ categoria.descripcionTrabajo }}</td>
-                <td style="padding: 0.75rem;">{{ categoria.cantidad }}</td>
-                <td style="padding: 0.75rem;">{{ categoria.materiales }}</td>
-                <td style="padding: 0.75rem;">
+                <td>{{ categoria.id }}</td>
+                <td>{{ categoria.fecha }}</td>
+                <td>{{ categoria.area }}</td>
+                <td>{{ categoria.marca }}</td>
+                <td>{{ categoria.modelo }}</td>
+                <td>{{ categoria.tipo }}</td>
+                <td>{{ categoria.capacidad }}</td>
+                <td>{{ categoria.refrigerante }}</td>
+                <td>{{ categoria.psi }}</td>
+                <td>{{ categoria.volts }}</td>
+                <td>{{ categoria.amp }}</td>
+                <td>{{ categoria.descripcion }}</td>
+                <td>{{ categoria.cantidad }}</td>
+                <td>{{ categoria.materiales }}</td>
+                <td>{{ categoria.recomendacion }}</td>
+                <td>
                     <div class="flex" style="gap: 0.5rem;">
                         <button pButton pRipple icon="pi pi-pencil"
                                 class="p-button-rounded p-button-success"
-                                style="background-color: #007acc; border: none;"
+                                style="background-color: #f98a05; border: none;"
                                 (click)="editarCategoria(categoria)">
                         </button>
                         <button pButton pRipple icon="pi pi-trash"
                                 class="p-button-rounded p-button-warning"
-                                style="background-color: #ff6b00; border: none;"
+                                style="background-color: #f30d0d; border: none;"
                                 (click)="eliminarCategoria(categoria)">
+                        </button>
+                        <button pButton pRipple icon="pi pi-file-pdf"
+                                class="p-button-rounded p-button-danger"
+                                style="background-color: #e53935; border: none;"
+                                (click)="generarPDFCategoria(categoria)">
                         </button>
                     </div>
                 </td>

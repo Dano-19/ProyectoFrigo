@@ -1,6 +1,3 @@
-
-// src/modules/categoria/entities/categoria.entity.ts
-
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -14,8 +11,8 @@ export class Categoria {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  nombre: string;
+    @Column({ nullable: true})
+    fecha:Date
 
     // Área: Usando tipo 'text' está bien si es un campo largo opcional
     @Column({ type: 'text', nullable: true })
@@ -23,35 +20,49 @@ export class Categoria {
 
     // Marca: Se usa 'varchar' con longitud definida (50 caracteres)
     @Column({ type: 'varchar', length: 50 })
-    Marca: string;
+    marca: string;
 
     // Modelo: Se usa 'varchar' con longitud definida (50 caracteres)
     @Column({ type: 'varchar', length: 50 })
-    Modelo: string;
+    modelo: string;
 
     // Tipo: Se usa 'varchar' con longitud definida (50 caracteres)
     @Column({ type: 'varchar', length: 50 })
-    Tipo: string;
+    tipo: string;
+
+    @Column({ type: 'varchar', length: 50 })
+    capacidad: string;
+
+    @Column({ type: 'varchar', length: 50 })
+    refrig: string;
+
+    @Column({ type: 'varchar', length: 50 })
+    psi: string;
+
+    @Column({ type: 'varchar', length: 50 })
+    volts: string;
+
+    @Column({ type: 'varchar', length: 50 })
+    amp: string;
 
     // Descripción de trabajo: Usamos 'text' para textos largos
     @Column({ type: 'text', nullable: true })
-    descripcionTrabajo: string;
+    descripcion: string;
 
     // Cantidad: Cambiado a 'decimal' para permitir decimales
     @Column({ type: 'decimal', precision: 5, scale: 2 })  // 'precision' define la cantidad total de dígitos y 'scale' la cantidad de decimales
-    Cantidad: number;
+    cantidad: number;
 
     // Material: 'text' es adecuado si la descripción puede ser larga, si no puedes usar 'varchar'
     @Column({ type: 'text', nullable: true })
-    Material: string;
+    materiales: string;
 
     // Acciones: Se usa 'varchar' con longitud definida
-    @Column({ type: 'varchar', length: 50 })
-    Acciones: string;
+    @Column({ type: 'varchar', length: 50, nullable: true })
+    recomendacion: string;
 
     // Relación uno a muchos con Producto
     @OneToMany(() => Producto, (prod) => prod.categoria)
     producto: Producto[];
-  fecha: Date;
 }
 
