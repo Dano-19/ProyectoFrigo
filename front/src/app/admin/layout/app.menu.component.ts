@@ -28,7 +28,7 @@ export class AppMenuComponent implements OnInit {
         }
     
         this.model = [
-            { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['/admin'], role: 'client' },
+            { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['/admin'], role: 'admin' },
             { label: 'Formulario', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/categoria'], role: 'admin' },
             { label: 'Listado de Formularios', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/producto'], role: 'admin' },
             { label: 'Tickets', icon: 'pi pi-fw pi-ticket', routerLink: ['/admin/tickets'], target: '_blank', role: 'admin' },
