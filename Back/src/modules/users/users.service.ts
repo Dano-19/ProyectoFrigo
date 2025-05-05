@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { createHash, hash } from 'crypto';
+import { console } from 'inspector';
 
 @Injectable()
 export class UsersService {
@@ -14,19 +15,27 @@ export class UsersService {
   }
 
   findAll() {
-    return this.userRepository.find();
+    return this.userRepository.find({select:['id','name','email','role']});
   }
 
   findOne(id: number) {
     return `This action returns a #${id} user`;
   }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.findOneBy({id});
+    if (!user){
+      throw new BadRequestException('User not found');
+    }
+    
+    const updateUser = this.userRepository.merge(user, updateUserDto);
+    await this.userRepository.save(updateUser);
+    return 'User updated successfully';
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.userRepository.delete(id);
+    
   }
 
   async findByEmail(email: string) {

@@ -20,7 +20,7 @@ export class peticionInterceptor implements HttpInterceptor{
     return handler.handle(peticion).pipe(tap(()=>{},
   
     (error:any)=>{
-      console.log("ERRORRRRRRR")
+      console.log("ERRORRRRRRR capa 8")
       if (error instanceof HttpErrorResponse){
         if(error.status!== 401){
           return
