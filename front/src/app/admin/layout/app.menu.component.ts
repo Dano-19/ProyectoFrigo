@@ -28,12 +28,13 @@ export class AppMenuComponent implements OnInit {
         }
     
         this.model = [
-            { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['/admin'], role: 'client' },
+            { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['/admin'], role: 'admin' },
             { label: 'Formulario', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/categoria'], role: 'admin' },
             { label: 'Listado de Formularios', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/producto'], role: 'admin' },
             { label: 'Tickets', icon: 'pi pi-fw pi-ticket', routerLink: ['/admin/tickets'], target: '_blank', role: 'admin' },
-            { label: 'Técnicos', icon: 'pi pi-fw pi-desktop', routerLink: ['/admin/tecnico'], role:['admin', 'technical']  },
-            { label: 'Usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/admin/usuarios'], role: 'admin' }
+            { label: 'Usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/admin/usuarios'], role: 'admin' },
+            { label: 'Reportes', icon: 'pi pi-fw pi-user', routerLink: ['/admin/reporte'], target: '_blank',  role: 'admin' },
+            { label: 'Clientes', icon: 'pi pi-fw pi-user', routerLink: ['/admin/cliente'],  role: 'admin'},
         ];
     }
     
