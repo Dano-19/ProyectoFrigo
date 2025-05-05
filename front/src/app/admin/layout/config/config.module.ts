@@ -6,6 +6,11 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ButtonModule } from 'primeng/button';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { AppConfigComponent } from './app.config.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { AccordionModule } from 'primeng/accordion';
 
 @NgModule({
     imports: [
@@ -14,7 +19,12 @@ import { AppConfigComponent } from './app.config.component';
         SidebarModule,
         RadioButtonModule,
         ButtonModule,
-        InputSwitchModule
+        InputSwitchModule,
+        ReactiveFormsModule,
+        CardModule,
+        InputTextModule,
+        DropdownModule,
+        AccordionModule
     ],
     declarations: [
         AppConfigComponent

@@ -4,7 +4,6 @@
   class="flex justify-content-center align-items-center min-h-screen min-w-screen bg-[#f8faff] overflow-hidden"
 >
   <div class="flex flex-column align-items-center justify-content-center">
-    <!-- Tarjeta redondeada con sombra difusa -->
     <div
       style="
         margin-top: 5rem;
@@ -23,10 +22,7 @@
         style="border-radius: 2rem; background-color: white"
       >
         <!-- LOGO -->
-        <div
-          class="text-center mb-6"
-          style="margin-top: 1rem; border-radius: 2.5rem; padding: 1.5rem"
-        >
+        <div class="text-center mb-6" style="margin-top: 1rem">
           <div
             style="
               background: linear-gradient(135deg, #ff6b00 20%, #007bff 80%);
@@ -47,7 +43,7 @@
           </div>
         </div>
 
-        <!-- Encabezado visual -->
+        <!-- Encabezado -->
         <div class="text-center mb-5">
           <div
             style="
@@ -115,8 +111,7 @@
             styleClass="mb-2"
             inputStyleClass="w-full p-3 md:w-30rem"
             [feedback]="false"
-          >
-          </p-password>
+          ></p-password>
           <p>
             <small
               *ngIf="
@@ -131,6 +126,7 @@
             </small>
           </p>
 
+          <!-- Rol -->
           <label
             for="rol"
             class="block font-semibold text-xl mb-2 mt-4"
@@ -157,14 +153,11 @@
             </small>
           </p>
 
-          <!-- Recordarme y olvido -->
-          <div
-            class="flex align-items-center justify-content-between mb-5 mt-4 gap-3"
-          >
-            <label style="color: #444">🔁 Recordarme</label>
+          <!-- Enlace olvidaste tu contraseña -->
+          <div class="flex justify-content-end mb-4 mt-4">
             <a
               class="font-medium no-underline text-right cursor-pointer"
-              style="color: #007bff"
+              style="color: #007bff; font-size: 1rem"
               [routerLink]="['/auth/forgot-password']"
             >
               ¿Olvidaste tu contraseña?
@@ -187,7 +180,7 @@
             "
           ></button>
 
-          <!-- Botón para registrarse -->
+          <!-- Botón registrarse -->
           <button
             pButton
             pRipple
