@@ -14,7 +14,7 @@ import { CalendarModule } from 'primeng/calendar';
   standalone: true,
   imports: [FormsModule,
              CommonModule,
-              InputTextModule,  
+              InputTextModule,
               InputTextareaModule,
               ButtonModule,
               CalendarModule
@@ -31,7 +31,6 @@ export class TicketsComponent {
     prioridad: '',
     fechaCreacion: '',
   };
-  
 
   // Define el correo al que se enviará
   correoDestino = 'soporte@frigoservicios.com';

@@ -19,8 +19,9 @@ import { join } from 'path';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true,
-    }),
+      envFilePath: '.env.development',
+      isGlobal:true,
+}),
 
     MailerModule.forRootAsync({
       imports: [ConfigModule],

@@ -19,41 +19,43 @@
         text-transform: uppercase;
     ">Formulario</h1>
 
-    <p-button 
-        (onClick)="mostrarDialog()" 
-        label="Nuevo Formulario" 
-        class="p-button-success p-button-rounded"
+    <p-button (onClick)="mostrarDialog()" label="Nuevo Formulario" class="p-button-success p-button-rounded"
         [style]="{ 'background-color': '#05b6f9', 'border': 'none' }">
     </p-button>
 
-    <p-dialog
-        header="Formulario"
-        [(visible)]="dialog_visible"
-        [modal]="true"
-        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
-        [style]="{ width: '30vw', 'border-radius': '1rem' }"
-        [draggable]="false"
-        [resizable]="false"
-        class="p-fluid"
-        [attr.aria-modal]="true"
-        [closeOnEscape]="true"
-    >
+    <p-dialog header="Formulario" [(visible)]="dialog_visible" [modal]="true"
+        [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '30vw', 'border-radius': '1rem' }"
+        [draggable]="false" [resizable]="false" class="p-fluid" [attr.aria-modal]="true" [closeOnEscape]="true">
 
         <form [formGroup]="categoriaForm">
             <!-- Fecha -->
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="fecha" style="font-weight: 600; color: #007acc;">Fecha</label>
                 <input type="date" pInputText id="fecha" formControlName="fecha" class="input-field" />
-                <div *ngIf="categoriaForm.get('fecha')?.invalid && categoriaForm.get('fecha')?.touched" class="error-message">
+                <div *ngIf="categoriaForm.get('fecha')?.invalid && categoriaForm.get('fecha')?.touched"
+                    class="error-message">
                     Fecha es obligatoria y debe tener el formato correcto.
                 </div>
+            </div>
+
+            <!-- NUEVO: Hora de Ingreso -->
+            <div class="p-field p-col-12 p-md-4">
+                <label for="horaIngreso">Hora Ingreso</label>
+                <input id="horaIngreso" type="time" pInputText formControlName="horaIngreso" />
+            </div>
+
+            <!-- NUEVO: Hora de Salida -->
+            <div class="p-field p-col-12 p-md-4">
+                <label for="horaSalida">Hora Salida</label>
+                <input id="horaSalida" type="time" pInputText formControlName="horaSalida" />
             </div>
 
             <!-- Área -->
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="area" style="font-weight: 600; color: #007acc;">Área</label>
                 <input type="text" pInputText id="area" formControlName="area" class="input-field" />
-                <div *ngIf="categoriaForm.get('area')?.invalid && categoriaForm.get('area')?.touched" class="error-message">
+                <div *ngIf="categoriaForm.get('area')?.invalid && categoriaForm.get('area')?.touched"
+                    class="error-message">
                     El área es obligatoria.
                 </div>
             </div>
@@ -62,7 +64,8 @@
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="marca" style="font-weight: 600; color: #007acc;">Marca</label>
                 <input type="text" pInputText id="marca" formControlName="marca" class="input-field" />
-                <div *ngIf="categoriaForm.get('marca')?.invalid && categoriaForm.get('marca')?.touched" class="error-message">
+                <div *ngIf="categoriaForm.get('marca')?.invalid && categoriaForm.get('marca')?.touched"
+                    class="error-message">
                     La marca es obligatoria.
                 </div>
             </div>
@@ -71,7 +74,8 @@
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="modelo" style="font-weight: 600; color: #007acc;">Modelo</label>
                 <input type="text" pInputText id="modelo" formControlName="modelo" class="input-field" />
-                <div *ngIf="categoriaForm.get('modelo')?.invalid && categoriaForm.get('modelo')?.touched" class="error-message">
+                <div *ngIf="categoriaForm.get('modelo')?.invalid && categoriaForm.get('modelo')?.touched"
+                    class="error-message">
                     El modelo es obligatorio.
                 </div>
             </div>
@@ -80,7 +84,8 @@
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="tipo" style="font-weight: 600; color: #007acc;">Tipo</label>
                 <input type="text" pInputText id="tipo" formControlName="tipo" class="input-field" />
-                <div *ngIf="categoriaForm.get('tipo')?.invalid && categoriaForm.get('tipo')?.touched" class="error-message">
+                <div *ngIf="categoriaForm.get('tipo')?.invalid && categoriaForm.get('tipo')?.touched"
+                    class="error-message">
                     El tipo es obligatorio.
                 </div>
             </div>
@@ -88,8 +93,10 @@
             <!-- Descripción -->
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="descripcion" style="font-weight: 600; color: #007acc;">Descripción</label>
-                <textarea pInputTextarea id="descripcion" formControlName="descripcion" class="input-field" rows="3"></textarea>
-                <div *ngIf="categoriaForm.get('descripcion')?.invalid && categoriaForm.get('descripcion')?.touched" class="error-message">
+                <textarea pInputTextarea id="descripcion" formControlName="descripcion" class="input-field"
+                    rows="3"></textarea>
+                <div *ngIf="categoriaForm.get('descripcion')?.invalid && categoriaForm.get('descripcion')?.touched"
+                    class="error-message">
                     La descripción de trabajo es obligatoria.
                 </div>
             </div>
@@ -99,14 +106,16 @@
                 <div style="width: 50%; padding-right: 10px;">
                     <label for="cantidad" style="font-weight: 600; color: #007acc;">Cantidad</label>
                     <input type="number" pInputText id="cantidad" formControlName="cantidad" class="input-field" />
-                    <div *ngIf="categoriaForm.get('cantidad')?.invalid && categoriaForm.get('cantidad')?.touched" class="error-message">
+                    <div *ngIf="categoriaForm.get('cantidad')?.invalid && categoriaForm.get('cantidad')?.touched"
+                        class="error-message">
                         La cantidad es obligatoria y debe ser un número.
                     </div>
                 </div>
                 <div style="width: 50%; padding-left: 10px;">
                     <label for="materiales" style="font-weight: 600; color: #007acc;">Materiales</label>
                     <input type="text" pInputText id="materiales" formControlName="materiales" class="input-field" />
-                    <div *ngIf="categoriaForm.get('materiales')?.invalid && categoriaForm.get('materiales')?.touched" class="error-message">
+                    <div *ngIf="categoriaForm.get('materiales')?.invalid && categoriaForm.get('materiales')?.touched"
+                        class="error-message">
                         El campo es obligatorio.
                     </div>
                 </div>
@@ -116,7 +125,8 @@
             <div class="field" style="margin-bottom: 1rem;">
                 <label for="acciones" style="font-weight: 600; color: #007acc;">Acciones</label>
                 <input type="text" pInputText id="acciones" formControlName="acciones" class="input-field" />
-                <div *ngIf="categoriaForm.get('acciones')?.invalid && categoriaForm.get('acciones')?.touched" class="error-message">
+                <div *ngIf="categoriaForm.get('acciones')?.invalid && categoriaForm.get('acciones')?.touched"
+                    class="error-message">
                     El campo es obligatorio.
                 </div>
             </div>
@@ -124,10 +134,10 @@
         </form>
 
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
-                    style="color: #007acc;" (click)="dialog_visible=false"></button>
+            <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" style="color: #007acc;"
+                (click)="dialog_visible=false"></button>
             <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text p-button-success"
-                    [disabled]="isSaving" (click)="guardarCategoria()"></button>
+                [disabled]="isSaving" (click)="guardarCategoria()"></button>
         </ng-template>
     </p-dialog>
 
@@ -137,6 +147,8 @@
             <tr style="background-color: #007acc; color: rgba(18, 176, 182, 0.699);">
                 <th>ID</th>
                 <th>Fecha</th>
+                <th>Hora Ingreso</th>
+                <th>Hora Salida</th>
                 <th>Área</th>
                 <th>Marca</th>
                 <th>Modelo</th>
@@ -149,10 +161,11 @@
         </ng-template>
         <ng-template pTemplate="body" let-categoria>
             <tr style="background-color: #ffffff; transition: background 0.3s;"
-                onmouseover="this.style.backgroundColor='#ffe5cc'"
-                onmouseout="this.style.backgroundColor='#ffffff'">
+                onmouseover="this.style.backgroundColor='#ffe5cc'" onmouseout="this.style.backgroundColor='#ffffff'">
                 <td>{{ categoria.id }}</td>
                 <td>{{ categoria.fecha }}</td>
+                <td>{{ categoria.horaIngreso }}</td>
+                <td>{{ categoria.horaSalida }}</td>
                 <td>{{ categoria.area }}</td>
                 <td>{{ categoria.marca }}</td>
                 <td>{{ categoria.modelo }}</td>
@@ -163,20 +176,14 @@
                 <td>{{ categoria.acciones }}</td>
                 <td>
                     <div class="flex" style="gap: 0.5rem;">
-                        <button pButton pRipple icon="pi pi-pencil"
-                                class="p-button-rounded p-button-success"
-                                style="background-color: #f98a05; border: none;"
-                                (click)="editarCategoria(categoria)">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success"
+                            style="background-color: #f98a05; border: none;" (click)="editarCategoria(categoria)">
                         </button>
-                        <button pButton pRipple icon="pi pi-trash"
-                                class="p-button-rounded p-button-warning"
-                                style="background-color: #f30d0d; border: none;"
-                                (click)="eliminarCategoria(categoria)">
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                            style="background-color: #f30d0d; border: none;" (click)="eliminarCategoria(categoria)">
                         </button>
-                        <button pButton pRipple icon="pi pi-file-pdf"
-                                class="p-button-rounded p-button-danger"
-                                style="background-color: #e53935; border: none;"
-                                (click)="generarPDFCategoria(categoria)">
+                        <button pButton pRipple icon="pi pi-file-pdf" class="p-button-rounded p-button-danger"
+                            style="background-color: #e53935; border: none;" (click)="generarPDFCategoria(categoria)">
                         </button>
                     </div>
                 </td>
