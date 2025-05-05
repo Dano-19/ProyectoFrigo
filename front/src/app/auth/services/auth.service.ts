@@ -7,44 +7,41 @@ import { Observable, tap } from 'rxjs';
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:3000/auth'; // Ajusta si tu backend cambia
+  private apiUrl = 'http://localhost:3000/auth'; // Asegúrate de que este sea el puerto correcto
 
   constructor(private http: HttpClient) {}
 
-  usersData: any;
+  private usersData: any;
 
   // ✅ Login
   loginConNest(credentials: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap((res) => {
-        console.log(res);
         this.usersData = res.data;
       })
     );
   }
 
-  // ✅ Obtener usuario actual (opcional)
+  // ✅ Obtener datos del usuario guardado (opcional)
   getuserData() {
     return this.usersData;
   }
 
-  // ✅ Enviar correo con enlace para cambiar contraseña
+  // ✅ Enviar enlace de recuperación al correo
   enviarPasswordPorCorreo(email: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/recuperar`, { email });
+    return this.http.post(`${this.apiUrl}/forgot-password`, { email });
   }
 
-  // ✅ Alias para integrarse mejor con el componente forgot-password
+  // ✅ Alias más legible
   forgotPassword(email: string): Observable<any> {
     return this.enviarPasswordPorCorreo(email);
   }
 
-  // ✅ Cambiar contraseña usando token desde URL
-  changePassword(token: string, newPassword: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/change-password`, { token, newPassword });
+  // ✅ Cambiar la contraseña usando el token del link
+  changePassword(token: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/change-password`, {
+      token,
+      password
+    });
   }
-
-  // ❌ Obsoleto (dejó de usarse con el flujo actual)
-  // restablecerPassword(email: string, code: string, newPassword: string): Observable<any> {
-  //   return this.http.post(`${this.apiUrl}/reset-password`, { email, code, newPassword });
-  // }
 }

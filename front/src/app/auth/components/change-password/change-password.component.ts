@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ChangePasswordComponent implements OnInit {
   changeForm!: FormGroup;
-  token!: string;
+  token: string = '';
   loading = false;
   errorMessage = '';
   successMessage = '';
@@ -22,14 +22,13 @@ export class ChangePasswordComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtener el token de la URL
     this.token = this.route.snapshot.queryParamMap.get('token') || '';
 
-    // Inicializar el formulario reactivo
     this.changeForm = this.fb.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
     });
+
   }
 
   onSubmit(): void {
@@ -43,18 +42,19 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     this.loading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
 
-    // Llamada HTTP al backend para cambiar contraseña
-    this.http.post('http://localhost:4000/auth/change-password', {
+    this.http.post('http://localhost:3000/auth/change-password', {
       token: this.token,
-      newPassword: password
+      password
     }).subscribe({
       next: () => {
         this.successMessage = 'Contraseña actualizada correctamente. Redirigiendo...';
-        setTimeout(() => this.router.navigate(['/login']), 2500);
+        setTimeout(() => this.router.navigate(['/auth/login']), 2500);
       },
       error: (err) => {
-        this.errorMessage = err.error.message || 'Error al cambiar la contraseña';
+        this.errorMessage = err.error?.message || 'Error al cambiar la contraseña';
         this.loading = false;
       }
     });

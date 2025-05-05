@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, HttpCode } from '@nestjs/common';
 import { RegisterAuthDto } from './dto/register-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { AuthService } from './auth.service';
@@ -25,8 +25,9 @@ export class AuthController {
   }
 
   @Post('change-password')
-  async changePassword(@Body() body: { token: string; password: string }) {
+  @HttpCode(204) // Código 204 No Content, sin cuerpo
+  async changePassword(@Body() body: { token: string; password: string }): Promise<void> {
     const { token, password } = body;
-    return this.authService.changePasswordWithToken(token, password);
+    await this.authService.changePasswordWithToken(token, password);
   }
 }
