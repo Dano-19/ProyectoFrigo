@@ -55,16 +55,15 @@ export class AuthService {
   }
 
   /**
-   * ✅ Recuperar contraseña por correo (⚠️ DEMO)
+   * ✅ Enviar token de recuperación por correo (enlace)
    */
-  async recuperarContraseña(email: string): Promise<void> {
+  async recuperarContraseña(email: string): Promise<{ message: string }> {
     const user = await this.userRepository.findOne({ where: { email } });
 
     if (!user) {
       throw new NotFoundException('Usuario no encontrado');
     }
 
-    // Genera un token temporal válido por 15 minutos
     const resetToken = await this.jwtService.signAsync(
       { id: user.id },
       { expiresIn: '15m' }
@@ -76,7 +75,7 @@ export class AuthService {
       html: `
         <h2>Hola 👋</h2>
         <p>Haz clic en el siguiente enlace para cambiar tu contraseña:</p>
-        <a href="http://localhost:4200/change-password?token=${resetToken}">
+        <a href="http://localhost:4200/auth/change-password?token=${resetToken}">
           Cambiar Contraseña
         </a>
         <p>Este enlace expirará en 15 minutos.</p>
@@ -84,10 +83,12 @@ export class AuthService {
         <p>Equipo de Frigoservicios</p>
       `,
     });
+
+    return { message: 'Enlace de recuperación enviado al correo' };
   }
 
   /**
-   * ✅ Cambiar contraseña usando un token JWT válido
+   * ✅ Cambiar contraseña con token válido
    */
   async changePasswordWithToken(token: string, newPassword: string) {
     try {
@@ -95,10 +96,10 @@ export class AuthService {
       const user = await this.userRepository.findOne({ where: { id: payload.id } });
 
       if (!user) {
-        throw new UnauthorizedException('Usuario no encontrado con ese token');
+        throw new UnauthorizedException('Usuario no encontrado');
       }
 
-      const hashed = await hash(newPassword, 10);
+      const hashed = await hash(newPassword, 12);
       await this.userRepository.update(user.id, { password: hashed });
 
       return { message: 'Contraseña actualizada correctamente' };
