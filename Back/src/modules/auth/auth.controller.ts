@@ -24,4 +24,11 @@ export class AuthController {
     await this.authService.recuperarContraseña(email);
     return { message: 'Correo de recuperación enviado correctamente' };
   }
+  
+  @Post('change-password')
+  async changePassword(@Body() body: { token: string; newPassword: string }) {
+    return this.authService.changePasswordWithToken(body.token, body.newPassword);
+  }
+  
+
 }

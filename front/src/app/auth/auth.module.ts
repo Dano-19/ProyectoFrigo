@@ -13,6 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 
 
+
 // PrimeNG Modules
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
@@ -21,12 +22,14 @@ import { MessageService } from 'primeng/api';        // ✅ NUEVO
 
 import { PrimengModule } from '../primeng/primeng.module';
 import { AccordionModule } from 'primeng/accordion';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
     RegisterComponent,
     LoginComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +44,8 @@ import { AccordionModule } from 'primeng/accordion';
     CardModule,
     InputTextModule,
     DropdownModule,
-    AccordionModule
+    AccordionModule,
+
   ],
   providers: [
     AuthService,

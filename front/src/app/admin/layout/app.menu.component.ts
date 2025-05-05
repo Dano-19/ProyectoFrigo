@@ -10,7 +10,7 @@ export class AppMenuComponent implements OnInit {
 
     model: any[] = [];
 
-    constructor(public layoutService: LayoutService) { }
+    constructor(public layoutService: LayoutService) {}
 
     ngOnInit() {
         this.model = [
@@ -23,36 +23,25 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     { label: 'Formulario', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/categoria'] },
                     { label: 'Listado de Formularios', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/producto'] },
+                ]
+            },
+            {
+                items: [
+                    // { label: 'Lista Pedidos', icon: 'pi pi-fw pi-eye', routerLink: ['/admin/pedido'], badge: 'NEW' },
+                    // { label: 'Nuevo Pedido', icon: 'pi pi-fw pi-moon', routerLink: ['/admin/pedido/nuevo'], badge: 'NEW' },
 
+                    { label: 'Tickets', icon: 'pi pi-fw pi-ticket', routerLink: ['/admin/tickets'], target: '_blank' },
+                    { label: 'Reportes', icon: 'pi pi-fw pi-chart-line', routerLink: ['/admin/reporte'], target: '_blank' }
                 ]
             },
             {
                 items: [
-                    /**{ label: 'Lista Pedidos', icon: 'pi pi-fw pi-eye', routerLink: ['/admin/pedido'], badge: 'NEW' },
-                    { label: 'Nuevo Pedido', icon: 'pi pi-fw pi-moon', routerLink: ['/admin/pedido/nuevo'], badge: 'NEW' },**/
-<<<<<<< HEAD
-                    { label: 'Tickets', icon: 'pi pi-fw pi-user', routerLink: ['/admin/tickets'], target: '_blank' },
-                    { label: 'Reportes', icon: 'pi pi-fw pi-user', routerLink: ['/admin/reporte'], target: '_blank' }
-=======
-                    { label: 'Tickets', icon: 'pi pi-fw pi-ticket', routerLink: ['/admin/tickets'], target: '_blank'  }
->>>>>>> 16fd965c5c3b137dfc546bc5c0f9b2ac046f5011
-                ]
-            },
-            {
-                items: [
-<<<<<<< HEAD
-                    { label: 'Clientes', icon: 'pi pi-fw pi-user', routerLink: ['/admin/cliente'] },
-                    { label: 'Roles', icon: 'pi pi-fw pi-desktop', url: ['https://www.primefaces.org/primeflex/'], target: '_blank' },
-=======
-                    { label: 'Técnicos', icon: 'pi pi-fw pi-desktop', routerLink: ['/admin/tecnico'] },
+                    { label: 'Clientes', icon: 'pi pi-fw pi-users', routerLink: ['/admin/cliente'] },
+                    { label: 'Roles', icon: 'pi pi-fw pi-shield', url: 'https://www.primefaces.org/primeflex/', target: '_blank' },
+                    { label: 'Técnicos', icon: 'pi pi-fw pi-briefcase', routerLink: ['/admin/tecnico'] },
                     { label: 'Usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/admin/usuarios'] },
->>>>>>> 16fd965c5c3b137dfc546bc5c0f9b2ac046f5011
                 ]
-            },
-
-
-
-
+            }
         ];
     }
 }
