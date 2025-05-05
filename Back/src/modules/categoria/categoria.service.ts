@@ -74,6 +74,3 @@ export class CategoriaService {
   }
 
 }
-
-
-
