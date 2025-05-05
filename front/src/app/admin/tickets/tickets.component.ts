@@ -44,7 +44,7 @@ export class TicketsComponent {
     // Envío HTTP al backend
     this.http.post('http://localhost:3000/tickets', this.ticket).subscribe({
       next: () => alert('✅ Ticket enviado con éxito'),
-      error: err => {
+      error: (err: any) => {
         console.error(err);
         alert('❌ Error al enviar el ticket');
       }
