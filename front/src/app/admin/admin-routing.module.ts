@@ -36,14 +36,15 @@ const routes: Routes = [
         canActivate: [authGuard("admin")]
       },
       {
-        path: "tickets", // 👈 Ruta añadida
+        path: "tickets", 
         component: TicketsComponent,
         canActivate: [authGuard("admin")]
       },
       {
         path: "tecnico",
         component: TecnicoComponent,
-        canActivate: [authGuard("admin")]
+        canActivate: [authGuard("admin")],
+        
       },
       {
         path: "usuarios",

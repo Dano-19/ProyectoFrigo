@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { UserService } from '../../../admin/usuarios/user.service';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,           // Inyectar AuthService
     private router: Router,                     // Inyectar Router
-    private messageService: MessageService      // Inyectar MessageService
+    private messageService: MessageService,     // Inyectar MessageService
+    private userService: UserService
   ) {}
 
   // ✅ Validación personalizada de contraseña
@@ -72,7 +74,7 @@ export class LoginComponent {
     this.authService.loginConNest(this.loginForm.value).subscribe(
       (res: any) => {
         localStorage.setItem('access_token', res.token);
-
+        this.userService.setUser(res.user); // Guardar el usuario en el servicio
         this.messageService.add({
           severity: 'success',
           summary: `¡Bienvenido!`,
