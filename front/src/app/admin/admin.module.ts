@@ -25,10 +25,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { AccordionModule } from 'primeng/accordion';
 import { DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
-// ❌ No pongas BrowserModule ni RouterModule aquí
-// import { BrowserModule } from '@angular/platform-browser';
-// import { RouterModule } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -52,12 +50,18 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     TableModule,
     MenuModule,
     ButtonModule,
+    ReactiveFormsModule,
     InputTextModule,
     CardModule,
     DropdownModule,
     AccordionModule,
     DialogModule,
-    ProgressSpinnerModule
+    DropdownModule,
+    ProgressSpinnerModule,
+    //BrowserModule,
+    //RouterModule,
+    FormsModule,
+    InventarioModule,
   ],
   providers: [
     CategoriaService,

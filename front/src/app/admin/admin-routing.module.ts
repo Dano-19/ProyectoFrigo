@@ -6,7 +6,7 @@ import { ProductoComponent } from './inventario/components/producto/producto.com
 import { NuevoPedidoComponent } from './pedido/components/nuevo-pedido/nuevo-pedido.component';
 import { ListaPedidoComponent } from './pedido/components/lista-pedido/lista-pedido.component';
 import { authGuard } from '../guards/auth.guard';
-import { TicketsComponent } from './tickets/tickets.component';
+import { TicketsComponent } from './tickets/tickets.component'; // 👈 Importación del componente
 import { ClienteComponent } from './cliente/cliente.component';
 import { ReporteComponent } from './reporte/reporte.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
@@ -55,7 +55,7 @@ const routes: Routes = [
         path: "usuarios",
         component: UsuariosComponent,
         canActivate: [authGuard("admin")]
-      }
+      },
     ]
   }
 ];
