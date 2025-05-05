@@ -17,8 +17,6 @@ export class CreatePedidoDto {
     @IsOptional()
     observaciones:string;
 
-    @IsNumber()
-    cliente:number;
 
     public pedidoProductos: PedidoProductoDto[];
 

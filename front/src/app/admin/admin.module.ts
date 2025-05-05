@@ -11,12 +11,18 @@ import { PedidoModule } from './pedido/pedido.module';
 import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TecnicoComponent } from './tecnico/tecnico.component';
+import { ClienteComponent } from './cliente/cliente.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
+import { AccordionModule } from 'primeng/accordion';
+import { DialogModule } from 'primeng/dialog';
+
 
 @NgModule({
   declarations: [
     LayoutComponent,
-    TecnicoComponent
+    ClienteComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +33,13 @@ import { TecnicoComponent } from './tecnico/tecnico.component';
     PedidoModule,
     MenuModule,
     ButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputTextModule,
+    CardModule,
+    InputTextModule,
+    DropdownModule,
+    AccordionModule,
+    DialogModule
   ],
   providers: [
     CategoriaService,

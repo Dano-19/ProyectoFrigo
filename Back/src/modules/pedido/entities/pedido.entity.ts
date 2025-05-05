@@ -1,4 +1,3 @@
-import { Cliente } from "../../cliente/entities/cliente.entity";
 import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { PedidoProducto } from "./pedidoproducto.entity";
 
@@ -15,9 +14,6 @@ export class Pedido {
 
     @Column()
     observaciones:string;
-
-    @ManyToOne(()=>Cliente)
-    cliente:Cliente
 
     @ManyToMany(()=>PedidoProducto, pedprod=> pedprod.pedido)
     pedidoProducto: PedidoProducto[];

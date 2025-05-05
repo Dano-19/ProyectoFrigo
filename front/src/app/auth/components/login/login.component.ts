@@ -21,7 +21,7 @@ export class LoginComponent {
 
   // Lista de roles disponibles
   roles = [
-    { label: 'Tecnico', value: 'tecnico' },
+    { label: 'Cliente', value: 'cliente' },
     { label: 'Cliente', value: 'cliente' },
     { label: 'Administrador', value: 'admin' },
   ];

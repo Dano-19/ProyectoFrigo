@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { DatabaseModule } from './database/database.module';
@@ -9,15 +8,13 @@ import { CategoriaModule } from './modules/categoria/categoria.module';
 import { PersonaModule } from './modules/persona/persona.module';
 import { ProductoModule } from './modules/producto/producto.module';
 import { RoleModule } from './modules/role/role.module';
-import { ClienteModule } from './modules/cliente/cliente.module';
 import { PedidoModule } from './modules/pedido/pedido.module';
 import { TicketsModule } from './modules/tickets/tickets.module';
-
 import { ConfigModule, ConfigService } from '@nestjs/config'; // ✅ Config
 import { MailerModule } from '@nestjs-modules/mailer';        // ✅ Mailer
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
-import { TecnicoModule } from './modules/tecnico/tecnico.module';
+import { ClienteModule } from './modules/cliente/cliente.module';
 
 @Module({
   imports: [
@@ -66,7 +63,7 @@ import { TecnicoModule } from './modules/tecnico/tecnico.module';
     ClienteModule,
     PedidoModule,
     TicketsModule,
-    TecnicoModule,
+    ClienteModule,
   ],
   controllers: [AppController],
   providers: [AppService],

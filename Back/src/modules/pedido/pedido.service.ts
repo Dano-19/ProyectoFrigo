@@ -16,23 +16,20 @@ export class PedidoService {
 
   async create(createPedidoDto: CreatePedidoDto) {
 
-    const {cliente, pedidoProductos}=createPedidoDto;
+    const { pedidoProductos}=createPedidoDto;
     //console.log("Cliente:",cliente)
     //console.log("Productos:",pedipoProductos)
     const queryRunner = this.pedidoRepository.manager.connection.createQueryRunner()//PARA MANIPULAR PEDIDo
     await queryRunner.connect()
     await queryRunner.startTransaction()
     try{
-      //buscar al cliente
-      const clienteEntity = await this.clienteRepository.findOne({where:{id:cliente}})//con esto capturamos al cliente
-      console.log("Cliente encontrado:",clienteEntity)
+      
 
       //registrar el pedido
       const nuevoPedido = this.pedidoRepository.create({
         fecha: new Date().toISOString(),
         estado: 1,
         observaciones: 'Nuevo pepido',
-        cliente: clienteEntity
       })
       //guardar el pedido
       const pedidoGuardado = await queryRunner.manager.save(Pedido,nuevoPedido)//guarda el pedido en la bdd
@@ -78,12 +75,6 @@ async findAll() {
     estado: pedido.estado,
     observaciones: pedido.observaciones,
     //cliente: pedido.cliente
-    cliente:{
-      id: pedido.cliente.id,
-      nombre_completo: pedido.cliente.nombre_completo,
-      dni: pedido.cliente.dni,
-      telefono: pedido.cliente.telefono
-    },
     productos: pedido.pedidoProductos.map((pedidoProducto) => ({
       id: pedidoProducto.id,
       cantidad: pedidoProducto.cantidad,
