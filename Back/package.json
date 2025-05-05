@@ -24,6 +24,10 @@
     "migration:revert": "npm run typeorm migration:revert -- -d typeorm.config.ts"
   },
   "dependencies": {
+    "@angular/core": "^19.2.9",
+    "@angular/forms": "^19.2.9",
+    "@angular/platform-browser": "^19.2.9",
+    "@angular/router": "^19.2.9",
     "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/common": "^10.4.17",
     "@nestjs/config": "^3.3.0",

@@ -10,7 +10,7 @@ export class AppMenuComponent implements OnInit {
 
     model: any[] = [];
 
-    constructor(public layoutService: LayoutService) { }
+    constructor(public layoutService: LayoutService) {}
 
     ngOnInit() {
         this.model = [
@@ -37,13 +37,9 @@ export class AppMenuComponent implements OnInit {
             {
                 items: [
                     { label: 'Clientes', icon: 'pi pi-fw pi-user', routerLink: ['/admin/cliente'] },
-                    { label: 'Roles', icon: 'pi pi-fw pi-desktop', url: ['https://www.primefaces.org/primeflex/'], target: '_blank' },
+                    { label: 'Usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/admin/usuarios'] },
                 ]
-            },
-
-
-
-
+            }
         ];
     }
 }

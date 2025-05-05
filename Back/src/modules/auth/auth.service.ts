@@ -1,4 +1,9 @@
-import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { RegisterAuthDto } from './dto/register-auth.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -12,11 +17,10 @@ import { MailerService } from '@nestjs-modules/mailer';
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
+    private readonly mailerService: MailerService,
 
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-
-    private readonly mailerService: MailerService
+    private readonly userRepository: Repository<User>
   ) {}
 
   /**
@@ -41,19 +45,17 @@ export class AuthService {
 
     const verificarPass = await compare(password, user.password);
     if (!verificarPass) {
-      throw new HttpException('Password invalido', 401);
+      throw new HttpException('Password inválido', 401);
     }
 
-    /*const payload = { email: user.email, id: user.id };
-    const token = this.jwtService.sign(payload);*/
     const payload = { email: user.email, role: user.role, id: user.id };
-    const token = await this.jwtService.signAsync(payload)
+    const token = await this.jwtService.signAsync(payload);
 
     return { user, token };
   }
 
   /**
-   * ✅ Recuperar contraseña por correo (⚠️ solo para pruebas)
+   * ✅ Recuperar contraseña por correo (⚠️ DEMO)
    */
   async recuperarContraseña(email: string): Promise<void> {
     const user = await this.userRepository.findOne({ where: { email } });
@@ -62,16 +64,46 @@ export class AuthService {
       throw new NotFoundException('Usuario no encontrado');
     }
 
+    // Genera un token temporal válido por 15 minutos
+    const resetToken = await this.jwtService.signAsync(
+      { id: user.id },
+      { expiresIn: '15m' }
+    );
+
     await this.mailerService.sendMail({
       to: user.email,
       subject: 'Recuperación de contraseña - Frigoservicios',
       html: `
         <h2>Hola 👋</h2>
-        <p>Tu contraseña encriptada es: <strong>${user.password}</strong></p>
-        <p>⚠️ Este es un correo de prueba. En producción, deberías enviar un enlace para restablecer la contraseña.</p>
+        <p>Haz clic en el siguiente enlace para cambiar tu contraseña:</p>
+        <a href="http://localhost:4200/change-password?token=${resetToken}">
+          Cambiar Contraseña
+        </a>
+        <p>Este enlace expirará en 15 minutos.</p>
         <hr />
         <p>Equipo de Frigoservicios</p>
       `,
     });
+  }
+
+  /**
+   * ✅ Cambiar contraseña usando un token JWT válido
+   */
+  async changePasswordWithToken(token: string, newPassword: string) {
+    try {
+      const payload: any = await this.jwtService.verifyAsync(token);
+      const user = await this.userRepository.findOne({ where: { id: payload.id } });
+
+      if (!user) {
+        throw new UnauthorizedException('Usuario no encontrado con ese token');
+      }
+
+      const hashed = await hash(newPassword, 10);
+      await this.userRepository.update(user.id, { password: hashed });
+
+      return { message: 'Contraseña actualizada correctamente' };
+    } catch (error) {
+      throw new UnauthorizedException('Token inválido o expirado');
+    }
   }
 }
