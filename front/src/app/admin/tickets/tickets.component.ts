@@ -14,7 +14,11 @@ import { CalendarModule } from 'primeng/calendar';
   standalone: true,
   imports: [FormsModule,
              CommonModule,
+<<<<<<< HEAD
               InputTextModule,
+=======
+              InputTextModule,
+>>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
               InputTextareaModule,
               ButtonModule,
               CalendarModule
@@ -32,23 +36,16 @@ export class TicketsComponent {
     fechaCreacion: '',
   };
 
-
   // Define el correo al que se enviará
   correoDestino = 'soporte@frigoservicios.com';
 
   constructor(private http: HttpClient) {}
 
   enviarTicket() {
-    // Validar campos mínimos
-    if (!this.ticket.nombre || !this.ticket.correo || !this.ticket.asunto || !this.ticket.mensaje) {
-      alert('⚠️ Por favor completa todos los campos obligatorios.');
-      return;
-    }
+    // Mostrar alerta con el correo destino antes del envío
+    alert(`✉️ El ticket será enviado a: ${this.correoDestino}`);
 
-    // Mostrar notificación previa
-    alert(`✉️ El ticket será enviado al correo: ${this.ticket.correo}`);
-
-    // POST al backend en puerto 4000
+    // Envío HTTP al backend
     this.http.post('http://localhost:3000/tickets', this.ticket).subscribe({
       next: () => alert('✅ Ticket enviado con éxito'),
       error: err => {
@@ -57,5 +54,4 @@ export class TicketsComponent {
       }
     });
   }
-
 }

@@ -14,6 +14,11 @@ export class Categoria {
     @Column({ nullable: true})
     fecha:Date
 
+    @Column({ type: 'time', nullable: true })
+    horaIngreso: string;
+
+    @Column({ type: 'time', nullable: true })
+    horaSalida: string;
 
     // Área: Usando tipo 'text' está bien si es un campo largo opcional
     @Column({ type: 'text', nullable: true })

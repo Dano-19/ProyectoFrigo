@@ -19,7 +19,13 @@ export class CategoriaService {
     const Fecha = new Date(createCategoriaDto.fecha);
     categoria.fecha = !isNaN(Fecha.getTime()) ? Fecha : new Date();
 
+    // … asignas fecha, area, marca, …
+    categoria.materiales = createCategoriaDto.materiales;
+    categoria.acciones  = createCategoriaDto.acciones;
+
     // Asignación de campos
+    categoria.horaIngreso = createCategoriaDto.horaIngreso;
+    categoria.horaSalida  = createCategoriaDto.horaSalida;
     categoria.area = createCategoriaDto.area;
     categoria.marca = createCategoriaDto.marca;
     categoria.modelo = createCategoriaDto.modelo;
@@ -62,15 +68,19 @@ export class CategoriaService {
   }
 
   
-  async update(id: number, UpdateCategoriaDto: UpdateCategoriaDto) {
-    const categoria = this.categoriaRepository.findOneBy({ id });
-    if (!Categoria) {
-      throw new BadRequestException('categoria not found');
+  async update(id: number, updateDto: UpdateCategoriaDto): Promise<Categoria> {
+    // 1) Buscar la entidad existente
+    const categoria = await this.categoriaRepository.findOne({ where: { id } });
+    if (!categoria) {
+      throw new BadRequestException(`Categoría con id ${id} no encontrada`);
     }
 
     
-    await this.categoriaRepository.update(id,  UpdateCategoriaDto);
-    return `This action updates a #${id} categoria`;
+    // 2) Aplicar sólo los campos que vienen en el DTO
+    await this.categoriaRepository.update(id, updateDto);
+
+    // 3) Retornar la entidad ya actualizada
+    return this.categoriaRepository.findOne({ where: { id } });
   }
 
 }

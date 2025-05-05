@@ -8,6 +8,8 @@ import autotable from 'jspdf-autotable';
 interface Categoria {
   id: number;
   fecha?: string;
+  horaIngreso?: string;
+  horaSalida?: string;
   area?: string;
   marca?: string;
   modelo?: string;
@@ -24,6 +26,7 @@ interface Categoria {
   styleUrls: ['./categoria.component.scss']
 })
 export class CategoriaComponent implements OnInit {
+<<<<<<< HEAD
 
   private categoriaService = inject(CategoriaService);
 
@@ -46,12 +49,36 @@ export class CategoriaComponent implements OnInit {
 
   cat: Categoria | undefined;
 
+=======
+  private categoriaService = inject(CategoriaService);
+  categorias: Categoria[] = [];
+  dialog_visible = false;
+  categoria_id = -1;
+  isSaving = false;
+
+  // 1) Incluimos los controles para horaIngreso y horaSalida
+  categoriaForm = new FormGroup({
+    fecha:        new FormControl('', Validators.required),
+    horaIngreso:  new FormControl('', Validators.required),
+    horaSalida:   new FormControl('', Validators.required),
+    area:         new FormControl('', Validators.required),
+    marca:        new FormControl('', Validators.required),
+    modelo:       new FormControl('', Validators.required),
+    tipo:         new FormControl('', Validators.required),
+    descripcion:  new FormControl('', Validators.required),
+    cantidad:     new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
+    materiales:   new FormControl('', Validators.required),
+    acciones:     new FormControl('', Validators.required)
+  });
+
+>>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
   ngOnInit(): void {
     this.getCategorias();
   }
 
   getCategorias() {
     this.categoriaService.funListar().subscribe(
+<<<<<<< HEAD
       (res: any) => {
         this.categorias = res;
       },
@@ -73,11 +100,27 @@ export class CategoriaComponent implements OnInit {
       if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur();
       }
+=======
+      (res: any) => this.categorias = res,
+      (err: any) => console.error(err)
+    );
+  }
+
+  mostrarDialog() { this.categoria_id = -1;
+    this.categoriaForm.reset();
+    this.dialog_visible = true; }
+
+  cerrarDialog(): void {
+    this.dialog_visible = false;
+    setTimeout(() => {
+      if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+>>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
     }, 0);
   }
 
   guardarCategoria() {
     if (this.categoriaForm.invalid) {
+<<<<<<< HEAD
       this.alerta("ERROR AL REGISTRAR", "Por favor complete todos los campos", "error");
       return;
     }
@@ -124,12 +167,46 @@ export class CategoriaComponent implements OnInit {
     }
 
     this.categoriaForm.reset();
+=======
+      this.alerta('ERROR AL REGISTRAR', 'Complete todos los campos', 'error');
+      return;
+    }
+
+    const data = { ...this.categoriaForm.value };
+
+    // Validar y formatear fecha
+    if (data.fecha) {
+      const f = new Date(data.fecha);
+      data.fecha = `${f.getFullYear()}-${String(f.getMonth()+1).padStart(2,'0')}-${String(f.getDate()).padStart(2,'0')}`;
+    }
+
+    this.isSaving = true;
+    const request$ = this.categoria_id > 0
+      ? this.categoriaService.funModificar(this.categoria_id, data)
+      : this.categoriaService.funGuardar(data);
+
+    request$.subscribe(
+      () => {
+        this.isSaving = false;
+        this.cerrarDialog();
+        this.getCategorias();
+        this.alerta(this.categoria_id > 0 ? 'ACTUALIZADO' : 'REGISTRADO', '¡Operación exitosa!', 'success');
+        this.categoria_id = -1;
+        this.categoriaForm.reset();
+      },
+      () => {
+        this.isSaving = false;
+        this.alerta(this.categoria_id > 0 ? 'ERROR AL ACTUALIZAR' : 'ERROR AL REGISTRAR', 'Verifica los datos!', 'error');
+      }
+    );
+>>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
   }
 
   editarCategoria(cat: Categoria) {
     this.dialog_visible = true;
     this.categoria_id = cat.id;
 
+<<<<<<< HEAD
     let fechaFormateada = '';
     if (cat.fecha) {
       const fecha = new Date(cat.fecha);
@@ -149,11 +226,27 @@ export class CategoriaComponent implements OnInit {
       cantidad: cat.cantidad || '',
       materiales: cat.materiales || '',
       acciones: cat.acciones || ''
+=======
+    // 2) Incluir horaIngreso y horaSalida en el setValue
+    this.categoriaForm.setValue({
+      fecha:        cat.fecha ? cat.fecha.split('T')[0] : '',
+      horaIngreso:  cat.horaIngreso  || '',
+      horaSalida:   cat.horaSalida   || '',
+      area:         cat.area         || '',
+      marca:        cat.marca        || '',
+      modelo:       cat.modelo       || '',
+      tipo:         cat.tipo         || '',
+      descripcion:  cat.descripcion  || '',
+      cantidad:     cat.cantidad     || '',
+      materiales:   cat.materiales   || '',
+      acciones:     cat.acciones     || ''
+>>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
     });
   }
 
   eliminarCategoria(cat: Categoria) {
     Swal.fire({
+<<<<<<< HEAD
       title: "¿Está seguro de eliminar El formulario?",
       text: "Una vez eliminada no se podrá recuperar!",
       icon: "warning",
@@ -172,12 +265,30 @@ export class CategoriaComponent implements OnInit {
           (error: any) => {
             this.alerta("ERROR!", "Error al intentar eliminar.", "error");
           }
+=======
+      title: '¿Eliminar formulario?',
+      text: '¡No podrás revertirlo!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar'
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.categoriaService.funEliminar(cat.id).subscribe(
+          () => { this.alerta('ELIMINADO', 'Formulario eliminado', 'success'); this.getCategorias(); this.categoria_id = -1; },
+          () => this.alerta('ERROR', 'Error al eliminar', 'error')
+>>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
         );
       }
     });
   }
 
+<<<<<<< HEAD
   alerta(title: string, text: string, icon: 'success' | 'error' | 'info' | 'question') {
+=======
+  alerta(title: string, text: string, icon: 'success'|'error'|'info'|'question') {
+>>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
     Swal.fire({ title, text, icon });
   }
 
@@ -194,7 +305,7 @@ export class CategoriaComponent implements OnInit {
 
   async generarPDFCategoria(cat: Categoria): Promise<void> {
     const doc = new jsPDF();
-    
+
     try {
       const dataUrl = await this.loadImageAsDataUrl('assets/layout/images/Logo-FRIGO.jpg');
       doc.addImage(dataUrl, 'JPG', 127, 10, 70, 25);
@@ -204,7 +315,11 @@ export class CategoriaComponent implements OnInit {
 
 
     doc.setFontSize(18);
+<<<<<<< HEAD
     doc.text("Formulario", 60, 10);
+=======
+    doc.text("Formulario", 90, 10);
+>>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
 
     doc.setFontSize(12);
     if (cat.fecha) {
@@ -215,6 +330,11 @@ export class CategoriaComponent implements OnInit {
     doc.text('Información:', 10, 40);
 
     const datos = [
+<<<<<<< HEAD
+=======
+      ['Hora Ingreso', cat.horaIngreso  || ''],
+      ['Hora Salida',  cat.horaSalida   || ''],
+>>>>>>> bfba1ddd6cd7d908dbfa4ad35094d0d0f5e50a63
       ['Área', cat.area || ''],
       ['Marca', cat.marca || ''],
       ['Modelo', cat.modelo || ''],

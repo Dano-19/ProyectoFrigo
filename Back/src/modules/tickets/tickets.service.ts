@@ -4,68 +4,26 @@ import * as nodemailer from 'nodemailer';
 @Injectable()
 export class TicketsService {
   async enviarCorreo(ticket: { nombre: string; correo: string; asunto: string; mensaje: string }) {
-    try {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.MAIL_USER,
-          pass: process.env.MAIL_PASS,
-        },
-      });
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'tucorreo@gmail.com',      // 🔒 Usa un correo real
+        pass: 'tu_contraseña_app'        // 🔒 Contraseña de aplicación, no la normal
+      }
+    });
 
-      // ✉️ Correo para el cliente
-      const mailToClient = {
-        from: `"Frigo Soporte" <${process.env.MAIL_USER}>`,
-        to: ticket.correo,
-        subject: `📨 Hemos recibido tu ticket: ${ticket.asunto}`,
-        text: `
-Hola ${ticket.nombre},
+    const mailOptions = {
+      from: ticket.correo,
+      to: 'soporte@frigoservicios.com',
+      subject: `🧾 Reclamo: ${ticket.asunto}`,
+      text: `
+        Nombre: ${ticket.nombre}
+        Correo: ${ticket.correo}
+        Asunto: ${ticket.asunto}
+        Mensaje: ${ticket.mensaje}
+      `
+    };
 
-Gracias por contactarnos. Hemos recibido tu mensaje:
-
-"${ticket.mensaje}"
-
-Nos pondremos en contacto contigo lo antes posible.
-
-Saludos,
-FrigoServicios
-        `,
-      };
-
-      // 📥 Copia para el soporte
-      const mailToSupport = {
-        from: `"Frigo Sistema" <${process.env.MAIL_USER}>`,
-        to: process.env.MAIL_USER,
-        subject: `🆕 Nuevo ticket recibido de ${ticket.nombre}`,
-        text: `
-Se ha generado un nuevo ticket:
-
-Nombre: ${ticket.nombre}
-Correo: ${ticket.correo}
-Asunto: ${ticket.asunto}
-Mensaje:
-${ticket.mensaje}
-
-Generado automáticamente desde el sistema.
-        `,
-      };
-
-      await Promise.all([
-        transporter.sendMail(mailToClient),
-        transporter.sendMail(mailToSupport),
-      ]);
-
-      console.log(`✅ Correos enviados correctamente a:
-- Cliente: ${ticket.correo}
-- Soporte: ${process.env.MAIL_USER}`);
-
-      return { message: 'Correos enviados al cliente y al soporte' };
-    } catch (error) {
-      console.error('❌ Error al enviar correos:', error);
-      throw new Error('Error al enviar correos');
-    }
+    return await transporter.sendMail(mailOptions);
   }
 }
-
-
-
