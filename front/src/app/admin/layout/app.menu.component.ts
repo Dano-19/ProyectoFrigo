@@ -1,42 +1,49 @@
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LayoutService } from './service/app.layout.service';
-import { authGuard } from '../../guards/auth.guard';
-import { UserService } from '../usuarios/user.service';
+import { UserService }   from '../usuarios/user.service';
+
+interface MenuItem {
+  label: string;
+  icon:  string;
+  routerLink: any[];
+  target?: string;
+  allowedRoles: string[];
+}
 
 @Component({
-    selector: 'app-menu',
-    templateUrl: './app.menu.component.html'
+  selector: 'app-menu',
+  templateUrl: './app.menu.component.html'
 })
 export class AppMenuComponent implements OnInit {
+  userRole = '';
+  model: MenuItem[]         = [];
+  filteredModel: MenuItem[] = [];
 
-    model: any[] = [];
-    user: any = null;
-    constructor(
-        public layoutService: LayoutService,
-        private userService: UserService
-    ) 
-    { }
+  constructor(
+    public layoutService: LayoutService,
+    private userService: UserService
+  ) {}
 
-    ngOnInit() {
-        const user = this.userService.getUser();
-        console.log(user);
-        if (user) {
-            this.user = user; // <-- Guarda el objeto completo
-        } else {
-            console.error('No user data found in UserService.');
-        }
-    
-        this.model = [
-            { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['/admin'], role: 'admin' },
-            { label: 'Formulario', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/categoria'], role: 'admin' },
-            /*{ label: 'Listado de Formularios', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/producto'], role: 'admin' },*/
-            { label: 'Tickets', icon: 'pi pi-fw pi-ticket', routerLink: ['/admin/tickets'], target: '_blank', role: 'admin' },
-            { label: 'Usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/admin/usuarios'], role: 'admin' },
-            { label: 'Reportes', icon: 'pi pi-fw pi-user', routerLink: ['/admin/reporte'], target: '_blank',  role: 'admin' },
-            { label: 'Clientes', icon: 'pi pi-fw pi-user', routerLink: ['/admin/cliente'],  role: 'admin'},
-        ];
+  ngOnInit(): void {
+    const user = this.userService.getUser();
+    if (!user || !user.role) {
+      console.error('No se encontró el rol en UserService.');
+      return;
     }
-    
-    }
+    this.userRole = user.role;
 
+    this.model = [
+      { label: 'Inicio',     icon: 'pi pi-fw pi-home',    routerLink: ['/admin'],           allowedRoles: ['client','technical','admin'] },
+      { label: 'Formulario', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/categoria'], allowedRoles: ['technical','admin'] },
+      { label: 'Tickets',    icon: 'pi pi-fw pi-ticket',  routerLink: ['/admin/tickets'],   target:'_blank', allowedRoles: ['admin'] },
+      { label: 'Usuarios',   icon: 'pi pi-fw pi-user',    routerLink: ['/admin/usuarios'],  allowedRoles: ['admin'] },
+      { label: 'Reportes',   icon: 'pi pi-fw pi-chart',   routerLink: ['/admin/reporte'],   target:'_blank', allowedRoles: ['admin'] },
+      { label: 'Clientes',   icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/cliente'],   allowedRoles: ['client'] }
+    ];
+
+    // Filtramos los ítems permitidos para este rol
+    this.filteredModel = this.model.filter(item =>
+      item.allowedRoles.includes(this.userRole)
+    );
+  }
+}
