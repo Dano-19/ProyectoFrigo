@@ -31,7 +31,7 @@ export class LoginComponent {
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.email, Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    rol: new FormControl(null, Validators.required)
+    //rol: new FormControl(null, Validators.required)
   });
 
   // Constructor con inyección de dependencias
@@ -51,7 +51,7 @@ export class LoginComponent {
   funIngresar() {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value || '';
-    const rol = this.loginForm.get('rol')?.value;
+    //const rol = this.loginForm.get('rol')?.value;
 
     if (!email || !email.includes('@')) {
       alert('El correo debe contener un @ válido');
@@ -63,10 +63,10 @@ export class LoginComponent {
       return;
     }
 
-    if (!rol) {
+    /*if (!rol) {
       alert('Debes seleccionar un rol.');
       return;
-    }
+    }*/
 
     this.errorLogin = false;
     this.notRegistered = false;

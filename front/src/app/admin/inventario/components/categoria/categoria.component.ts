@@ -4,7 +4,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import jsPDF from 'jspdf';
 import autotable from 'jspdf-autotable';
-
 interface Categoria {
   id: number;
   fecha?: string;
@@ -19,7 +18,6 @@ interface Categoria {
   materiales?: string;
   acciones?: string;
 }
-
 @Component({
   selector: 'app-categoria',
   templateUrl: './categoria.component.html',
@@ -32,19 +30,20 @@ export class CategoriaComponent implements OnInit {
   categoria_id = -1;
   isSaving = false;
 
+
   // 1) Incluimos los controles para horaIngreso y horaSalida
   categoriaForm = new FormGroup({
-    fecha:        new FormControl('', Validators.required),
-    horaIngreso:  new FormControl('', Validators.required),
-    horaSalida:   new FormControl('', Validators.required),
-    area:         new FormControl('', Validators.required),
-    marca:        new FormControl('', Validators.required),
-    modelo:       new FormControl('', Validators.required),
-    tipo:         new FormControl('', Validators.required),
-    descripcion:  new FormControl('', Validators.required),
-    cantidad:     new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
-    materiales:   new FormControl('', Validators.required),
-    acciones:     new FormControl('', Validators.required)
+    fecha: new FormControl('', Validators.required),
+    horaIngreso: new FormControl('', Validators.required),
+    horaSalida: new FormControl('', Validators.required),
+    area: new FormControl('', Validators.required),
+    marca: new FormControl('', Validators.required),
+    modelo: new FormControl('', Validators.required),
+    tipo: new FormControl('', Validators.required),
+    descripcion: new FormControl('', Validators.required),
+    cantidad: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
+    materiales: new FormControl('', Validators.required),
+    acciones: new FormControl('', Validators.required)
   });
 
   ngOnInit(): void {
@@ -58,9 +57,11 @@ export class CategoriaComponent implements OnInit {
     );
   }
 
-  mostrarDialog() { this.categoria_id = -1;
+  mostrarDialog() {
+    this.categoria_id = -1;
     this.categoriaForm.reset();
-    this.dialog_visible = true; }
+    this.dialog_visible = true;
+  }
 
   cerrarDialog(): void {
     this.dialog_visible = false;
@@ -80,14 +81,13 @@ export class CategoriaComponent implements OnInit {
     // Validar y formatear fecha
     if (data.fecha) {
       const f = new Date(data.fecha);
-      data.fecha = `${f.getFullYear()}-${String(f.getMonth()+1).padStart(2,'0')}-${String(f.getDate()).padStart(2,'0')}`;
+      data.fecha = `${f.getFullYear()}-${String(f.getMonth() + 1).padStart(2, '0')}-${String(f.getDate()).padStart(2, '0')}`;
     }
 
     this.isSaving = true;
     const request$ = this.categoria_id > 0
       ? this.categoriaService.funModificar(this.categoria_id, data)
       : this.categoriaService.funGuardar(data);
-
     request$.subscribe(
       () => {
         this.isSaving = false;
@@ -103,50 +103,68 @@ export class CategoriaComponent implements OnInit {
       }
     );
   }
-
-  editarCategoria(cat: Categoria) {
+  editarCategoria(categoria: Categoria): void {
+    this.categoria_id   = categoria.id;
     this.dialog_visible = true;
-    this.categoria_id = cat.id;
 
-    // 2) Incluir horaIngreso y horaSalida en el setValue
-    this.categoriaForm.setValue({
-      fecha:        cat.fecha ? cat.fecha.split('T')[0] : '',
-      horaIngreso:  cat.horaIngreso  || '',
-      horaSalida:   cat.horaSalida   || '',
-      area:         cat.area         || '',
-      marca:        cat.marca        || '',
-      modelo:       cat.modelo       || '',
-      tipo:         cat.tipo         || '',
-      descripcion:  cat.descripcion  || '',
-      cantidad:     cat.cantidad     || '',
-      materiales:   cat.materiales   || '',
-      acciones:     cat.acciones     || ''
+    // Limpia residuos de ediciones previas (opcional)
+    this.categoriaForm.reset();
+
+    // Extrae sólo la fecha "YYYY-MM-DD"
+    const [fecha] = categoria.fecha?.split('T') ?? [''];
+
+    this.categoriaForm.patchValue({
+      fecha,
+      horaIngreso: categoria.horaIngreso ?? '',
+      horaSalida:  categoria.horaSalida  ?? '',
+      area:        categoria.area        ?? '',
+      marca:       categoria.marca       ?? '',
+      modelo:      categoria.modelo      ?? '',
+      tipo:        categoria.tipo        ?? '',
+      descripcion: categoria.descripcion ?? '',
+      // ← Aquí convertimos number → string
+      cantidad:    categoria.cantidad != null 
+                      ? categoria.cantidad.toString() 
+                      : '',
+      // Si materiales y acciones no son strings, conviértelos igual
+      materiales:  categoria.materiales != null 
+                      ? categoria.materiales.toString() 
+                      : '',
+      acciones:    categoria.acciones != null 
+                      ? categoria.acciones.toString() 
+                      : ''
     });
   }
-
   eliminarCategoria(cat: Categoria) {
     Swal.fire({
       title: '¿Eliminar formulario?',
       text: '¡No podrás revertirlo!',
       icon: 'warning',
       showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
       confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminar'
+      cancelButtonColor: '#d33'
     }).then(result => {
       if (result.isConfirmed) {
         this.categoriaService.funEliminar(cat.id).subscribe(
-          () => { this.alerta('ELIMINADO', 'Formulario eliminado', 'success'); this.getCategorias(); this.categoria_id = -1; },
-          () => this.alerta('ERROR', 'Error al eliminar', 'error')
+          mensaje => {
+            const texto = String(mensaje);
+            this.alerta('ELIMINADO', texto, 'success');
+            this.getCategorias();
+            this.categoria_id = -1;
+          },
+          err => {
+            console.error('Error al eliminar categoría', err);
+            this.alerta('ERROR', 'Error al eliminar la categoría', 'error');
+          }
         );
       }
     });
   }
-
-  alerta(title: string, text: string, icon: 'success'|'error'|'info'|'question') {
+  alerta(title: string, text: string, icon: 'success' | 'error' | 'info' | 'question') {
     Swal.fire({ title, text, icon });
   }
-
   private loadImageAsDataUrl(url: string): Promise<string> {
     return fetch(url)
       .then(res => res.blob())
@@ -157,32 +175,29 @@ export class CategoriaComponent implements OnInit {
         reader.readAsDataURL(blob);
       }));
   }
-
   async generarPDFCategoria(cat: Categoria): Promise<void> {
     const doc = new jsPDF();
-
     try {
       const dataUrl = await this.loadImageAsDataUrl('assets/layout/images/Logo-FRIGO.jpg');
       doc.addImage(dataUrl, 'JPG', 127, 10, 70, 25);
     } catch (err) {
       console.warn('No se pudo cargar el logo desde assets:', err);
     }
-
-
     doc.setFontSize(18);
     doc.text("Formulario", 90, 10);
 
     doc.setFontSize(12);
     if (cat.fecha) {
+      doc.text('Hora Ingreso: ' + cat.horaIngreso, 14, 25)
+      doc.text('Hora Salida: ' + cat.horaSalida, 14, 30);
       doc.text('Fecha: ' + cat.fecha, 10, 20);
     }
-
     doc.setFontSize(13);
     doc.text('Información:', 10, 40);
 
     const datos = [
-      ['Hora Ingreso', cat.horaIngreso  || ''],
-      ['Hora Salida',  cat.horaSalida   || ''],
+      //['Hora Ingreso', cat.horaIngreso || ''],
+      //['Hora Salida', cat.horaSalida || ''],
       ['Área', cat.area || ''],
       ['Marca', cat.marca || ''],
       ['Modelo', cat.modelo || ''],
@@ -195,7 +210,7 @@ export class CategoriaComponent implements OnInit {
 
     autotable(doc, {
       startY: 45,
-      head: [['Campo', 'Valor']],
+      head: [['Datos', 'Detalles']],
       body: datos,
       styles: {
         fontSize: 11,
@@ -203,7 +218,7 @@ export class CategoriaComponent implements OnInit {
         fillColor: [255, 255, 255]
       },
       headStyles: {
-        fillColor: [243, 146,   0], // naranja corporativo
+        fillColor: [243, 146, 0], // naranja corporativo
         textColor: 255,
         fontStyle: 'bold'
       },
@@ -214,7 +229,7 @@ export class CategoriaComponent implements OnInit {
       tableLineColor: [200, 200, 200]
     });
 
-    doc.save(`categoria_${cat.id}.pdf`);
+    doc.save(`Informe_${cat.id}-${cat.fecha}.pdf`);
   }
 }
 

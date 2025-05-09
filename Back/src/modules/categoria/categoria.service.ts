@@ -68,6 +68,8 @@ export class CategoriaService {
   }
 
   
+
+  
   async update(id: number, updateDto: UpdateCategoriaDto): Promise<Categoria> {
     // 1) Buscar la entidad existente
     const categoria = await this.categoriaRepository.findOne({ where: { id } });

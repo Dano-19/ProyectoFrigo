@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,10 @@ export class CategoriaService {
     return this.http.patch(`${this.baseUrl}/categoria/${id}`,registro)
   }
 
-  funEliminar(id:number){
-    return this.http.delete(`${this.baseUrl}/categoria/${id}`);
+  funEliminar(id: number): Observable<string> {
+    return this.http.delete(
+      `${this.baseUrl}/categoria/${id}`,
+      { responseType: 'text' }
+    );
   }
 }
