@@ -38,7 +38,8 @@ export class AppMenuComponent implements OnInit {
       { label: 'Tickets',    icon: 'pi pi-fw pi-ticket',  routerLink: ['/admin/tickets'],   target:'_blank', allowedRoles: ['admin'] },
       { label: 'Usuarios',   icon: 'pi pi-fw pi-user',    routerLink: ['/admin/usuarios'],  allowedRoles: ['admin'] },
       { label: 'Reportes',   icon: 'pi pi-fw pi-folder',   routerLink: ['/admin/reporte'],   target:'_blank', allowedRoles: ['admin'] },
-      { label: 'Clientes',   icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/cliente'],   allowedRoles: ['client'] }
+      { label: 'Clientes',   icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/cliente'],   allowedRoles: ['client'] },
+      //{label: 'Configuración', icon: 'pi pi-fw pi-cog', routerLink: ['/admin/producto'], allowedRoles: ['admin'] },
     ];
 
     // Filtramos los ítems permitidos para este rol

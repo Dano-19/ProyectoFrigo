@@ -14,6 +14,7 @@ export class CategoriaService {
   // Crear una nueva categoría
   async create(createCategoriaDto: CreateCategoriaDto) {
     const categoria = new Categoria();
+    console.log('createCategoriaDto', createCategoriaDto);
 
     // Fecha en formato válido
     const Fecha = new Date(createCategoriaDto.fecha);
@@ -38,7 +39,7 @@ export class CategoriaService {
 
     categoria.materiales = createCategoriaDto.materiales;
     categoria.acciones = createCategoriaDto.acciones;
-
+    console.log('categoria', categoria);
     return await this.categoriaRepository.save(categoria);
   }
 

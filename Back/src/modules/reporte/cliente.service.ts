@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Cliente } from './entities/cliente.entity';
+import { Reporte } from './entities/cliente.entity';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 
 @Injectable()
 export class ClienteService {
   constructor(
-    @InjectRepository(Cliente)
-    private readonly clienteRepo: Repository<Cliente>,
+    @InjectRepository(Reporte)
+    private readonly clienteRepo: Repository<Reporte>,
   ) {}
 
   create(dto: CreateClienteDto) {

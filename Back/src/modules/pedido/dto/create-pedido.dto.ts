@@ -1,5 +1,5 @@
 import { IsNumber ,IsOptional,IsString } from "class-validator";
-import { PedidoProducto } from "../entities/pedidoproducto.entity";
+
 import { PedidoProductoDto } from "./pedido-producto.dto";
 
 

@@ -2,11 +2,17 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToMany
+  OneToMany,
+  OneToOne,
+  JoinColumn,
+  ManyToOne
 } from 'typeorm';
-import { Producto } from '../../producto/entities/producto.entity';
 
-@Entity('categoria')  // Ajuste: usar el nombre real de tu tabla en singular
+import { Reporte } from '../../reporte/entities/cliente.entity';
+import { Ticket } from '../../tickets/entities/ticket.entity'; 
+
+
+@Entity('Formulario')  // Ajuste: usar el nombre real de tu tabla en singular
 export class Categoria {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,11 +31,11 @@ export class Categoria {
     area: string;
 
     // Marca: Se usa 'varchar' con longitud definida (50 caracteres)
-    @Column({ type: 'varchar', length: 50 })
+     @Column({ type: 'varchar', nullable: true })
     marca: string;
 
     // Modelo: Se usa 'varchar' con longitud definida (50 caracteres)
-    @Column({ type: 'varchar', length: 50 })
+    @Column({ type: 'varchar', nullable: true })
     modelo: string;
 
     // Tipo: Se usa 'varchar' con longitud definida (50 caracteres)
@@ -52,8 +58,11 @@ export class Categoria {
     @Column({ type: 'varchar', length: 50, nullable: true })
     acciones: string;
 
-    // Relación uno a muchos con Producto
-    @OneToMany(() => Producto, (prod) => prod.categoria)
-    producto: Producto[];
+    @OneToOne(() => Reporte, reporte => reporte.formulario)
+    reporte: Reporte;
+
+    @ManyToOne(() => Ticket, ticket => ticket.reportes, { eager: true })
+    @JoinColumn({ name: 'ticket_id' })
+    ticket: Ticket;
 }
 

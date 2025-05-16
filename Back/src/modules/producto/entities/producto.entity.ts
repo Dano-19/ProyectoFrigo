@@ -9,7 +9,7 @@ import {
     JoinColumn
   } from 'typeorm';
   import { Categoria } from '../../categoria/entities/categoria.entity';
-  import { PedidoProducto } from '../../pedido/entities/pedidoproducto.entity';
+  
   
   @Entity('productos')
   export class Producto {
@@ -28,17 +28,13 @@ import {
     @Column({ type: 'text', nullable: true })
     descripcion: string | null;
   
-    @ManyToOne(() => Categoria, c => c.producto, {
-      nullable: true,
-      onDelete: 'SET NULL'
-    })
+    
     @JoinColumn({ name: 'categoriaId' })
     categoria: Categoria | null;
   
     @Column({ type: 'int', nullable: true })
     categoriaId: number | null;
   
-    @OneToMany(() => PedidoProducto, pp => pp.producto)
-    pedidoProductos: PedidoProducto[];
+    
   }
   

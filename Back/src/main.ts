@@ -7,7 +7,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors(); // permite conexión desde el frontend
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe(
+    {whitelist: true,
+    transform: true,
+  }
+));
 
   const config = new DocumentBuilder()
     .addBearerAuth()

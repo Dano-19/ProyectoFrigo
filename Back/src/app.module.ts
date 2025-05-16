@@ -10,7 +10,7 @@ import { ProductoModule } from './modules/producto/producto.module';
 import { RoleModule } from './modules/role/role.module';
 import { PedidoModule } from './modules/pedido/pedido.module';
 import { TicketsModule } from './modules/tickets/tickets.module';
-import { ClienteModule } from './modules/cliente/cliente.module';
+import { ClienteModule } from './modules/reporte/cliente.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
@@ -21,6 +21,7 @@ import { join } from 'path';
     ConfigModule.forRoot({
       envFilePath: '.env.development',
       isGlobal:true,
+      
 }),
 
     MailerModule.forRootAsync({
