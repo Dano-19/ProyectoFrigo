@@ -8,7 +8,7 @@ import {
     OneToMany,
     JoinColumn
   } from 'typeorm';
-  import { Categoria } from '../../categoria/entities/categoria.entity';
+  import { formulario } from '../../formulario/entities/formulario.entity';
   import { PedidoProducto } from '../../pedido/entities/pedidoproducto.entity';
   
   @Entity('productos')
@@ -28,15 +28,15 @@ import {
     @Column({ type: 'text', nullable: true })
     descripcion: string | null;
   
-    @ManyToOne(() => Categoria, c => c.producto, {
+    @ManyToOne(() => formulario, c => c.producto, {
       nullable: true,
       onDelete: 'SET NULL'
     })
-    @JoinColumn({ name: 'categoriaId' })
-    categoria: Categoria | null;
+    @JoinColumn({ name: 'formularioId' })
+    formulario: formulario | null;
   
     @Column({ type: 'int', nullable: true })
-    categoriaId: number | null;
+    formularioId: number | null;
   
     @OneToMany(() => PedidoProducto, pp => pp.producto)
     pedidoProductos: PedidoProducto[];

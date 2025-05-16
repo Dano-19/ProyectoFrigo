@@ -10,7 +10,7 @@ export interface Producto {
   // si tu backend espera más campos, agrégalos aquí:
   // precio?: number;
   // stock?: number;
-  // categoriaId?: number;
+  // formularioId?: number;
 }
 
 @Injectable({

@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { DatabaseModule } from './database/database.module';
-import { CategoriaModule } from './modules/categoria/categoria.module';
+import { FormularioModule } from './modules/formulario/formulario.module';
 import { PersonaModule } from './modules/persona/persona.module';
 import { ProductoModule } from './modules/producto/producto.module';
 import { RoleModule } from './modules/role/role.module';
@@ -21,6 +21,7 @@ import { join } from 'path';
     ConfigModule.forRoot({
       envFilePath: '.env.development',
       isGlobal:true,
+     
 }),
 
     MailerModule.forRootAsync({
@@ -52,7 +53,7 @@ import { join } from 'path';
     AuthModule,
     UsersModule,
     DatabaseModule,
-    CategoriaModule,
+    FormularioModule,
     PersonaModule,
     ProductoModule,
     RoleModule,

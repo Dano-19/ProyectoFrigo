@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { LayoutComponent } from './layout/layout.component';
 import { AppLayoutModule } from './layout/app.layout.module';
-import { CategoriaService } from './inventario/services/categoria.service';
+import { FormularioService } from './inventario/services/formulario.service';
 import { ProductoService } from './inventario/services/producto.service';
 
 import { InventarioModule } from './inventario/inventario.module';
@@ -64,7 +64,7 @@ import { RouterModule } from '@angular/router';
     InventarioModule,
   ],
   providers: [
-    CategoriaService,
+    FormularioService,
     ProductoService
   ]
 })
