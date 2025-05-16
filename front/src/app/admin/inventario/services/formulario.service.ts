@@ -6,27 +6,27 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriaService {
+export class FormularioService {
 
   private baseUrl = environment.urlServidor
   private http= inject(HttpClient)
 
   funListar(){
-    return this.http.get(`${this.baseUrl}/categoria`)
+    return this.http.get(`${this.baseUrl}/formulario`)
     
   }
 
   funGuardar(registro:any){
-    return this.http.post(`${this.baseUrl}/categoria`, registro)
+    return this.http.post(`${this.baseUrl}/formulario`, registro)
   }
 
   funModificar(id:number, registro:any){
-    return this.http.patch(`${this.baseUrl}/categoria/${id}`,registro)
+    return this.http.patch(`${this.baseUrl}/formulario/${id}`,registro)
   }
 
   funEliminar(id: number): Observable<string> {
     return this.http.delete(
-      `${this.baseUrl}/categoria/${id}`,
+      `${this.baseUrl}/formulario/${id}`,
       { responseType: 'text' }
     );
   }

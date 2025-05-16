@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CategoriaService } from '../../services/categoria.service';
+import { FormularioService } from '../../services/formulario.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import jsPDF from 'jspdf';
 import autotable from 'jspdf-autotable';
-interface Categoria {
+interface formulario {
   id: number;
   fecha?: string;
   horaIngreso?: string;
@@ -12,54 +12,68 @@ interface Categoria {
   area?: string;
   marca?: string;
   modelo?: string;
+  serie?: string;
   tipo?: string;
+  capacidad?: string;
+  refrig?: string;
+  psi?: string;
+  volts?: string;
+  amp?: string;
+  // Descripción de trabajo
   descripcion?: string;
   cantidad?: string;
   materiales?: string;
-  acciones?: string;
+  recomendado?: string;
 }
 @Component({
-  selector: 'app-categoria',
-  templateUrl: './categoria.component.html',
-  styleUrls: ['./categoria.component.scss']
+  selector: 'app-formulario',
+  templateUrl: './formulario.component.html',
+  styleUrls: ['./formulario.component.scss']
 })
-export class CategoriaComponent implements OnInit {
-  private categoriaService = inject(CategoriaService);
-  categorias: Categoria[] = [];
+export class formularioComponent implements OnInit {
+  private FormularioService = inject(FormularioService);
+  formularios: formulario[] = [];
   dialog_visible = false;
-  categoria_id = -1;
+  formulario_id = -1;
   isSaving = false;
 
 
   // 1) Incluimos los controles para horaIngreso y horaSalida
-  categoriaForm = new FormGroup({
+  formularioForm = new FormGroup({
     fecha: new FormControl('', Validators.required),
     horaIngreso: new FormControl('', Validators.required),
     horaSalida: new FormControl('', Validators.required),
     area: new FormControl('', Validators.required),
     marca: new FormControl('', Validators.required),
     modelo: new FormControl('', Validators.required),
+    serie: new FormControl('', Validators.required),
     tipo: new FormControl('', Validators.required),
+    capacidad: new FormControl('', Validators.required),
+    refrig: new FormControl('', Validators.required),
+    psi: new FormControl('', Validators.required),
+    volts: new FormControl('', Validators.required),
+    amp: new FormControl('', Validators.required),
+    // Descripción de trabajo
     descripcion: new FormControl('', Validators.required),
     cantidad: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
     materiales: new FormControl('', Validators.required),
-    acciones: new FormControl('', Validators.required)
+    recomendado: new FormControl('', Validators.required)
   });
 
   ngOnInit(): void {
-    this.getCategorias();
+    this.getformularios();
   }
 
-  getCategorias() {
-    this.categoriaService.funListar().subscribe(
-      (res: any) => this.categorias = res,
+  getformularios() {
+    this.FormularioService.funListar().subscribe(
+      (res: any) => this.formularios = res,
       (err: any) => console.error(err)
     );
   }
 
   mostrarDialog() {
-    this.categoria_id = -1;
-    this.categoriaForm.reset();
+    this.formulario_id = -1;
+    this.formularioForm.reset();
     this.dialog_visible = true;
   }
 
@@ -70,13 +84,13 @@ export class CategoriaComponent implements OnInit {
     }, 0);
   }
 
-  guardarCategoria() {
-    if (this.categoriaForm.invalid) {
+  guardarformulario() {
+    if (this.formularioForm.invalid) {
       this.alerta('ERROR AL REGISTRAR', 'Complete todos los campos', 'error');
       return;
     }
 
-    const data = { ...this.categoriaForm.value };
+    const data = { ...this.formularioForm.value };
 
     // Validar y formatear fecha
     if (data.fecha) {
@@ -85,57 +99,64 @@ export class CategoriaComponent implements OnInit {
     }
 
     this.isSaving = true;
-    const request$ = this.categoria_id > 0
-      ? this.categoriaService.funModificar(this.categoria_id, data)
-      : this.categoriaService.funGuardar(data);
+    const request$ = this.formulario_id > 0
+      ? this.FormularioService.funModificar(this.formulario_id, data)
+      : this.FormularioService.funGuardar(data);
     request$.subscribe(
       () => {
         this.isSaving = false;
         this.cerrarDialog();
-        this.getCategorias();
-        this.alerta(this.categoria_id > 0 ? 'ACTUALIZADO' : 'REGISTRADO', '¡Operación exitosa!', 'success');
-        this.categoria_id = -1;
-        this.categoriaForm.reset();
+        this.getformularios();
+        this.alerta(this.formulario_id > 0 ? 'ACTUALIZADO' : 'REGISTRADO', '¡Operación exitosa!', 'success');
+        this.formulario_id = -1;
+        this.formularioForm.reset();
       },
       () => {
         this.isSaving = false;
-        this.alerta(this.categoria_id > 0 ? 'ERROR AL ACTUALIZAR' : 'ERROR AL REGISTRAR', 'Verifica los datos!', 'error');
+        this.alerta(this.formulario_id > 0 ? 'ERROR AL ACTUALIZAR' : 'ERROR AL REGISTRAR', 'Verifica los datos!', 'error');
       }
     );
   }
-  editarCategoria(categoria: Categoria): void {
-    this.categoria_id   = categoria.id;
+  editarformulario(formulario: formulario): void {
+    this.formulario_id   = formulario.id;
     this.dialog_visible = true;
 
     // Limpia residuos de ediciones previas (opcional)
-    this.categoriaForm.reset();
+    this.formularioForm.reset();
 
     // Extrae sólo la fecha "YYYY-MM-DD"
-    const [fecha] = categoria.fecha?.split('T') ?? [''];
+    const [fecha] = formulario.fecha?.split('T') ?? [''];
 
-    this.categoriaForm.patchValue({
+    this.formularioForm.patchValue({
       fecha,
-      horaIngreso: categoria.horaIngreso ?? '',
-      horaSalida:  categoria.horaSalida  ?? '',
-      area:        categoria.area        ?? '',
-      marca:       categoria.marca       ?? '',
-      modelo:      categoria.modelo      ?? '',
-      tipo:        categoria.tipo        ?? '',
-      descripcion: categoria.descripcion ?? '',
+      horaIngreso: formulario.horaIngreso ?? '',
+      horaSalida:  formulario.horaSalida  ?? '',
+      area:        formulario.area        ?? '',
+      marca:       formulario.marca       ?? '',
+      modelo:      formulario.modelo      ?? '',
+      serie:       formulario.serie       ?? '',
+      tipo:        formulario.tipo        ?? '',
+      capacidad:   formulario.capacidad   ?? '',
+      refrig:      formulario.refrig      ?? '',
+      psi:         formulario.psi         ?? '',
+      volts:       formulario.volts       ?? '',
+      amp:         formulario.amp         ?? '',
+      // Descripción de trabajo
+      descripcion: formulario.descripcion ?? '',
       // ← Aquí convertimos number → string
-      cantidad:    categoria.cantidad != null 
-                      ? categoria.cantidad.toString() 
+      cantidad:    formulario.cantidad != null 
+                      ? formulario.cantidad.toString() 
                       : '',
       // Si materiales y acciones no son strings, conviértelos igual
-      materiales:  categoria.materiales != null 
-                      ? categoria.materiales.toString() 
+      materiales:  formulario.materiales != null 
+                      ? formulario.materiales.toString() 
                       : '',
-      acciones:    categoria.acciones != null 
-                      ? categoria.acciones.toString() 
+      recomendado:    formulario.recomendado != null 
+                      ? formulario.recomendado.toString() 
                       : ''
     });
   }
-  eliminarCategoria(cat: Categoria) {
+  eliminarformulario(cat: formulario) {
     Swal.fire({
       title: '¿Eliminar formulario?',
       text: '¡No podrás revertirlo!',
@@ -147,12 +168,12 @@ export class CategoriaComponent implements OnInit {
       cancelButtonColor: '#d33'
     }).then(result => {
       if (result.isConfirmed) {
-        this.categoriaService.funEliminar(cat.id).subscribe(
+        this.FormularioService.funEliminar(cat.id).subscribe(
           mensaje => {
             const texto = String(mensaje);
             this.alerta('ELIMINADO', texto, 'success');
-            this.getCategorias();
-            this.categoria_id = -1;
+            this.getformularios();
+            this.formulario_id = -1;
           },
           err => {
             console.error('Error al eliminar categoría', err);
@@ -175,7 +196,7 @@ export class CategoriaComponent implements OnInit {
         reader.readAsDataURL(blob);
       }));
   }
-  async generarPDFCategoria(cat: Categoria): Promise<void> {
+  async generarPDFformulario(cat: formulario): Promise<void> {
     const doc = new jsPDF();
     try {
       const dataUrl = await this.loadImageAsDataUrl('assets/layout/images/Logo-FRIGO.jpg');
@@ -201,11 +222,18 @@ export class CategoriaComponent implements OnInit {
       ['Área', cat.area || ''],
       ['Marca', cat.marca || ''],
       ['Modelo', cat.modelo || ''],
+      ['Serie', cat.serie || ''],
+      ['Capacidad', cat.capacidad || ''],
+      ['Refrigeración', cat.refrig || ''],
+      ['PSI', cat.psi || ''],
+      ['Volts', cat.volts || ''],
+      ['Amp', cat.amp || ''],
       ['Tipo', cat.tipo || ''],
+
       ['Descripción', cat.descripcion || ''],
       ['Cantidad', cat.cantidad || ''],
       ['Materiales', cat.materiales || ''],
-      ['Acciones', cat.acciones || '']
+      ['recomendado', cat.recomendado || '']
     ];
 
     autotable(doc, {

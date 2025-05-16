@@ -28,7 +28,7 @@ export class ProductoController {
 
   @Get('back')
   async backend(@Req() req: Request) {
-    const builder = await this.productoService.queryBuilder('productos').leftJoinAndSelect('productos.categoria','categoria');
+    const builder = await this.productoService.queryBuilder('productos').leftJoinAndSelect('productos.formulario','formulario');
     if (req.query.q) { //si existe el valor de busqueda
       builder.where("productos.nombre LIKE :q", { q: `%${req.query.q}%` });
     }

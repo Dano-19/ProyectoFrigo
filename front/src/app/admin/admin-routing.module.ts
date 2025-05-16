@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppLayoutComponent }         from './layout/app.layout.component';
-import { CategoriaComponent }         from './inventario/components/categoria/categoria.component';
+import { formularioComponent }         from './inventario/components/formulario/formulario.component';
 import { ProductoComponent }          from './inventario/components/producto/producto.component';
 import { NuevoPedidoComponent }       from './pedido/components/nuevo-pedido/nuevo-pedido.component';
 import { ListaPedidoComponent }       from './pedido/components/lista-pedido/lista-pedido.component';
@@ -21,8 +21,8 @@ const routes: Routes = [
     component: AppLayoutComponent,
     children: [
       {
-        path: 'categoria',
-        component: CategoriaComponent,
+        path: 'formulario',
+        component: formularioComponent,
         canActivate: [ authGuard('technical') ]
       },
       {

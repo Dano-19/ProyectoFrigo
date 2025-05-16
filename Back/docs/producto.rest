@@ -14,7 +14,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJwQGhtL
     "nombre": " la poderos ",
     "precio": "7.00",
     "stock": 1,
-    "categoriaId": 1
+    "formularioId": 1
     }
 
 

@@ -28,5 +28,5 @@ export class CreateProductoDto {
 
   @IsOptional()
   @IsInt()
-  categoriaId?: number;
+  formularioId?: number;
 }
