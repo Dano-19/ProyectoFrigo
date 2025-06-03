@@ -23,23 +23,34 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
 import { AccordionModule } from 'primeng/accordion';
-import { DialogModule } from 'primeng/dialog';
+import { Dialog, DialogModule } from 'primeng/dialog';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { AdminMaterialesComponent } from './admin-materiales/admin-materiales.component';
+
 
 @NgModule({
   declarations: [
     LayoutComponent,
     ClienteComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    AdminMaterialesComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     AppLayoutModule,
-    InventarioModule,
+    InventarioModule, 
     PedidoModule,
+    FormsModule,
+    RouterModule,
+    TableModule,
+    InputTextModule,
+    ButtonModule,
+    
+
+    
 
     // Angular
     FormsModule,

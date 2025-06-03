@@ -33,7 +33,12 @@ export class AppMenuComponent implements OnInit {
     this.userRole = user.role;
 
     this.model = [
-      { label: 'Inicio',     icon: 'pi pi-fw pi-home',    routerLink: ['/admin'],           allowedRoles: ['client','technical','admin'] },
+      { label: 'Inicio',     icon: 'pi pi-fw pi-home',    routerLink: ['/admin'], allowedRoles: ['client','technical','admin'] },
+      { label: 'Materiales', icon: 'pi pi-fw pi-home',    routerLink: ['/admin/materiales'], allowedRoles: ['admin'] },
+      { label: 'Lista Pedidos', icon: 'pi pi-fw pi-home',    routerLink: ['/admin/pedidos'], allowedRoles: ['admin'] },
+      { label: 'Resportes', icon: 'pi pi-fw pi-home',    routerLink: ['/admin/reporte'], allowedRoles: ['admin'] },
+      { label: 'Lista Clientes', icon: 'pi pi-fw pi-home',    routerLink: ['/admin/lista-cliente'], allowedRoles: ['admin'] },
+      { label: 'Lista Tecnico', icon: 'pi pi-fw pi-home',    routerLink: ['/admin/lista-tecnico'], allowedRoles: ['admin'] },
       { label: 'Formulario', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/formulario'], allowedRoles: ['technical','admin'] },
       { label: 'Tickets',    icon: 'pi pi-fw pi-ticket',  routerLink: ['/admin/tickets'],   target:'_blank', allowedRoles: ['admin'] },
       { label: 'Usuarios',   icon: 'pi pi-fw pi-user',    routerLink: ['/admin/usuarios'],  allowedRoles: ['admin'] },

@@ -1,0 +1,24 @@
+<div class="contenido-pedidos">
+  <h2 class="titulo">Pedidos</h2>
+
+  <div class="contenedor-pedidos">
+    <ng-container *ngFor="let pedido of pedidos">
+      <p-card class="card-pedido">
+        <div class="cabecera-card" (click)="toggleExpand(pedido)">
+          <span><strong>ID:</strong> {{ pedido.id }}</span>
+          <i class="pi" [ngClass]="pedido.expanded ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+        </div>
+
+        <div *ngIf="pedido.expanded" class="contenido-card">
+          <p><strong>Nombre empresa o Cliente:</strong> {{ pedido.empresa }}</p>
+          <p><strong>Codigo postal</strong> {{ pedido.codigopostal }}</p>
+          <p><strong>Provinicia</strong> {{ pedido.provincia }}</p>
+          <p><strong>Ciudad</strong> {{ pedido.ciudad }}</p>
+          <p><strong>Calle Principal</strong> {{ pedido.callePrincipal }}</p>
+          <p><strong>Calle Secundaria </strong> {{ pedido.calleSecundario }}</p>
+          <p><strong>Detalle del Problema </strong> {{ pedido.detalle }}</p>
+        </div>
+      </p-card>
+    </ng-container>
+  </div>
+</div>

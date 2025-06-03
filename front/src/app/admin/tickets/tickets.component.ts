@@ -23,13 +23,13 @@ import { CalendarModule } from 'primeng/calendar';
 })
 export class TicketsComponent {
   ticket = {
-    nombre: '',
-    correo: '',
-    asunto: '',
-    mensaje: '',
+    id: '',
+    fechaVisita: '',
+    horaVisita: '',
+    cliente: '',
+    estado: '',
+    detalle: '',
     status: '',
-    prioridad: '',
-    fechaCreacion: '',
   };
 
   // Define el correo al que se enviará

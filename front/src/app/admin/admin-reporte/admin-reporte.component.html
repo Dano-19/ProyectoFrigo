@@ -1,0 +1,65 @@
+<div class="dashboard">
+<main class="main">
+  <h2>Reporte</h2>
+
+  <section class="form-box p-4 border-round surface-card shadow-2">
+
+    <h3>Datos de empresa</h3>
+    <input pInputText type="text" [(ngModel)]="empresa" placeholder="Empresa..." class="w-full mb-3" />
+
+    <label class="block mb-2 font-semibold">Estado</label>
+    <input pInputText type="text" [(ngModel)]="estado" placeholder="Estado..." class="w-full mb-3" />
+
+    
+    <div class="col-12 mb-3">
+      <label class="font-medium">Datos Ticket</label>
+      <input pInputText type="text" placeholder="ID" value="001" disabled class="w-1/4" />    
+    </div>
+
+
+
+
+    <div class="col-6 mb-3">
+      <label class="font-medium">Hora de entrada</label>
+      <input type="time" pInputText [(ngModel)]="horaEntrada" class="w-full" />
+    </div>
+    <div class="col-6 mb-3">
+      <label class="font-medium">Hora de salida</label>
+      <input type="time" pInputText [(ngModel)]="horaSalida" class="w-full" />
+    </div>
+
+   
+
+    <label class="block mb-2 font-semibold">Descripción</label>
+    <textarea pInputTextarea [(ngModel)]="descripcion" rows="3" class="w-full mb-4"></textarea>
+
+    <label class="block mb-2 font-semibold">Materiales usados</label>
+    <p-table [value]="materialesUsados" class="mb-4" [tableStyle]="{ 'min-width': '100%' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Material</th>
+          <th>Cantidad</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-m>
+        <tr>
+          <td>{{ m.nombre }}</td>
+          <td>{{ m.cantidad }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <label class="block mb-2 font-semibold">Recomendación</label>
+    <textarea pInputTextarea [(ngModel)]="recomendacion" rows="3" class="w-full mb-4"></textarea>
+
+    <div class="flex gap-3">
+      <button pButton label="Guardar" icon="pi pi-save" (click)="guardar()" class="p-button-success"></button>
+      <button pButton label="Generar PDF" icon="pi pi-file-pdf" (click)="generarPDF()" class="p-button-secondary"></button>
+    </div>
+
+  </section>
+
+  <p-toast></p-toast>
+</main>
+
+</div>

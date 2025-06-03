@@ -1,22 +1,29 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Dialog } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-cliente',
   templateUrl: './cliente.component.html',
-  styleUrls: ['./cliente.component.scss']
+  styleUrls: ['./cliente.component.scss'],
 })
 export class ClienteComponent {
   clienteForm: FormGroup;
 
+  visible: boolean = false;
+  showDialog() {
+        this.visible = true;
+    }
+
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.clienteForm = this.fb.group({
-      nombre: ['', Validators.required],
-      correo: ['', [Validators.required, Validators.email]],
-      direccion: [''],
-      telefono: ['', Validators.required],
-      descripcion: ['', Validators.required],
+      codifoPostal: ['', Validators.required],
+      provincia: ['', [Validators.required, Validators.email]],
+      ciudad: [''],
+      callePrincipal: ['', Validators.required],
+      calleSecundaria: ['', Validators.required],
     });
   }
 

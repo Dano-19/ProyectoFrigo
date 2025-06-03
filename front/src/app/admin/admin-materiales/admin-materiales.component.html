@@ -1,0 +1,48 @@
+<div class="dashboard">
+  
+  <main class="main">
+    <h1>Material</h1>
+
+    <p-table [value]="materiales" [tableStyle]="{ 'min-width': '60rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>NOMBRE</th>
+          <th>DESCRIPCION</th>
+          <th>STOCK</th>
+          <th>ACCIONES</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-material let-i="rowIndex">
+        <tr>
+          <td>
+            <input pInputText [(ngModel)]="material.id" [disabled]="!material.editable" />
+          </td>
+          <td>
+            <input pInputText [(ngModel)]="material.nombre" [disabled]="!material.editable" />
+          </td>
+          <td>
+            <input pInputText [(ngModel)]="material.descripcion" [disabled]="!material.editable" />
+          </td>
+          <td>
+            <input
+              pInputText
+              type="number"
+              [(ngModel)]="material.stock"
+              [disabled]="!material.editable"
+              min="0"
+            />
+          </td>
+          <td class="acciones">
+            <button pButton type="button" icon="pi pi-pencil" (click)="editarFila(i)"></button>
+            <button pButton type="button" icon="pi pi-save" (click)="guardarFila(i)"></button>
+            <button pButton type="button" icon="pi pi-trash" class="p-button-danger" (click)="eliminarFila(i)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <button pButton class="agregar-btn" label="AGREGAR" (click)="agregarFila()"></button>
+  </main>
+</div>

@@ -1,0 +1,46 @@
+<h2 class="titulo-tabla">Lista Clientes</h2>
+
+<table class="tabla-clientes">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Correo</th>
+      <th>Teléfono</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cliente of clientes; let i = index">
+      <td>
+        <input pInputText [(ngModel)]="cliente.nombre" [readonly]="!cliente.editando" />
+      </td>
+      <td>
+        <input pInputText [(ngModel)]="cliente.correo" [readonly]="!cliente.editando" />
+      </td>
+      <td>
+        <input pInputText [(ngModel)]="cliente.telefono" [readonly]="!cliente.editando" />
+      </td>
+      <td>
+        <button *ngIf="!cliente.editando"
+                pButton
+                icon="pi pi-pencil"
+                class="p-button-rounded p-button-info"
+                (click)="editar(cliente)">
+        </button>
+
+        <button *ngIf="cliente.editando"
+                pButton
+                icon="pi pi-check"
+                class="p-button-rounded p-button-success"
+                (click)="guardar(cliente)">
+        </button>
+
+        <button pButton
+                icon="pi pi-trash"
+                class="p-button-rounded p-button-danger"
+                (click)="eliminar(i)">
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

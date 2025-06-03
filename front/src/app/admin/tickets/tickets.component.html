@@ -10,25 +10,47 @@
     <!-- Formulario con ngModel -->
     <form (ngSubmit)="enviarTicket()" #ticketForm="ngForm" class="grid formgrid">
 
-      <!-- Nombre -->
       <div class="field col-12">
-        <label for="nombre">Nombre:</label>
-        <input id="nombre" name="nombre" type="text" pInputText class="w-full" [(ngModel)]="ticket.nombre"
-          placeholder="Tu nombre completo" required />
+        <label for="id">Id</label>
+        <input id="id" name="id" type="text" pInputText class="w-full" [(ngModel)]="ticket.id"
+          placeholder="id" required />
       </div>
 
       <!-- Correo -->
       <div class="field col-12">
-        <label for="correo">Correo:</label>
-        <input id="correo" name="correo" type="email" pInputText class="w-full" [(ngModel)]="ticket.correo"
-          placeholder="Correo electrónico" required />
-      </div>
+  <label for="fechaVisita">Fecha de la visita</label>
+  <p-calendar
+    id="fechaVisita"
+    name="fechaVisita"
+    [(ngModel)]="ticket.fechaVisita"
+    placeholder="Selecciona la fecha"
+    dateFormat="dd/mm/yy"
+    showIcon="true"
+    class="w-full"
+    required
+  ></p-calendar>
+</div>
 
-      <!-- Asunto -->
+         <div class="field col-12">
+  <label for="horaVisita">Hora de la visita</label>
+  <p-calendar
+    id="horaVisita"
+    name="horaVisita"
+    [(ngModel)]="ticket.horaVisita"
+    placeholder="Selecciona la hora"
+    timeOnly="true"
+    hourFormat="24"
+    showIcon="true"
+    class="w-full"
+    required
+  ></p-calendar>
+</div>
+
+
       <div class="field col-12">
-        <label for="asunto">Asunto:</label>
-        <input id="asunto" name="asunto" type="text" pInputText class="w-full" [(ngModel)]="ticket.asunto"
-          placeholder="Asunto del ticket" required />
+        <label for="cliente">Cliente</label>
+        <input id="cliente" name="cliente" type="cliente" pInputText class="w-full" [(ngModel)]="ticket.cliente"
+          placeholder="cliente" required />
       </div>
 
       <!-- Estado -->
@@ -43,35 +65,10 @@
         </select>
       </div>
 
-      <!-- Prioridad -->
-      <div class="field col-12">
-        <label for="prioridad" class="font-semibold text-primary">Prioridad:</label>
-        <select id="prioridad" name="prioridad" [(ngModel)]="ticket.prioridad" required
-          class="p-inputtext p-component w-full" style="border-radius: 1rem; padding: 0.75rem; border: 1px solid #ccc;">
-          <option value="" disabled selected>Seleccione una prioridad</option>
-          <option value="Alta">Alta</option>
-          <option value="Media">Media</option>
-          <option value="Baja">Baja</option>
-        </select>
-      </div>
-
-      <!-- Fecha de Creación -->
-      <div class="field col-12">
-        <label for="fecha" class="font-semibold text-primary">Fecha de Creación:</label>
-        <p-calendar id="fecha" name="fecha" [(ngModel)]="ticket.fechaCreacion" dateFormat="dd/mm/yy" showIcon="true"
-          showButtonBar="true" class="w-full" [inputStyle]="{
-      padding: '0.75rem',
-      borderRadius: '0rem',
-      backgroundColor: '#f9fbff',
-      border: '1px solid #ccc'
-    }">
-        </p-calendar>
-      </div>
-
       <!-- Mensaje -->
       <div class="field col-12">
-        <label for="mensaje">Mensaje:</label>
-        <textarea [(ngModel)]="ticket.mensaje" name="mensaje" id="mensaje" rows="5"
+        <label for="detalle">Detalle</label>
+        <textarea [(ngModel)]="ticket.detalle" name="detalle" id="detalle" rows="5"
           placeholder="Escribe tu mensaje aquí" class="p-inputtext p-component w-full"
           style="border-radius: 1rem; padding: 1rem; border: 1px solid #ccc; background-color: #f9fbff;">
         </textarea>

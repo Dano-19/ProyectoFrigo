@@ -14,6 +14,11 @@ import { ReporteComponent }           from './reporte/reporte.component';
 import { UsuariosComponent }          from './usuarios/usuarios.component';
 
 import { authGuard } from '../guards/auth.guard';
+import { AdminMaterialesComponent } from './admin-materiales/admin-materiales.component';
+import { AdminPedidoComponent } from './admin-pedido/admin-pedido.component';
+import { AdminReporteComponent } from './admin-reporte/admin-reporte.component';
+import { ListaClienteComponent } from './lista-cliente/lista-cliente.component';
+import { ListaTecnicoComponent } from './lista-tecnico/lista-tecnico.component';
 
 const routes: Routes = [
   {
@@ -23,7 +28,32 @@ const routes: Routes = [
       {
         path: 'formulario',
         component: formularioComponent,
-        canActivate: [ authGuard('technical') ]
+        canActivate: [ authGuard('admin') ]
+      },
+      {
+        path: 'materiales',
+        component: AdminMaterialesComponent,
+        canActivate: [ authGuard('admin') ]
+      },
+      {
+        path: 'reporte',
+        component: AdminReporteComponent,
+        canActivate: [ authGuard('admin') ]
+      },
+      {
+        path: 'lista-cliente',
+        component: ListaClienteComponent,
+        canActivate: [ authGuard('admin') ]
+      },
+      {
+        path: 'lista-tecnico',
+        component: ListaTecnicoComponent,
+        canActivate: [ authGuard('admin') ]
+      },
+      {
+        path: 'pedidos',
+        component: AdminPedidoComponent,
+        canActivate: [ authGuard('admin') ]
       },
       {
         path: 'producto',
