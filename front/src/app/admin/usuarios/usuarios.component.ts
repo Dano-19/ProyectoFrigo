@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { finalize } from 'rxjs/operators';
 
 interface User {
-  id?: number;
-  name?: string;
+  cedula?: number;
+  nombre?: string;
   email?: string;
-  role?: string;           // <-- añadimos role
+  rol?: string;           // <-- añadimos role
 }
 
 @Component({
@@ -24,9 +24,9 @@ export class UsuariosComponent implements OnInit {
 
   // Lista estática de roles
   roles = [
-    { label: 'Admin',    value: 'admin'    },
-    { label: 'Client',   value: 'client'   },
-    { label: 'Technical', value: 'technical' }
+    { label: 'Admin',    value: '2'    },
+    { label: 'Cliente',   value: '1'   },
+    { label: 'Técnico', value: '3' }
   ];
 
   private readonly apiUrl = 'http://localhost:3000/usuarios';
@@ -53,13 +53,13 @@ export class UsuariosComponent implements OnInit {
   }
 
   saveUser(): void {
-    if (!this.user.id) {
+    if (!this.user.cedula) {
       return;
     }
 
     this.http
-      .patch(
-        `${this.apiUrl}/${this.user.id}`,
+      .put(
+        `${this.apiUrl}/${this.user.cedula}`,
         this.user,
         { responseType: 'text' }
       )
@@ -74,7 +74,7 @@ export class UsuariosComponent implements OnInit {
 
   deleteUser(u: User): void {
     this.http
-      .delete(`${this.apiUrl}/${u.id}`, { responseType: 'text' })
+      .delete(`${this.apiUrl}/${u.cedula}`, { responseType: 'text' })
       .subscribe({
         next: () => window.location.reload(),
         error: err => console.error('Error al borrar usuario', err)

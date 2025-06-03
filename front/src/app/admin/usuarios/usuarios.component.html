@@ -13,17 +13,17 @@
 >
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
-      <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+      <th pSortableColumn="cedula">Cedula <p-sortIcon field="cedula"></p-sortIcon></th>
+      <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
       <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
       <th>Roles</th>
     </tr>
     <tr>
       <th>
-        <input pInputText type="text" placeholder="Buscar ID" (input)="dt.filter($any($event.target).value, 'id', 'contains')" />
+        <input pInputText type="text" placeholder="Buscar Cedula" (input)="dt.filter($any($event.target).value, 'cedula', 'contains')" />
       </th>
       <th>
-        <input pInputText type="text" placeholder="Buscar Nombre" (input)="dt.filter($any($event.target).value, 'name', 'contains')" />
+        <input pInputText type="text" placeholder="Buscar Nombre" (input)="dt.filter($any($event.target).value, 'nombre', 'contains')" />
       </th>
       <th>
         <input pInputText type="text" placeholder="Buscar Email" (input)="dt.filter($any($event.target).value, 'email', 'contains')" />
@@ -37,7 +37,7 @@
       <td>{{ user.cedula }}</td>
       <td>{{ user.nombre }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ user.role }}</td>  <!-- muestro también el rol en la tabla -->
+      <td>{{ user.rol.nombre_rol }}</td>  <!-- muestro también el rol en la tabla -->
       <td>
         <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text p-mr-2"
                 (click)="showEditUserDialog(user)"></button>
@@ -57,23 +57,27 @@
 >
   <form class="p-fluid">
     <div class="p-field">
-      <label for="name">Nombre</label>
-      <input id="name" pInputText [(ngModel)]="user.name" name="name" required />
+      <label for="cedula">Cedula</label>
+      <input id="cedula" pInputText [(ngModel)]="user.cedula" name="cedula" required />
+    </div>
+    <div class="p-field">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" pInputText [(ngModel)]="user.nombre" name="nombre" required />
     </div>
     <div class="p-field">
       <label for="email">Email</label>
       <input id="email" pInputText type="email" [(ngModel)]="user.email" name="email" required />
     </div>
     <div class="p-field">
-      <label for="role">Rol</label>
+      <label for="rol">Rol</label>
       <p-dropdown
-        id="role"
+        id="rol"
         [options]="roles"
         optionLabel="label"
         optionValue="value"
         placeholder="Seleccione rol"
-        [(ngModel)]="user.role"
-        name="role"
+        [(ngModel)]="user.rol"
+        name="rol"
         required
         appendsTo="body"
       ></p-dropdown>
@@ -84,7 +88,7 @@
     <button pButton type="button" label="Cancelar" icon="pi pi-times"
             class="p-button-text" (click)="userDialog = false"></button>
     <button pButton type="button" label="Guardar" icon="pi pi-check"
-            [disabled]="!user.name || !user.email || !user.role"
+            [disabled]="!user.nombre || !user.email || !user.rol"
             (click)="saveUser()"></button>
   </p-footer>
 </p-dialog>
