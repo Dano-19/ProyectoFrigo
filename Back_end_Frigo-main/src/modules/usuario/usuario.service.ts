@@ -5,6 +5,7 @@ import { Usuario } from './entities/usuario.entity';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Rol } from '../rol/entities/rol.entity';
+import { Role } from 'modules/common/enums/rol.enum';
 
 @Injectable()
 export class UsuarioService {
@@ -17,8 +18,12 @@ export class UsuarioService {
   ) {}
 
   async create(dto: CreateUsuarioDto) {
-    const rol = await this.rolRepo.findOne({ where: { id_rol: dto.id_rol } });
-    if (!rol) throw new NotFoundException('Rol no encontrado');
+    let rol = await this.rolRepo.findOne({ where: { id_rol: dto.id_rol } });
+    if (!rol) {
+      rol = await this.rolRepo.findOne({
+        where: { nombre_rol: Role.CLIENT },
+      });
+    }
 
     const usuario = this.usuarioRepo.create({
       cedula: String(dto.cedula),
@@ -28,7 +33,7 @@ export class UsuarioService {
       password: dto.password,
       rol,
     });
-
+    console.log('Usuario creado:', usuario);
     return this.usuarioRepo.save(usuario);
   }
 

@@ -12,7 +12,7 @@ export class Rol {
   @PrimaryGeneratedColumn()
   id_rol: number;
 
-    @Column({type: 'enum', enum: Role, default: Role.CLIENT,})
+  @Column({ type: 'enum', enum: Role })
   nombre_rol: Role;
 
   @OneToMany(() => Usuario, (usuario) => usuario.rol)

@@ -6,10 +6,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { RolModule } from '../rol/rol.module';
 
 @Module({
   imports: [
     UsuarioModule,
+    RolModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'secreto123',
       signOptions: { expiresIn: '1d' },

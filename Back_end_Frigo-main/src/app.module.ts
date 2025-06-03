@@ -30,7 +30,7 @@ import { AuthModule } from './modules/auth/auth.module';
       port: 5432,
       username: 'postgres',
       password: '12345',
-      database: 'back1',
+      database: 'frigo',
       synchronize: true, // solo para desarrollo
       autoLoadEntities: true,
       entities: [

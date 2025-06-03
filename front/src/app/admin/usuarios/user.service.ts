@@ -25,7 +25,8 @@ export class UserService {
     }
     try {
       const decoded = jwtDecode<TokenPayload>(token);
-      return decoded;
+      const user = {...decoded,role: this.userData.rol};
+      return user;
     } catch (e) {
       console.error('Error decodificando token:', e);
       return null;

@@ -26,6 +26,7 @@ export class AppMenuComponent implements OnInit {
 
   ngOnInit(): void {
     const user = this.userService.getUser();
+    console.log('user',user);
     if (!user || !user.role) {
       console.error('No se encontró el rol en UserService.');
       return;

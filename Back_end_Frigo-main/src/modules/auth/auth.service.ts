@@ -20,7 +20,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
 
     @InjectRepository(Usuario)
-    private readonly userRepository: Repository<Usuario>
+    private readonly userRepository: Repository<Usuario>,
   ) {}
 
   // ✅ Registro de usuario
@@ -28,7 +28,7 @@ export class AuthService {
     console.log('📥 Datos recibidos para registro:', dto);
 
     const hashedPassword = await hash(dto.password, 12);
-    const userToSave = { ...dto, password: hashedPassword };
+    const userToSave = { ...dto, password: hashedPassword, rol: { id_rol: 1 } };
 
     try {
       const userCreated = await this.userRepository.save(userToSave);
@@ -56,7 +56,11 @@ export class AuthService {
       throw new HttpException('Password inválido', 401);
     }
 
-    const payload = { email: user.email, role: user.rol?.nombre_rol, id: user.cedula };
+    const payload = {
+      email: user.email,
+      role: user.rol?.nombre_rol,
+      id: user.cedula,
+    };
     const token = await this.jwtService.signAsync(payload);
 
     console.log('✅ Login exitoso. Usuario con rol:', user.rol?.nombre_rol);
