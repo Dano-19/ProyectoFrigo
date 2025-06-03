@@ -19,6 +19,9 @@ import { AdminPedidoComponent } from './admin-pedido/admin-pedido.component';
 import { AdminReporteComponent } from './admin-reporte/admin-reporte.component';
 import { ListaClienteComponent } from './lista-cliente/lista-cliente.component';
 import { ListaTecnicoComponent } from './lista-tecnico/lista-tecnico.component';
+import { FormularioComponent } from './formulario/formulario.component';
+import { ListaMaterialesComponent } from './lista-materiales/lista-materiales.component';
+import { ticket_tecnicoComponent } from './ticket-tecnico/ticket-tecnico.component';
 
 const routes: Routes = [
   {
@@ -83,12 +86,27 @@ const routes: Routes = [
       {
         path: 'tickets',
         component: TicketsComponent,
-        canActivate: [ authGuard('client') ]
+        canActivate: [ authGuard('admin') ]
       },
       {
         path: 'usuarios',
         component: UsuariosComponent,
         canActivate: [ authGuard('admin') ]
+      },
+      {
+        path: 'formularioT',
+        component: FormularioComponent,
+        canActivate: [ authGuard('technical') ]
+      },
+      {
+        path: 'lista-material',
+        component: ListaMaterialesComponent,
+        canActivate: [ authGuard('technical') ]
+      },
+      {
+        path: 'ticket-tecnico',
+        component: ticket_tecnicoComponent,
+        canActivate: [ authGuard('technical') ]
       },
       {
         path: '',

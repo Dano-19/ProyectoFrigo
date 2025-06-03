@@ -1,0 +1,29 @@
+<p-panel header="Lista de Materiales">
+  <div class="p-fluid grid p-4" style="background:#f5f5f5; border-radius:8px">
+
+    <div class="card">
+    <p-table
+        [value]="customers"
+        [paginator]="true"
+        [rows]="5"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [rowsPerPageOptions]="[5, 10, 20]">
+        <ng-template #header>
+            <tr>
+                <th style="width:25%">Id</th>
+                <th style="width:25%">Nombre</th>
+                <th style="width:25%">Descripción</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-customer>
+            <tr>
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.nombre }}</td>
+                <td>{{ customer.descripcion }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+</div>
+</p-panel>
+

@@ -1,0 +1,41 @@
+<p-panel header="Ticket para el tecnico">
+  <div class="p-fluid grid p-4" style="background:#f5f5f5; border-radius:8px">
+
+    <div class="col-12 mb-3">
+      <label class="font-medium">Datos Ticket</label>
+      <input type="text" pInputText [(ngModel)]="ticketId" disabled [ngStyle]="{ width: '100%' }" />
+    </div>
+    <div class="col-12 mb-3">
+      <label class="font-medium">Fecha</label>
+      <input type="text" pInputText [(ngModel)]="fecha" disabled [ngStyle]="{ width: '100%' }" />
+    </div>
+
+    <div class="col-6 mb-3">
+      <label class="font-medium">Hora de visita</label>
+      <input type="text" pInputText [(ngModel)]="hora_visita" disabled [ngStyle]="{ width: '100%' }" />
+    </div>
+
+    <div class="col-12 mb-3">
+      <label class="font-medium">Estado</label>
+      <input type="text" pInputText [(ngModel)]="estado" disabled [ngStyle]="{ width: '100%' }" />
+    </div>
+
+    <div class="col-12 mb-3">
+      <label class="font-medium">Técnico</label>
+      <input type="text" pInputText [(ngModel)]="tecnicoId" disabled [ngStyle]="{ width: '100%' }" />
+    </div>
+
+    <!-- Descripción -->
+    <div class="col-12 mb-3">
+      <label class="font-medium">Descripción</label>
+      <textarea rows="4" pInputTextarea [(ngModel)]="descripcion" [ngStyle]="{ width: '100%', resize: 'none' }" disabled [ngStyle]="{ width: '100%' }"></textarea>
+    </div>
+
+    <!-- Botón -->
+    <div class="col-12 text-right">
+      <button pButton label="Aceptar" (click)="AceptarTicket()" class="p-button-secondary"></button>
+    </div>
+
+  </div>
+</p-panel>
+
