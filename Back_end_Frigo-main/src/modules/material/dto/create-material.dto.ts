@@ -1,0 +1,5 @@
+export class CreateMaterialDto {
+  readonly nombre: string;
+  readonly descripcion: string;
+  readonly stock: number;
+}

@@ -14,6 +14,7 @@ export class UserService {
   private userData: any = null;
 
   setUser(data: any): void {
+    console.log('🔍 Usuario guardado en UserService:', data); 
     this.userData = data;
   }
 

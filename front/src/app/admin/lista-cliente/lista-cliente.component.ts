@@ -7,7 +7,7 @@ import { TableModule } from 'primeng/table';
 
 interface Cliente {
   nombre: string;
-  correo: string;
+  email: string;
   telefono: string;
   editando?: boolean;
 }
@@ -23,16 +23,16 @@ export class ListaClienteComponent {
   // 👉 Columnas dinámicas para PrimeNG
   cols = [
     { field: 'nombre', header: 'Nombre' },
-    { field: 'correo', header: 'Correo' },
+    { field: 'email', header: 'email' },
     { field: 'telefono', header: 'Teléfono' }
   ];
 
   clientes: Cliente[] = [
-    { nombre: 'Jose', correo: 'JJ@gmail.com', telefono: '09884587' },
-    { nombre: 'Mario', correo: 'JJ@gmail.com', telefono: '09884587' },
-    { nombre: 'Maria', correo: 'JJ@gmail.com', telefono: '09884587' },
-    { nombre: 'Su tía', correo: 'JJ@gmail.com', telefono: '09884587' },
-    { nombre: 'Hola', correo: 'JJ@gmail.com', telefono: '09884587' }
+    { nombre: 'Jose', email: 'JJ@gmail.com', telefono: '09884587' },
+    { nombre: 'Mario', email: 'JJ@gmail.com', telefono: '09884587' },
+    { nombre: 'Maria', email: 'JJ@gmail.com', telefono: '09884587' },
+    { nombre: 'Su tía', email: 'JJ@gmail.com', telefono: '09884587' },
+    { nombre: 'Hola', email: 'JJ@gmail.com', telefono: '09884587' }
   ];
 
   editar(cliente: Cliente) {

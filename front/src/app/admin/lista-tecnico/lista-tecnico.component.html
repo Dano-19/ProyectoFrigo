@@ -6,7 +6,7 @@
       <th>Cédula</th>
       <th>Nombre</th>
       <th>Apellido</th>
-      <th>Correo</th>
+      <th>email</th>
       <th>Acciones</th>
     </tr>
   </ng-template>
@@ -40,7 +40,7 @@
       <td>
         <input
           pInputText
-          [(ngModel)]="tecnico.correo"
+          [(ngModel)]="tecnico.email"
           [disabled]="!tecnico.editable"
           class="w-full"
         />

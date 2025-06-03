@@ -11,9 +11,10 @@ import { MessageService } from 'primeng/api';
 })
 export class RegisterComponent {
   formData = {
-    name: '',
-    username: '',
+    cedula: '',
+    nombre: '',
     email: '',
+    telefono: '',
     password: ''
   };
 
@@ -24,12 +25,8 @@ export class RegisterComponent {
   ) {}
 
   onSubmit() {
-    const email = this.formData.email;
-    const password = this.formData.password;
+    const { email, password } = this.formData;
 
-   
-
-    // Validación de contraseña
     if (!this.validPassword(password)) {
       this.messageService.add({
         severity: 'error',
@@ -40,15 +37,12 @@ export class RegisterComponent {
       return;
     }
 
-    console.log(this.formData)
-    // Envío al backend
     this.http.post('http://localhost:3000/auth/register', this.formData).subscribe({
       next: () => {
         this.messageService.add({
           severity: 'success',
           summary: '¡Registro exitoso!',
           detail: 'Serás redirigido al login...',
-          icon: 'pi pi-check-circle',
           life: 3500
         });
 
@@ -68,11 +62,7 @@ export class RegisterComponent {
     });
   }
 
-  
-
   validPassword(password: string): boolean {
     return password.length >= 6 && /[^A-Za-z0-9]/.test(password);
   }
-
- 
 }

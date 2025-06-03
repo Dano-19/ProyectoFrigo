@@ -27,14 +27,14 @@ export class AuthService {
     return this.usersData;
   }
 
-  // ✅ Enviar enlace de recuperación al correo
-  enviarPasswordPorCorreo(email: string): Observable<any> {
+  // ✅ Enviar enlace de recuperación al email
+  enviarPasswordPoremail(email: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/forgot-password`, { email });
   }
 
   // ✅ Alias más legible
   forgotPassword(email: string): Observable<any> {
-    return this.enviarPasswordPorCorreo(email);
+    return this.enviarPasswordPoremail(email);
   }
 
   // ✅ Cambiar la contraseña usando el token del link

@@ -20,9 +20,9 @@ import { ButtonModule } from 'primeng/button';
 })
 export class ListaTecnicoComponent {
   tecnicos = [
-    { cedula: '17518888', nombre: 'Juan', apellido: 'Guaman', correo: 'JJ.gmail.com', editable: false },
-    { cedula: '12564987', nombre: 'Luis', apellido: 'Mora', correo: 'luism@gmail.com', editable: false },
-    { cedula: '09876543', nombre: 'Ana', apellido: 'Reyes', correo: 'anita@correo.com', editable: false }
+    { cedula: '17518888', nombre: 'Juan', apellido: 'Guaman', email: 'JJ.gmail.com', editable: false },
+    { cedula: '12564987', nombre: 'Luis', apellido: 'Mora', email: 'luism@gmail.com', editable: false },
+    { cedula: '09876543', nombre: 'Ana', apellido: 'Reyes', email: 'anita@email.com', editable: false }
   ];
 
   editar(index: number) {

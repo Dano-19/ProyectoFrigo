@@ -32,14 +32,14 @@ export class TicketsComponent {
     status: '',
   };
 
-  // Define el correo al que se enviará
-  correoDestino = 'soporte@frigoservicios.com';
+  // Define el email al que se enviará
+  emailDestino = 'soporte@frigoservicios.com';
 
   constructor(private http: HttpClient) {}
 
   enviarTicket() {
-    // Mostrar alerta con el correo destino antes del envío
-    alert(`✉️ El ticket será enviado a: ${this.correoDestino}`);
+    // Mostrar alerta con el email destino antes del envío
+    alert(`✉️ El ticket será enviado a: ${this.emailDestino}`);
 
     // Envío HTTP al backend
     this.http.post('http://localhost:3000/tickets', this.ticket).subscribe({
