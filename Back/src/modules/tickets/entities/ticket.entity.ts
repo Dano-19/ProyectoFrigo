@@ -31,7 +31,7 @@ export class Ticket {
   @Column({ type: 'varchar', length: 50 })
   status: string;
 
-  @ManyToOne(() => User, (user) => user.tickets, { nullable: false })
+  @ManyToOne(() => User, (user) => user.tickets, { nullable: true })
   assignedTo: User;
 
   @OneToMany(() => Reporte, (reporte) => reporte.ticket)

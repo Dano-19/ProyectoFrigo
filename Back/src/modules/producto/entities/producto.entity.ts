@@ -9,7 +9,7 @@ import {
     JoinColumn
   } from 'typeorm';
   import { formulario } from '../../formulario/entities/formulario.entity';
-  import { PedidoProducto } from '../../pedido/entities/pedidoproducto.entity';
+  
   
   @Entity('productos')
   export class Producto {
@@ -28,10 +28,7 @@ import {
     @Column({ type: 'text', nullable: true })
     descripcion: string | null;
   
-    @ManyToOne(() => formulario, c => c.producto, {
-      nullable: true,
-      onDelete: 'SET NULL'
-    })
+    
     @JoinColumn({ name: 'formularioId' })
     formulario: formulario | null;
   

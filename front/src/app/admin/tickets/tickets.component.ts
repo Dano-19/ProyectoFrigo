@@ -27,7 +27,7 @@ export class TicketsComponent {
     correo: '',
     asunto: '',
     mensaje: '',
-    estado: '',
+    status: '',
     prioridad: '',
     fechaCreacion: '',
   };

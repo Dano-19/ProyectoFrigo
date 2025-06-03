@@ -1,21 +1,71 @@
+import { IsString, IsNotEmpty, IsDateString, IsOptional, IsNumber } from 'class-validator';
+
 export class CreateFormularioDto {
-    fecha: Date;  // Se espera que sea un string, que luego convertimos a Date
-    horaIngreso?: string;   // formato "HH:mm:ss"
-    horaSalida?: string;    // formato "HH:mm:ss"
-    area: string;
-    marca: string;
-    modelo: string;
-    serie: string;
-    tipo: string;
-    capacidad: string;
-    refrig:string;
-    psi: string;
-    volts: string;
-    amp: string; 
+  @IsNotEmpty()
+  @IsDateString()
+  fecha: string;   // has de recibirlo como “YYYY-MM-DD” en el body
 
+  @IsOptional()
+  @IsString()
+  horaIngreso?: string;
 
-    descripcion: string;
-    cantidad: number;  // Se espera que sea un string para poder convertirlo a number
-    materiales: string;
-    recomendado: string;
-  }
+  @IsOptional()
+  @IsString()
+  horaSalida?: string;
+
+  @IsNotEmpty()
+  @IsString()
+  area: string;
+
+  @IsNotEmpty()
+  @IsString()
+  marca: string;
+
+  @IsNotEmpty()
+  @IsString()
+  modelo: string;
+
+  @IsNotEmpty()
+  @IsString()
+  serie: string;
+
+  @IsNotEmpty()
+  @IsString()
+  tipo: string;
+
+  @IsNotEmpty()
+  @IsString()
+  capacidad: string;
+
+  @IsNotEmpty()
+  @IsString()
+  refrig: string;
+
+  @IsNotEmpty()
+  @IsString()
+  psi: string;
+
+  @IsNotEmpty()
+  @IsString()
+  volts: string;
+
+  @IsNotEmpty()
+  @IsString()
+  amp: string;
+
+  @IsOptional()
+  @IsString()
+  descripcion: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  cantidad: number;
+
+  @IsOptional()
+  @IsString()
+  materiales: string;
+
+  @IsOptional()
+  @IsString()
+  recomendado: string;
+}

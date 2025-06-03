@@ -18,6 +18,7 @@ export class TicketsService {
 
   /** Crea y guarda el ticket en BD */
   async create(dto: CreateTicketDto): Promise<Ticket> {
+    console.log('Recibido para crear ticket:', dto);
     const ticket = this.ticketRepo.create({
       nombre: dto.nombre,
       correo: dto.correo,
@@ -96,6 +97,7 @@ Generado automáticamente desde el sistema.
 
       return { message: 'Correos enviados al cliente y al soporte' };
     } catch (error) {
+      console.error('');
       console.error('❌ Error al enviar correos:', error);
       throw new Error('Error al enviar correos');
     }

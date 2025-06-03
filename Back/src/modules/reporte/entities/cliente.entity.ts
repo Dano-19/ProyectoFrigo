@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn, OneToOne, Index, OneToMany } from 'typeorm';
 import { Cliente } from '../../Client/entities/client.entity';
-import { Categoria } from '../../categoria/entities/categoria.entity';
+import { formulario } from '../../formulario/entities/formulario.entity';
 import { Ticket } from '../../tickets/entities/ticket.entity'; 
 import { User } from '../../users/entities/user.entity';
 
@@ -32,9 +32,9 @@ export class Reporte {
   @JoinColumn({ name: 'client_id' })
   client: Cliente;
 
-  @OneToOne(() => Categoria, formulario => formulario.reporte, { eager: true })
+  @OneToOne(() => formulario, formulario => formulario.reporte, { eager: true })
   @JoinColumn({ name: 'formulario_id' })
-  formulario: Categoria;
+  formulario: formulario;
 
   @ManyToOne(() => Ticket, ticket => ticket.reportes, { eager: true })
   @JoinColumn({ name: 'ticket_id' })

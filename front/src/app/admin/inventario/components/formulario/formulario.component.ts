@@ -12,7 +12,7 @@ interface formulario {
   area?: string;
   marca?: string;
   modelo?: string;
-  serie?: string;
+  serie: string | null;
   tipo?: string;
   capacidad?: string;
   refrig?: string;

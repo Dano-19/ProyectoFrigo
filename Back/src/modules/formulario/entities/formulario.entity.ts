@@ -1,3 +1,5 @@
+import { Reporte } from '../../reporte/entities/cliente.entity';
+import { Ticket } from '../../tickets/entities/ticket.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,6 +9,7 @@ import {
   JoinColumn,
   ManyToOne
 } from 'typeorm';
+
 
 @Entity('formulario')  // Ajuste: usar el nombre real de tu tabla en singular
 export class formulario {
@@ -34,7 +37,7 @@ export class formulario {
     @Column({ type: 'varchar', nullable: true })
     modelo: string;
 
-    @Column({ type: 'varchar', length: 50 })
+    @Column({ type: 'varchar', length: 50, nullable: true })
     serie: string;
 
     // Tipo: Se usa 'varchar' con longitud definida (50 caracteres)
@@ -56,9 +59,6 @@ export class formulario {
     @Column({ type: 'varchar', length: 50 })
     amp: string;
 
-
-
-
     // Descripción de trabajo: Usamos 'text' para textos largos
     @Column({ type: 'text', nullable: true })
     descripcion: string;
@@ -74,9 +74,6 @@ export class formulario {
     // Acciones: Se usa 'varchar' con longitud definida
     @Column({ type: 'varchar', length: 50, nullable: true })
     recomendado: string;
-
-
-
 
     @OneToOne(() => Reporte, reporte => reporte.formulario)
     reporte: Reporte;
