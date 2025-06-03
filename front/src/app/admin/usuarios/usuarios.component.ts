@@ -29,7 +29,7 @@ export class UsuariosComponent implements OnInit {
     { label: 'Technical', value: 'technical' }
   ];
 
-  private readonly apiUrl = 'http://localhost:3000/users';
+  private readonly apiUrl = 'http://localhost:3000/usuarios';
 
   constructor(private http: HttpClient) {}
 
